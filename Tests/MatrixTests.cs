@@ -855,6 +855,24 @@ public class MatrixImmutableTests
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
+    
+    [TestCase(new float[] { 0 }, new float[] { 200, 0 })]
+    [TestCase(new float[] { 0, 2 }, new float[] {})]
+    [TestCase(new float[] {}, new float[] {})]
+    public void RotateMatrixByDegrees_01_2x2D_Ok(float[] leftPositions, float[] rightPositions)
+    {
+        // Arrange
+        var matrix = new MatrixImmutable(
+            new(leftPositions),
+            new(rightPositions)
+        );
+
+        // Act & assert
+        Assert.Throws<MatrixVectorsNot2DException>(() =>
+        {
+            var result = MatrixImmutable.Rotate2D(matrix, 0);
+        });
+    }
 
     [TestCase(Axis.X, 0, "{(1,0,0),(0,1,-0),(0,0,1)}")]
     [TestCase(Axis.Y, 0, "{(1,0,0),(0,1,0),(0,0,1)}")]
@@ -945,6 +963,26 @@ public class MatrixImmutableTests
 
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
+    }
+    
+    [TestCase(new float[] { 2, -1 }, new float[] { 3, 8, 5 }, new float[] { 6, 1, 7 })]
+    [TestCase(new float[] { 2, -1, 3 }, new float[] { 3 }, new float[] { 6, 1, 7 })]
+    [TestCase(new float[] { 2, -1, 3 }, new float[] { 3, 8, 5 }, new float[] {})]
+    [TestCase(new float[] {}, new float[] {}, new float[] {})]
+    public void RotateMatrixByDegrees_01_3D_ThrowsOnNon3DVectors(float[] positions1, float[] positions2, float[] positions3)
+    {
+        // Arrange
+        var matrix = new MatrixImmutable(
+            new VectorImmutable(positions1),
+            new VectorImmutable(positions2),
+            new VectorImmutable(positions3)
+        );
+
+        // Act & assert
+        Assert.Throws<MatrixVectorsNot3DException>(() =>
+        {
+            var result = MatrixImmutable.Rotate3D(Axis.X, matrix, 0);
+        });
     }
 }
 

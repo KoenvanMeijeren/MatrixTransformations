@@ -227,7 +227,10 @@ public class VectorImmutableTests
     }
 
     [TestCase(new float[] { }, new float[] { }, "()")]
+    [TestCase(new float[] { 0 }, new float[] { 0 }, "(0)")]
     [TestCase(new float[] { 6 }, new float[] { 3 }, "(2)")]
+    [TestCase(new float[] { 0, 0 }, new float[] { 0, 0 }, "(0,0)")]
+    [TestCase(new float[] { 8, 0 }, new float[] { 0, 0 }, "(0,0)")]
     [TestCase(new float[] { 6, 4 }, new float[] { 3, 2 }, "(2,2)")]
     [TestCase(new float[] { 6, 4, 6 }, new float[] { 3, 2, 3 }, "(2,2,2)")]
     [TestCase(new float[] { 6, 4, 6, 7 }, new float[] { 3, 2, 4, 5 }, "(2,2,1.5,1.4)")]
@@ -242,6 +245,19 @@ public class VectorImmutableTests
 
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
+    }
+    
+    public void DivideVectorByVector_01_ThrowsOnVectorsNotEqual()
+    {
+        // Arrange
+        var left = new VectorImmutable(new float[]{1, 2});
+        var right = new VectorImmutable(new float[]{1});
+
+        // Act & assert
+        Assert.Throws<VectorsAreNotEqualException>(() =>
+        {
+            var result = left / right;
+        });
     }
 
     [TestCase(new float[] { }, 2, "()")]
