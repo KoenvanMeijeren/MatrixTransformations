@@ -98,7 +98,7 @@ public partial class MatrixForm : Form
 
         _squareRotated.Matrix = MatrixImmutable.Rotate2D(_squareRotatedBackup.Matrix, _squareRotationDegrees);
         _squareRotated.Draw(graphics, _squareRotated.Matrix);
-        
+
         _cube.Draw(graphics, _cube.Matrix);
     }
 
