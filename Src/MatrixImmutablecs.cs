@@ -37,7 +37,7 @@ public class MatrixImmutable
         return new VectorImmutable(newPositions.ToArray());
     }
 
-    public static MatrixImmutable Identity(MatrixImmutable matrix)
+    public static MatrixImmutable Identity(MatrixImmutable matrix, float value = 1)
     {
         if (matrix.IsEmpty())
         {
@@ -50,13 +50,14 @@ public class MatrixImmutable
         var vectorIndex = 0;
         foreach (var vector in matrix.Vectors)
         {
+            EnsureMatrixVectorsHaveEqualVectorDimensions(matrix.Vectors, vector);
             if (previousVector != null)
             {
                 EnsureVectorsHaveEqualDimensions(previousVector, vector);
             }
             
             var positions = new float[vector.Length()];
-            positions[identityIndex++] = 1;
+            positions[identityIndex++] = value;
             vectors[vectorIndex++] = new VectorImmutable(positions);
             previousVector = vector;
         }
@@ -182,6 +183,11 @@ public class MatrixImmutable
         var vectorMatrix = new MatrixImmutable(vectors);
         
         return vectorMatrix * matrix;
+    }
+
+    public static MatrixImmutable Scale(MatrixImmutable matrix, float scale)
+    {
+        return Identity(matrix, scale) * matrix;
     }
 
     public override string ToString()
