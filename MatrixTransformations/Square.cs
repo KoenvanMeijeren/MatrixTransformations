@@ -25,7 +25,7 @@ public class Square
         };
     }
 
-    public void Draw(Graphics graphics, List<VectorImmutable> vectors)
+    public void Draw(GraphicsHelper graphics, List<VectorImmutable> vectors)
     {
         var pen = new Pen(_color, _weight);
         graphics.DrawLine(pen, vectors[0].X, vectors[0].Y, vectors[1].X, vectors[1].Y);

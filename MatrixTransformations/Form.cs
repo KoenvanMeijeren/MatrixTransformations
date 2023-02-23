@@ -60,12 +60,11 @@ public partial class Form : System.Windows.Forms.Form
     {
         base.OnPaint(eventArgs);
 
-        // Draw axes
-        AxisX.Draw(eventArgs.Graphics, _xAxis.VertexBuffer);
-        AxisY.Draw(eventArgs.Graphics, _yAxis.VertexBuffer);
-
-        // Draw square
-        _square.Draw(eventArgs.Graphics, _square.VertexBuffer);
+        var graphics = new GraphicsHelper(eventArgs.Graphics);
+        
+        AxisX.Draw(graphics, _xAxis.VertexBuffer);
+        AxisY.Draw(graphics, _yAxis.VertexBuffer);
+        _square.Draw(graphics, _square.VertexBuffer);
     }
 
     private void Form1_KeyDown(object sender, KeyEventArgs eventArgs)
