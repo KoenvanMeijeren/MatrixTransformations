@@ -3,7 +3,7 @@ using Src;
 
 namespace MatrixTransformations;
 
-public partial class Form : System.Windows.Forms.Form
+public partial class MatrixForm : Form
 {
     // Window dimensions
     public const int FormWidth = 800, FormHeight = 600;
@@ -21,7 +21,7 @@ public partial class Form : System.Windows.Forms.Form
 
     private double _squareScale = DefaultSquareScale, _squareRotationDegrees = DefaultSquareRotationDegrees;
 
-    public Form()
+    public MatrixForm()
     {
         InitializeComponent();
 
