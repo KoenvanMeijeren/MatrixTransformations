@@ -657,6 +657,23 @@ public class MatrixImmutableTests
     }
     
     [Test]
+    public void MultiplyMatrixWithMatrix_06_2x2DWith2x3D_Ok()
+    {
+        // Arrange
+        var vector1 = new VectorImmutable(1, 8);
+        var vector2 = new VectorImmutable(2, -3);
+        var left = new MatrixImmutable(vector1, vector2);
+        var vector3 = new VectorImmutable(2, 7, -2);
+        var vector4 = new VectorImmutable(3, -1, 5);
+        var right = new MatrixImmutable(vector3, vector4);
+        
+        // Act
+        var result = left * right;
+        
+        Assert.That(result.ToString(), Is.EqualTo("{(26,-1,38),(-5,17,-19)}"));
+    }
+    
+    [Test]
     public void MultiplyMatrixWithVector_01_Ok()
     {
         // Arrange
@@ -688,9 +705,9 @@ public class MatrixImmutableTests
         Assert.That(result.ToString(), Is.EqualTo("{(9,13)}"));
     }
 
-    [TestCase(new float[]{}, new float[]{}, 0, "{}")]
-    [TestCase(new float[]{}, new float[]{}, 1, "{}")]
-    [TestCase(new float[]{}, new float[]{}, 2, "{}")]
+    [TestCase(new float[]{}, new float[]{}, 0, "{(),()}")]
+    [TestCase(new float[]{}, new float[]{}, 1, "{(),()}")]
+    [TestCase(new float[]{}, new float[]{}, 2, "{(),()}")]
     public void ScaleMatrixByValue_01_0D_Ok(float[] leftPositions, float[] rightPositions, float scale, string expectedResult)
     {
         // Arrange
