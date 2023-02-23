@@ -810,7 +810,7 @@ public class MatrixImmutableTests
         var vector = new VectorImmutable(positions);
 
         // Act
-        var result = MatrixImmutable.RotateVector(vector, degrees);
+        var result = MatrixImmutable.RotateVector2D(vector, degrees);
 
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
@@ -826,7 +826,7 @@ public class MatrixImmutableTests
     public void DegreesToRotateMatrix_01_Ok(float degrees, string expectedResult)
     {
         // Act
-        var result = MatrixImmutable.DegreesToRotationMatrix(degrees);
+        var result = MatrixImmutable.DegreesToRotationMatrix2D(degrees);
 
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
@@ -854,6 +854,135 @@ public class MatrixImmutableTests
 
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
+    }
+    
+    [TestCase(new float[] { 0 }, new float[] { 200, 0 })]
+    [TestCase(new float[] { 0, 2 }, new float[] {})]
+    [TestCase(new float[] {}, new float[] {})]
+    public void RotateMatrixByDegrees_01_2x2D_Ok(float[] leftPositions, float[] rightPositions)
+    {
+        // Arrange
+        var matrix = new MatrixImmutable(
+            new(leftPositions),
+            new(rightPositions)
+        );
+
+        // Act & assert
+        Assert.Throws<MatrixVectorsNot2DException>(() =>
+        {
+            var result = MatrixImmutable.Rotate2D(matrix, 0);
+        });
+    }
+
+    [TestCase(Axis.X, 0, "{(1,0,0),(0,1,-0),(0,0,1)}")]
+    [TestCase(Axis.Y, 0, "{(1,0,0),(0,1,0),(0,0,1)}")]
+    [TestCase(Axis.Z, 0, "{(1,-0,0),(0,1,0),(0,0,1)}")]
+    [TestCase(Axis.X, 15, "{(1,0,0),(0,0.97,-0.26),(0,0.26,0.97)}")]
+    [TestCase(Axis.Y, 15, "{(0.97,0,0.26),(0,1,0),(0.26,0,0.97)}")]
+    [TestCase(Axis.Z, 15, "{(0.97,-0.26,0),(0.26,0.97,0),(0,0,1)}")]
+    [TestCase(Axis.X, 30, "{(1,0,0),(0,0.87,-0.5),(0,0.5,0.87)}")]
+    [TestCase(Axis.Y, 30, "{(0.87,0,0.5),(0,1,0),(0.5,0,0.87)}")]
+    [TestCase(Axis.Z, 30, "{(0.87,-0.5,0),(0.5,0.87,0),(0,0,1)}")]
+    [TestCase(Axis.X, 45, "{(1,0,0),(0,0.71,-0.71),(0,0.71,0.71)}")]
+    [TestCase(Axis.Y, 45, "{(0.71,0,0.71),(0,1,0),(0.71,0,0.71)}")]
+    [TestCase(Axis.Z, 45, "{(0.71,-0.71,0),(0.71,0.71,0),(0,0,1)}")]
+    [TestCase(Axis.X, 90, "{(1,0,0),(0,0,-1),(0,1,0)}")]
+    [TestCase(Axis.Y, 90, "{(0,0,1),(0,1,0),(1,0,0)}")]
+    [TestCase(Axis.Z, 90, "{(0,-1,0),(1,0,0),(0,0,1)}")]
+    [TestCase(Axis.X, 180, "{(1,0,0),(0,-1,-0),(0,0,-1)}")]
+    [TestCase(Axis.Y, 180, "{(-1,0,0),(0,1,0),(0,0,-1)}")]
+    [TestCase(Axis.Z, 180, "{(-1,-0,0),(0,-1,0),(0,0,1)}")]
+    [TestCase(Axis.X, 360, "{(1,0,0),(0,1,0),(0,-0,1)}")]
+    [TestCase(Axis.Y, 360, "{(1,0,-0),(0,1,0),(-0,0,1)}")]
+    [TestCase(Axis.Z, 360, "{(1,0,0),(-0,1,0),(0,0,1)}")]
+    public void DegreesToRotateMatrix_01_3D_Ok(Axis axis, float degrees, string expectedResult)
+    {
+        // Act
+        var result = MatrixImmutable.DegreesToRotationMatrix3D(axis, degrees);
+
+        // Assert
+        Assert.That(result.ToString(), Is.EqualTo(expectedResult));
+    }
+
+    [TestCase(Axis.X, new float[] { 2, -1, 4 }, 0, "(2,-1,4)")]
+    [TestCase(Axis.Y, new float[] { 2, -1, 4 }, 0, "(2,-1,4)")]
+    [TestCase(Axis.Z, new float[] { 2, -1, 4 }, 0, "(2,-1,4)")]
+    [TestCase(Axis.X, new float[] { 2, -1, 4 }, 15, "(2,-2,3.6)")]
+    [TestCase(Axis.Y, new float[] { 2, -1, 4 }, 15, "(2.97,-1,4.38)")]
+    [TestCase(Axis.Z, new float[] { 2, -1, 4 }, 15, "(2.19,-0.45,4)")]
+    [TestCase(Axis.X, new float[] { 2, -1, 4 }, 30, "(2,-2.87,2.96)")]
+    [TestCase(Axis.Y, new float[] { 2, -1, 4 }, 30, "(3.73,-1,4.46)")]
+    [TestCase(Axis.Z, new float[] { 2, -1, 4 }, 30, "(2.23,0.13,4)")]
+    [TestCase(Axis.X, new float[] { 2, -1, 4 }, 45, "(2,-3.54,2.12)")]
+    [TestCase(Axis.Y, new float[] { 2, -1, 4 }, 45, "(4.24,-1,4.24)")]
+    [TestCase(Axis.Z, new float[] { 2, -1, 4 }, 45, "(2.12,0.71,4)")]
+    [TestCase(Axis.X, new float[] { 2, -1, 4 }, 90, "(2,-4,-1)")]
+    [TestCase(Axis.Y, new float[] { 2, -1, 4 }, 90, "(4,-1,2)")]
+    [TestCase(Axis.Z, new float[] { 2, -1, 4 }, 90, "(1,2,4)")]
+    [TestCase(Axis.X, new float[] { 2, -1, 4 }, 180, "(2,1,-4)")]
+    [TestCase(Axis.Y, new float[] { 2, -1, 4 }, 180, "(-2,-1,-4)")]
+    [TestCase(Axis.Z, new float[] { 2, -1, 4 }, 180, "(-2,1,4)")]
+    [TestCase(Axis.X, new float[] { 2, -1, 4 }, 360, "(2,-1,4)")]
+    [TestCase(Axis.Y, new float[] { 2, -1, 4 }, 360, "(2,-1,4)")]
+    [TestCase(Axis.Z, new float[] { 2, -1, 4 }, 360, "(2,-1,4)")]
+    public void RotateVectorByDegrees_01_3D_Ok(Axis axis, float[] positions, float degrees, string expectedResult)
+    {
+        // Arrange
+        var vector = new VectorImmutable(positions);
+
+        // Act
+        var result = MatrixImmutable.RotateVector3D(axis, vector, degrees);
+
+        // Assert
+        Assert.That(result.ToString(), Is.EqualTo(expectedResult));
+    }
+
+    [TestCase(Axis.X, new float[] { 2, -1, 4 }, new float[] { 3, 8, 5 }, new float[] { 6, 1, 7 }, 0, "{(2,-1,4),(3,8,5),(6,1,7)}")]
+    [TestCase(Axis.Y, new float[] { 2, -1, 4 }, new float[] { 3, 8, 5 }, new float[] { 6, 1, 7 }, 0, "{(2,-1,4),(3,8,5),(6,1,7)}")]
+    [TestCase(Axis.Z, new float[] { 2, -1, 4 }, new float[] { 3, 8, 5 }, new float[] { 6, 1, 7 }, 0, "{(2,-1,4),(3,8,5),(6,1,7)}")]
+    [TestCase(Axis.X, new float[] { 2, -1, 4 }, new float[] { 3, 8, 5 }, new float[] { 6, 1, 7 }, 15, "{(2,-2,3.6),(3,6.43,6.9),(6,-0.85,7.02)}")]
+    [TestCase(Axis.Y, new float[] { 2, -1, 4 }, new float[] { 3, 8, 5 }, new float[] { 6, 1, 7 }, 15, "{(2.97,-1,4.38),(4.19,8,5.61),(7.61,1,8.31)}")]
+    [TestCase(Axis.Z, new float[] { 2, -1, 4 }, new float[] { 3, 8, 5 }, new float[] { 6, 1, 7 }, 15, "{(2.19,-0.45,4),(0.83,8.5,5),(5.54,2.52,7)}")]
+    [TestCase(Axis.X, new float[] { 2, -1, 4 }, new float[] { 3, 8, 5 }, new float[] { 6, 1, 7 }, 45, "{(2,-3.54,2.12),(3,2.12,9.19),(6,-4.24,5.66)}")]
+    [TestCase(Axis.Y, new float[] { 2, -1, 4 }, new float[] { 3, 8, 5 }, new float[] { 6, 1, 7 }, 45, "{(4.24,-1,4.24),(5.66,8,5.66),(9.19,1,9.19)}")]
+    [TestCase(Axis.Z, new float[] { 2, -1, 4 }, new float[] { 3, 8, 5 }, new float[] { 6, 1, 7 }, 45, "{(2.12,0.71,4),(-3.54,7.78,5),(3.54,4.95,7)}")]
+    [TestCase(Axis.X, new float[] { 2, -1, 4 }, new float[] { 3, 8, 5 }, new float[] { 6, 1, 7 }, 90, "{(2,-4,-1),(3,-5,8),(6,-7,1)}")]
+    [TestCase(Axis.Y, new float[] { 2, -1, 4 }, new float[] { 3, 8, 5 }, new float[] { 6, 1, 7 }, 90, "{(4,-1,2),(5,8,3),(7,1,6)}")]
+    [TestCase(Axis.Z, new float[] { 2, -1, 4 }, new float[] { 3, 8, 5 }, new float[] { 6, 1, 7 }, 90, "{(1,2,4),(-8,3,5),(-1,6,7)}")]
+    public void RotateMatrixByDegrees_01_3D_Ok(Axis axis, float[] positions1, float[] positions2, float[] positions3, float degrees, string expectedResult)
+    {
+        // Arrange
+        var matrix = new MatrixImmutable(
+            new VectorImmutable(positions1),
+            new VectorImmutable(positions2),
+            new VectorImmutable(positions3)
+        );
+
+        // Act
+        var result = MatrixImmutable.Rotate3D(axis, matrix, degrees);
+
+        // Assert
+        Assert.That(result.ToString(), Is.EqualTo(expectedResult));
+    }
+    
+    [TestCase(new float[] { 2, -1 }, new float[] { 3, 8, 5 }, new float[] { 6, 1, 7 })]
+    [TestCase(new float[] { 2, -1, 3 }, new float[] { 3 }, new float[] { 6, 1, 7 })]
+    [TestCase(new float[] { 2, -1, 3 }, new float[] { 3, 8, 5 }, new float[] {})]
+    [TestCase(new float[] {}, new float[] {}, new float[] {})]
+    public void RotateMatrixByDegrees_01_3D_ThrowsOnNon3DVectors(float[] positions1, float[] positions2, float[] positions3)
+    {
+        // Arrange
+        var matrix = new MatrixImmutable(
+            new VectorImmutable(positions1),
+            new VectorImmutable(positions2),
+            new VectorImmutable(positions3)
+        );
+
+        // Act & assert
+        Assert.Throws<MatrixVectorsNot3DException>(() =>
+        {
+            var result = MatrixImmutable.Rotate3D(Axis.X, matrix, 0);
+        });
     }
 }
 
