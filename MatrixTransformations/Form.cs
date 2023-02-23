@@ -14,7 +14,7 @@ public partial class Form : System.Windows.Forms.Form
     private readonly AxisY _yAxis;
 
     // Objects
-    private readonly Square _square;
+    private readonly Square _square, _square2;
         
     public Form()
     {
@@ -54,6 +54,7 @@ public partial class Form : System.Windows.Forms.Form
 
         // Create objects
         _square = new Square(Color.Purple);
+        _square2 = new Square(Color.Cyan);
     }
 
     protected override void OnPaint(PaintEventArgs eventArgs)
@@ -62,9 +63,12 @@ public partial class Form : System.Windows.Forms.Form
 
         var graphics = new GraphicsHelper(eventArgs.Graphics);
         
-        AxisX.Draw(graphics, _xAxis.VertexBuffer);
-        AxisY.Draw(graphics, _yAxis.VertexBuffer);
-        _square.Draw(graphics, _square.VertexBuffer);
+        AxisX.Draw(graphics, _xAxis.Matrix);
+        AxisY.Draw(graphics, _yAxis.Matrix);
+        
+        _square.Draw(graphics, _square.Matrix);
+        _square2.Matrix = MatrixImmutable.Scale(_square2.Matrix, 1.5);
+        _square2.Draw(graphics, _square2.Matrix);
     }
 
     private void Form1_KeyDown(object sender, KeyEventArgs eventArgs)
