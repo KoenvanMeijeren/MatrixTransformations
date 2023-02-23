@@ -17,7 +17,7 @@ namespace MatrixTransformations
         //      |/         |/                  z
         //      2----------1
 
-        private const int size = 1;
+        private const int Size = 1;
         public MatrixImmutable Matrix { get; set; }
 
         private readonly Color _color;
@@ -26,25 +26,25 @@ namespace MatrixTransformations
         {
             _color = color;
             Matrix = new MatrixImmutable(
-                new VectorImmutable(1.0f, 1.0f, 1.0f), //0
-                new VectorImmutable(1.0f, -1.0f, 1.0f), //1
-                new VectorImmutable(-1.0f, -1.0f, 1.0f), //2
-                new VectorImmutable(-1.0f, 1.0f, 1.0f), //3
+                new VectorImmutable(1.0f * Size, 1.0f * Size, 1.0f * Size), //0
+                new VectorImmutable(1.0f * Size, -1.0f * Size, 1.0f * Size), //1
+                new VectorImmutable(-1.0f * Size, -1.0f * Size, 1.0f * Size), //2
+                new VectorImmutable(-1.0f * Size, 1.0f * Size, 1.0f * Size), //3
 
-                new VectorImmutable(1.0f, 1.0f, -1.0f), //4
-                new VectorImmutable(1.0f, -1.0f, -1.0f), //5
-                new VectorImmutable(-1.0f, -1.0f, -1.0f), //6
-                new VectorImmutable(-1.0f, 1.0f, -1.0f), //7
+                new VectorImmutable(1.0f * Size, 1.0f * Size, -1.0f * Size), //4
+                new VectorImmutable(1.0f * Size, -1.0f * Size, -1.0f * Size), //5
+                new VectorImmutable(-1.0f * Size, -1.0f * Size, -1.0f * Size), //6
+                new VectorImmutable(-1.0f * Size, 1.0f * Size, -1.0f * Size), //7
 
-                new VectorImmutable(1.2f, 1.2f, 1.2f), //0
-                new VectorImmutable(1.2f, -1.2f, 1.2f), //1
-                new VectorImmutable(-1.2f, -1.2f, 1.2f), //2
-                new VectorImmutable(-1.2f, 1.2f, 1.2f), //3
+                new VectorImmutable(1.2f * Size, 1.2f * Size, 1.2f * Size), //0
+                new VectorImmutable(1.2f * Size, -1.2f * Size, 1.2f * Size), //1
+                new VectorImmutable(-1.2f * Size, -1.2f * Size, 1.2f * Size), //2
+                new VectorImmutable(-1.2f * Size, 1.2f * Size, 1.2f * Size), //3
 
-                new VectorImmutable(1.2f, 1.2f, -1.2f), //4
-                new VectorImmutable(1.2f, -1.2f, -1.2f), //5
-                new VectorImmutable(-1.2f, -1.2f, -1.2f), //6
-                new VectorImmutable(-1.2f, 1.2f, -1.2f) //7
+                new VectorImmutable(1.2f * Size, 1.2f * Size, -1.2f * Size), //4
+                new VectorImmutable(1.2f * Size, -1.2f * Size, -1.2f * Size), //5
+                new VectorImmutable(-1.2f * Size, -1.2f * Size, -1.2f * Size), //6
+                new VectorImmutable(-1.2f * Size, 1.2f * Size, -1.2f * Size) //7
             );
         }
 
