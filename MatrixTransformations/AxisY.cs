@@ -5,20 +5,20 @@ namespace MatrixTransformations;
 public class AxisY
 {
     private int _size;
-    public readonly List<VectorImmutable> VertexBuffer;
+    public MatrixImmutable Matrix { get; set; }
 
     public AxisY(int size = 100)
     {
         _size = size;
-        VertexBuffer = new List<VectorImmutable>
-        {
+        Matrix = new MatrixImmutable(
             new(0, 0),
             new(0, size)
-        };
+        );
     }
 
-    public static void Draw(GraphicsHelper graphicsHelper, List<VectorImmutable> vectors)
+    public static void Draw(GraphicsHelper graphicsHelper, MatrixImmutable matrix)
     {
+        var vectors = matrix.Vectors;
         var pen = new Pen(Color.Green, 2f);
         graphicsHelper.DrawLine(pen, vectors[0].X, vectors[0].Y, vectors[1].X, vectors[1].Y);
         var font = new Font("Arial", 10);
