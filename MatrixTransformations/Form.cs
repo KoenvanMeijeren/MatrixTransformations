@@ -1,3 +1,4 @@
+using System.Drawing.Drawing2D;
 using Src;
 
 namespace MatrixTransformations;
@@ -5,8 +6,8 @@ namespace MatrixTransformations;
 public partial class Form : System.Windows.Forms.Form
 {
     // Window dimensions
-    private const int FormWidth = 800;
-    private const int FormHeight = 600;
+    public const int FormWidth = 800;
+    public const int FormHeight = 600;
 
     // Axes
     private readonly AxisX _xAxis;
@@ -23,14 +24,14 @@ public partial class Form : System.Windows.Forms.Form
         Height = FormHeight;
         DoubleBuffered = true;
 
-        var v1 = new VectorImmutable();
-        Console.WriteLine(v1);
-        var v2 = new VectorImmutable(1, 2);
-        Console.WriteLine(v2);
-        var v3 = new VectorImmutable(2, 6);
-        Console.WriteLine(v3);
-        var v4 = v2 + v3;
-        Console.WriteLine(v4); // 3, 8
+        var vector1 = new VectorImmutable();
+        Console.WriteLine(vector1);
+        var vector2 = new VectorImmutable(1, 2);
+        Console.WriteLine(vector2);
+        var vector3 = new VectorImmutable(2, 6);
+        Console.WriteLine(vector3);
+        var vector4 = vector2 + vector3;
+        Console.WriteLine(vector4); // 3, 8
 
         var vector5 = new VectorImmutable(2, 2);
         var matrix1 = new MatrixImmutable(vector5, vector5);
@@ -45,14 +46,14 @@ public partial class Form : System.Windows.Forms.Form
         Console.WriteLine(matrixIdentity - matrix2); // -1, -4, 1, -2
         Console.WriteLine(matrix2 * matrix2); // 0, 20, -5, 5
 
-        Console.WriteLine(matrix2 * v3); // 28, 16
+        Console.WriteLine(matrix2 * vector3); // 28, 16
         
         // Define axes
         _xAxis = new AxisX(200); 
         _yAxis = new AxisY(200);
 
         // Create objects
-        _square = new Square(Color.Purple, 100);
+        _square = new Square(Color.Purple);
     }
 
     protected override void OnPaint(PaintEventArgs eventArgs)
