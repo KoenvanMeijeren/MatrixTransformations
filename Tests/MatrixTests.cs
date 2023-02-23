@@ -757,6 +757,28 @@ public class MatrixImmutableTests
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
+    
+    [Test]
+    public void ScaleMatrixByValue_02_4x2D_Ok()
+    {
+        // Mocked values
+        var size = 100;
+        var scale = 1.5;
+        
+        // Arrange
+        var matrix = new MatrixImmutable(
+            new(-size, -size),
+            new(size, -size),
+            new(size, size),
+            new(-size, size)
+        );
+
+        // Act
+        var result = MatrixImmutable.Scale(matrix, scale);
+
+        // Assert
+        Assert.That(result.ToString(), Is.EqualTo("{(-150,-150),(150,-150),(150,150),(-150,150)}"));
+    }
 }
 
 public class MatrixImmutable2DTests

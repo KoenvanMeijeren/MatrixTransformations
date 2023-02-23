@@ -187,6 +187,12 @@ public class MatrixImmutable
 
     public static MatrixImmutable Scale(MatrixImmutable matrix, float scale)
     {
+        var firstVector = matrix.Vectors[0];
+        if (matrix.Length() != firstVector.Length())
+        {
+            return matrix * scale;
+        }
+        
         return Identity(matrix, scale) * matrix;
     }
 
