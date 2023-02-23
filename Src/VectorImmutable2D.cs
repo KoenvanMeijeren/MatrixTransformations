@@ -18,7 +18,7 @@ public class VectorImmutable2D
         YPosition = yPosition;
     }
 
-    public static VectorImmutable2D operator + (VectorImmutable2D left, VectorImmutable2D right)
+    public static VectorImmutable2D operator +(VectorImmutable2D left, VectorImmutable2D right)
     {
         return new VectorImmutable2D
         {
@@ -26,8 +26,8 @@ public class VectorImmutable2D
             YPosition = left.YPosition + right.YPosition
         };
     }
-    
-    public static VectorImmutable2D operator - (VectorImmutable2D left, VectorImmutable2D right)
+
+    public static VectorImmutable2D operator -(VectorImmutable2D left, VectorImmutable2D right)
     {
         return new VectorImmutable2D
         {
@@ -35,17 +35,8 @@ public class VectorImmutable2D
             YPosition = left.YPosition - right.YPosition
         };
     }
-    
-    public static VectorImmutable2D operator * (VectorImmutable2D input, float multiply)
-    {
-        return new VectorImmutable2D
-        {
-            XPosition = input.XPosition * multiply,
-            YPosition = input.YPosition * multiply
-        };
-    }
-    
-    public static VectorImmutable2D operator * (float multiply, VectorImmutable2D input)
+
+    public static VectorImmutable2D operator *(VectorImmutable2D input, float multiply)
     {
         return new VectorImmutable2D
         {
@@ -54,27 +45,36 @@ public class VectorImmutable2D
         };
     }
 
-    public static VectorImmutable2D operator / (VectorImmutable2D input, float divider)
+    public static VectorImmutable2D operator *(float multiply, VectorImmutable2D input)
+    {
+        return new VectorImmutable2D
+        {
+            XPosition = input.XPosition * multiply,
+            YPosition = input.YPosition * multiply
+        };
+    }
+
+    public static VectorImmutable2D operator /(VectorImmutable2D input, float divider)
     {
         if (divider == 0 || divider == 0.0)
         {
             throw new ArithmeticException("Cannot divide vector by zero!");
         }
-        
+
         return new VectorImmutable2D
         {
             XPosition = input.XPosition / divider,
             YPosition = input.YPosition / divider
         };
     }
-    
-    public static VectorImmutable2D operator / (float divider, VectorImmutable2D input)
+
+    public static VectorImmutable2D operator /(float divider, VectorImmutable2D input)
     {
         if (divider == 0 || divider == 0.0)
         {
             throw new ArithmeticException("Cannot divide vector by zero!");
         }
-        
+
         return new VectorImmutable2D
         {
             XPosition = input.XPosition / divider,

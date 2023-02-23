@@ -1,4 +1,4 @@
-namespace MatrixTransformations;
+﻿namespace MatrixTransformations;
 
 internal static class Program
 {

@@ -17,7 +17,7 @@ public class MatrixImmutable
         {
             return new VectorImmutable();
         }
-        
+
         var vectors = matrix.Vectors;
         var newPositions = new List<float>();
         VectorImmutable? previousVector = null;
@@ -27,23 +27,28 @@ public class MatrixImmutable
             {
                 EnsureVectorsHaveEqualDimensions(previousVector, vector);
             }
-            
+
             var positions = vector.Positions;
             EnsureIndexWithinBounds(positions, column);
             newPositions.Add(positions[column]);
             previousVector = vector;
         }
-        
+
         return new VectorImmutable(newPositions.ToArray());
     }
 
-    public static MatrixImmutable Identity(MatrixImmutable matrix, float value = 1)
+    public static MatrixImmutable Identity(MatrixImmutable matrix, double identity)
+    {
+        return Identity(matrix, (float)identity);
+    }
+
+    public static MatrixImmutable Identity(MatrixImmutable matrix, float identity = 1)
     {
         if (matrix.IsEmpty())
         {
             return new MatrixImmutable();
         }
-        
+
         VectorImmutable? previousVector = null;
         var vectors = new VectorImmutable[matrix.Vectors.Length];
         var identityIndex = 0;
@@ -55,63 +60,63 @@ public class MatrixImmutable
             {
                 EnsureVectorsHaveEqualDimensions(previousVector, vector);
             }
-            
+
             var positions = new float[vector.Length()];
-            positions[identityIndex++] = value;
+            positions[identityIndex++] = identity;
             vectors[vectorIndex++] = new VectorImmutable(positions);
             previousVector = vector;
         }
-        
+
         EnsureMatrixVectorsHaveEqualVectorDimensions(vectors, previousVector);
 
         return new MatrixImmutable(vectors);
     }
 
-    public static MatrixImmutable operator + (MatrixImmutable left, MatrixImmutable right)
+    public static MatrixImmutable operator +(MatrixImmutable left, MatrixImmutable right)
     {
         EnsureMatrixVectorsLengthEqual(left, right);
         if (left.IsEmpty() || right.IsEmpty())
         {
             return new MatrixImmutable();
         }
-        
+
         var vectorsLength = left.Vectors.Length;
         var newVectors = new VectorImmutable[vectorsLength];
         for (var index = 0; index < vectorsLength; index++)
         {
             var vectorLeft = left.Vectors[index];
             var vectorRight = right.Vectors[index];
-            
+
             EnsureVectorsHaveEqualDimensions(vectorLeft, vectorRight);
             newVectors[index] = vectorLeft + vectorRight;
         }
-        
+
         return new MatrixImmutable(newVectors);
     }
-    
-    public static MatrixImmutable operator - (MatrixImmutable left, MatrixImmutable right)
+
+    public static MatrixImmutable operator -(MatrixImmutable left, MatrixImmutable right)
     {
         EnsureMatrixVectorsLengthEqual(left, right);
         if (left.IsEmpty() || right.IsEmpty())
         {
             return new MatrixImmutable();
         }
-        
+
         var vectorsLength = left.Vectors.Length;
         var newVectors = new VectorImmutable[vectorsLength];
         for (var index = 0; index < vectorsLength; index++)
         {
             var vectorLeft = left.Vectors[index];
             var vectorRight = right.Vectors[index];
-            
+
             EnsureVectorsHaveEqualDimensions(vectorLeft, vectorRight);
             newVectors[index] = vectorLeft - vectorRight;
         }
-        
+
         return new MatrixImmutable(newVectors);
     }
-    
-    public static MatrixImmutable operator * (MatrixImmutable matrix, float multiply)
+
+    public static MatrixImmutable operator *(MatrixImmutable matrix, float multiply)
     {
         var vectorsLength = matrix.Vectors.Length;
         var newVectors = new VectorImmutable[vectorsLength];
@@ -120,29 +125,39 @@ public class MatrixImmutable
             var vector = matrix.Vectors[index];
             newVectors[index] = vector * multiply;
         }
-        
+
         return new MatrixImmutable(newVectors);
     }
-    
-    public static MatrixImmutable operator * (float multiply, MatrixImmutable matrix)
+
+    public static MatrixImmutable operator *(MatrixImmutable matrix, double multiply)
+    {
+        return matrix * (float)multiply;
+    }
+
+    public static MatrixImmutable operator *(float multiply, MatrixImmutable matrix)
     {
         return matrix * multiply;
     }
 
-    public static MatrixImmutable operator * (MatrixImmutable left, MatrixImmutable right)
+    public static MatrixImmutable operator *(double multiply, MatrixImmutable matrix)
+    {
+        return matrix * (float)multiply;
+    }
+
+    public static MatrixImmutable operator *(MatrixImmutable left, MatrixImmutable right)
     {
         var newMatrixLength = left.Length();
         if (right.Length() < newMatrixLength)
         {
             newMatrixLength = right.Length();
         }
-        
+
         var newVectors = new VectorImmutable[newMatrixLength];
         for (var matrixLeftRow = 0; matrixLeftRow < newMatrixLength; matrixLeftRow++)
         {
             var leftVector = left.Vectors[matrixLeftRow];
             EnsureVectorLeftColumnsAreEqualToMatrixRightRows(leftVector, right);
-            
+
             var rightColumnsLength = right.Vectors[0].Length();
             var newPositions = new float[rightColumnsLength];
             for (var matrixRightColumn = 0; matrixRightColumn < rightColumnsLength; matrixRightColumn++)
@@ -157,37 +172,89 @@ public class MatrixImmutable
 
                 newPositions[matrixRightColumn] = result;
             }
-            
+
             newVectors[matrixLeftRow] = new VectorImmutable(newPositions);
         }
-        
+
         return new MatrixImmutable(newVectors);
     }
-    
-    public static VectorImmutable operator * (MatrixImmutable matrix, VectorImmutable vector)
+
+    public static VectorImmutable operator *(MatrixImmutable matrix, VectorImmutable vector)
     {
         var vectors = new VectorImmutable[vector.Length()];
         for (var index = 0; index < vector.Length(); index++)
         {
             vectors[index] = new VectorImmutable(vector.Positions[index]);
         }
-        
+
         var vectorMatrix = new MatrixImmutable(vectors);
-        
+
         return ToVector(matrix * vectorMatrix, 0);
     }
-    
-    public static MatrixImmutable operator * (VectorImmutable vector, MatrixImmutable matrix)
+
+    public static MatrixImmutable operator *(VectorImmutable vector, MatrixImmutable matrix)
     {
-        var vectors = new[] {vector};
+        var vectors = new[] { vector };
         var vectorMatrix = new MatrixImmutable(vectors);
-        
+
         return vectorMatrix * matrix;
+    }
+
+    public static MatrixImmutable Scale(MatrixImmutable matrix, double scale)
+    {
+        return Scale(matrix, (float)scale);
     }
 
     public static MatrixImmutable Scale(MatrixImmutable matrix, float scale)
     {
+        var firstVector = matrix.Vectors[0];
+        if (firstVector.IsEmpty())
+        {
+            return matrix;
+        }
+
+        if (matrix.Length() != firstVector.Length())
+        {
+            return matrix * scale;
+        }
+
         return Identity(matrix, scale) * matrix;
+    }
+
+    public static MatrixImmutable DegreesToRotationMatrix(float degrees)
+    {
+        var angle = Calculator.ConvertToRadians(degrees);
+        var cosAlfa = (float)Math.Cos(angle);
+        var sinALfa = (float)Math.Sin(angle);
+
+        return new MatrixImmutable(
+            new VectorImmutable(cosAlfa, -sinALfa),
+            new VectorImmutable(sinALfa, cosAlfa)
+        );
+    }
+
+    public static VectorImmutable RotateVector(VectorImmutable vector, float degrees)
+    {
+        return DegreesToRotationMatrix(degrees) * vector;
+    }
+
+    public static MatrixImmutable Rotate2D(MatrixImmutable matrix, double degrees)
+    {
+        return Rotate2D(matrix, (float)degrees);
+    }
+
+    public static MatrixImmutable Rotate2D(MatrixImmutable matrix, float degrees)
+    {
+        var vectorsLength = matrix.Vectors.Length;
+        var newVectors = new VectorImmutable[vectorsLength];
+        for (var index = 0; index < vectorsLength; index++)
+        {
+            var vector = matrix.Vectors[index];
+            EnsureVectorIs2D(vector);
+            newVectors[index] = RotateVector(vector, degrees);
+        }
+
+        return new MatrixImmutable(newVectors);
     }
 
     public override string ToString()
@@ -200,7 +267,7 @@ public class MatrixImmutable
             result.Append(vector);
             delimiter = ",";
         }
-        
+
         return "{" + $"{result}" + "}";
     }
 
@@ -208,7 +275,7 @@ public class MatrixImmutable
     {
         return Vectors.Length;
     }
-    
+
     public bool IsEmpty()
     {
         return Length() < 1 || Vectors[0].IsEmpty();
@@ -228,7 +295,7 @@ public class MatrixImmutable
             throw new MatrixDifferentVectorsDimensionsException();
         }
     }
-    
+
     private static void EnsureMatrixVectorsHaveEqualVectorDimensions(IReadOnlyCollection<VectorImmutable> vectors, VectorImmutable? vector)
     {
         if (vectors.Count != vector?.Length())
@@ -252,29 +319,44 @@ public class MatrixImmutable
             throw new MatrixLeftColumnsAreNotEqualToMatrixRightRows();
         }
     }
+
+    private static void EnsureVectorIs2D(VectorImmutable vector)
+    {
+        if (vector.Length() == 2)
+        {
+            return;
+        }
+
+        throw new MatrixVectorsNot2DException();
+    }
 }
 
 public class MatrixIndexOutOfBoundsException : Exception
 {
-    
+
 }
 
 public class MatrixDifferentVectorsDimensionsException : Exception
 {
-    
+
 }
 
 public class MatrixVectorsLengthNotEqualToVectorDimensionsException : Exception
 {
-    
+
 }
 
 public class MatrixVectorsLengthNotEqualException : Exception
 {
-    
+
 }
 
 public class MatrixLeftColumnsAreNotEqualToMatrixRightRows : Exception
 {
-    
+
+}
+
+public class MatrixVectorsNot2DException : Exception
+{
+
 }
