@@ -3,31 +3,43 @@ using Src;
 
 namespace MatrixTransformations;
 
-public partial class Form : System.Windows.Forms.Form
+public partial class MatrixForm : Form
 {
     // Window dimensions
-    public const int FormWidth = 800, FormHeight = 600;
+    public const int DefaultFormWidth = 800, DefaultFormHeight = 600;
+    private int _formWidth = DefaultFormWidth, _formHeight = DefaultFormHeight;
+    private const int DefaultAxisSize = 200;
+
     private const double DefaultSquareScale = 1.5,
         DefaultSquareRotationDegrees = 45;
 
     // Axes
-    private readonly AxisX _xAxis;
-    private readonly AxisY _yAxis;
+    private readonly AxisX _axisX;
+    private readonly AxisY _axisY;
+    private readonly AxisZ _axisZ;
 
     // Objects
     private readonly Square _square, _squareBackup,
         _squareScaled, _squareScaledBackup,
         _squareRotated, _squareRotatedBackup;
 
+    private readonly Cube _cube, _cubeBackup;
+
     private double _squareScale = DefaultSquareScale, _squareRotationDegrees = DefaultSquareRotationDegrees;
 
-    public Form()
+    public MatrixForm()
     {
         InitializeComponent();
 
-        Width = FormWidth;
-        Height = FormHeight;
+        Width = _formWidth;
+        Height = _formHeight;
         DoubleBuffered = true;
+        SizeChanged += (sender, args) =>
+        {
+            _formWidth = Width;
+            _formHeight = Height;
+            Refresh();
+        };
 
         var vector1 = new VectorImmutable();
         Console.WriteLine(vector1);
@@ -54,8 +66,9 @@ public partial class Form : System.Windows.Forms.Form
         Console.WriteLine(matrix2 * vector3); // 28, 16
 
         // Define axes
-        _xAxis = new AxisX(200);
-        _yAxis = new AxisY(200);
+        _axisX = new AxisX(DefaultAxisSize);
+        _axisY = new AxisY(DefaultAxisSize);
+        _axisZ = new AxisZ(DefaultAxisSize);
 
         // Create objects
         _square = new Square(Color.Purple);
@@ -64,16 +77,19 @@ public partial class Form : System.Windows.Forms.Form
         _squareScaledBackup = new Square(Color.Cyan);
         _squareRotated = new Square(Color.Orange);
         _squareRotatedBackup = new Square(Color.Orange);
+        _cube = new Cube(Color.Purple);
+        _cubeBackup = new Cube(Color.Purple);
     }
 
     protected override void OnPaint(PaintEventArgs eventArgs)
     {
         base.OnPaint(eventArgs);
 
-        var graphics = new GraphicsHelper(eventArgs.Graphics);
+        var graphics = new GraphicsHelper(eventArgs.Graphics, _formWidth, _formHeight);
 
-        AxisX.Draw(graphics, _xAxis.Matrix);
-        AxisY.Draw(graphics, _yAxis.Matrix);
+        AxisX.Draw(graphics, _axisX.Matrix);
+        AxisY.Draw(graphics, _axisY.Matrix);
+        AxisZ.Draw(graphics, _axisZ.Matrix);
 
         _square.Draw(graphics, _square.Matrix);
 
@@ -82,6 +98,8 @@ public partial class Form : System.Windows.Forms.Form
 
         _squareRotated.Matrix = MatrixImmutable.Rotate2D(_squareRotatedBackup.Matrix, _squareRotationDegrees);
         _squareRotated.Draw(graphics, _squareRotated.Matrix);
+
+        _cube.Draw(graphics, _cube.Matrix);
     }
 
     private void Form_KeyDown(object sender, KeyEventArgs eventArgs)

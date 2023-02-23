@@ -1,6 +1,6 @@
 ﻿namespace MatrixTransformations
 {
-    partial class Form
+    partial class MatrixForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -35,7 +35,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "Form";
+            this.Name = "MatrixForm";
             this.Text = "Form";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form_KeyDown);
             this.ResumeLayout(false);

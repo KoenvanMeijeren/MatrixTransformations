@@ -6,7 +6,7 @@ public class GraphicsHelper
     private readonly int _height;
     public readonly Graphics Graphics;
 
-    public GraphicsHelper(Graphics graphics, int width = Form.FormWidth, int height = Form.FormHeight)
+    public GraphicsHelper(Graphics graphics, int width = MatrixForm.DefaultFormWidth, int height = MatrixForm.DefaultFormHeight)
     {
         _width = width;
         _height = height;
