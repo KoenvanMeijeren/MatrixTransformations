@@ -6,7 +6,9 @@ namespace MatrixTransformations;
 public partial class MatrixForm : Form
 {
     // Window dimensions
-    public const int FormWidth = 800, FormHeight = 600;
+    public const int DefaultFormWidth = 800, DefaultFormHeight = 600;
+    private int _formWidth = DefaultFormWidth, _formHeight = DefaultFormHeight;
+    
     private const double DefaultSquareScale = 1.5,
         DefaultSquareRotationDegrees = 45;
 
@@ -25,9 +27,15 @@ public partial class MatrixForm : Form
     {
         InitializeComponent();
 
-        Width = FormWidth;
-        Height = FormHeight;
+        Width = _formWidth;
+        Height = _formHeight;
         DoubleBuffered = true;
+        SizeChanged += (sender, args) =>
+        {
+            _formWidth = Width;
+            _formHeight = Height;
+            Refresh();
+        };
 
         var vector1 = new VectorImmutable();
         Console.WriteLine(vector1);
@@ -70,7 +78,7 @@ public partial class MatrixForm : Form
     {
         base.OnPaint(eventArgs);
 
-        var graphics = new GraphicsHelper(eventArgs.Graphics);
+        var graphics = new GraphicsHelper(eventArgs.Graphics, _formWidth, _formHeight);
 
         AxisX.Draw(graphics, _xAxis.Matrix);
         AxisY.Draw(graphics, _yAxis.Matrix);
