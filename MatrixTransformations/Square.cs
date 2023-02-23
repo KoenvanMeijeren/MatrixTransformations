@@ -17,10 +17,10 @@ public class Square
         _weight = weight;
 
         Matrix = new MatrixImmutable(
-            new(-size, -size),
-            new(size, -size),
-            new(size, size),
-            new(-size, size)
+            new(-size, -size, 1),
+            new(size, -size, 1),
+            new(size, size, 1),
+            new(-size, size, 1)
         );
     }
 
