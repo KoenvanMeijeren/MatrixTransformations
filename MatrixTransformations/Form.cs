@@ -71,7 +71,7 @@ public partial class Form : System.Windows.Forms.Form
         _square2.Draw(graphics, _square2.Matrix);
     }
 
-    private void Form1_KeyDown(object sender, KeyEventArgs eventArgs)
+    private void Form_KeyDown(object sender, KeyEventArgs eventArgs)
     {
         if (eventArgs.KeyCode == Keys.Escape)
         {
