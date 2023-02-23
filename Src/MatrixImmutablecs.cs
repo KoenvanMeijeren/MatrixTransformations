@@ -37,7 +37,12 @@ public class MatrixImmutable
         return new VectorImmutable(newPositions.ToArray());
     }
 
-    public static MatrixImmutable Identity(MatrixImmutable matrix, float value = 1)
+    public static MatrixImmutable Identity(MatrixImmutable matrix, double identity)
+    {
+        return Identity(matrix, (float) identity);
+    }
+    
+    public static MatrixImmutable Identity(MatrixImmutable matrix, float identity = 1)
     {
         if (matrix.IsEmpty())
         {
@@ -57,7 +62,7 @@ public class MatrixImmutable
             }
             
             var positions = new float[vector.Length()];
-            positions[identityIndex++] = value;
+            positions[identityIndex++] = identity;
             vectors[vectorIndex++] = new VectorImmutable(positions);
             previousVector = vector;
         }
@@ -124,9 +129,19 @@ public class MatrixImmutable
         return new MatrixImmutable(newVectors);
     }
     
+    public static MatrixImmutable operator * (MatrixImmutable matrix, double multiply)
+    {
+        return matrix * (float) multiply;
+    }
+    
     public static MatrixImmutable operator * (float multiply, MatrixImmutable matrix)
     {
         return matrix * multiply;
+    }
+    
+    public static MatrixImmutable operator * (double multiply, MatrixImmutable matrix)
+    {
+        return matrix * (float) multiply;
     }
 
     public static MatrixImmutable operator * (MatrixImmutable left, MatrixImmutable right)
@@ -185,6 +200,11 @@ public class MatrixImmutable
         return vectorMatrix * matrix;
     }
 
+    public static MatrixImmutable Scale(MatrixImmutable matrix, double scale)
+    {
+        return Scale(matrix, (float) scale);
+    }
+    
     public static MatrixImmutable Scale(MatrixImmutable matrix, float scale)
     {
         var firstVector = matrix.Vectors[0];
