@@ -796,6 +796,65 @@ public class MatrixImmutableTests
         // Assert
         Assert.That(result.ToString(), Is.EqualTo("{(-150,-150),(150,-150),(150,150),(-150,150)}"));
     }
+    
+    [TestCase(new float[]{2,-1}, 0, "(2,-1)")]
+    [TestCase(new float[]{2,-1}, 15, "(2.19,-0.45)")]
+    [TestCase(new float[]{2,-1}, 30, "(2.23,0.13)")]
+    [TestCase(new float[]{2,-1}, 45, "(2.12,0.71)")]
+    [TestCase(new float[]{2,-1}, 90, "(1,2)")]
+    [TestCase(new float[]{2,-1}, 180, "(-2,1)")]
+    [TestCase(new float[]{2,-1}, 360, "(2,-1)")]
+    public void RotateVectorByDegrees_01_1x1D_Ok(float[] positions, float degrees, string expectedResult)
+    {
+        // Arrange
+        var vector = new VectorImmutable(positions);
+
+        // Act
+        var result = MatrixImmutable.RotateVector(vector, degrees);
+
+        // Assert
+        Assert.That(result.ToString(), Is.EqualTo(expectedResult));
+    }
+
+    [TestCase(0, "{(1,-0),(0,1)}")]
+    [TestCase(15, "{(0.97,-0.26),(0.26,0.97)}")]
+    [TestCase(30, "{(0.87,-0.5),(0.5,0.87)}")]
+    [TestCase(45, "{(0.71,-0.71),(0.71,0.71)}")]
+    [TestCase(90, "{(0,-1),(1,0)}")]
+    [TestCase(180, "{(-1,-0),(0,-1)}")]
+    [TestCase(360, "{(1,0),(-0,1)}")]
+    public void DegreesToRotateMatrix_01_Ok(float degrees, string expectedResult)
+    {
+        // Act
+        var result = MatrixImmutable.DegreesToRotationMatrix(degrees);
+        
+        // Assert
+        Assert.That(result.ToString(), Is.EqualTo(expectedResult));
+    }
+    
+    [TestCase(new float[]{0,0}, new float[]{200,0}, 0, "{(0,0),(200,0)}")]
+    [TestCase(new float[]{0,0}, new float[]{200,0}, 15, "{(0,0),(193.19,51.76)}")]
+    [TestCase(new float[]{32,4}, new float[]{4,8}, 15, "{(29.87,12.15),(1.79,8.76)}")]
+    [TestCase(new float[]{0,0}, new float[]{200,0}, 30, "{(0,0),(173.21,100)}")]
+    [TestCase(new float[]{32,9}, new float[]{200,18}, 30, "{(23.21,23.79),(164.21,115.59)}")]
+    [TestCase(new float[]{0,0}, new float[]{200,0}, 45, "{(0,0),(141.42,141.42)}")]
+    [TestCase(new float[]{0,0}, new float[]{200,0}, 90, "{(0,0),(0,200)}")]
+    [TestCase(new float[]{0,0}, new float[]{200,0}, 180, "{(0,0),(-200,0)}")]
+    [TestCase(new float[]{0,0}, new float[]{200,0}, 360, "{(0,0),(200,-0)}")]
+    public void RotateMatrixByDegrees_01_2x2D_Ok(float[] leftPositions, float[] rightPositions, float degrees, string expectedResult)
+    {
+        // Arrange
+        var matrix = new MatrixImmutable(
+            new(leftPositions),
+            new(rightPositions)
+        );
+
+        // Act
+        var result = MatrixImmutable.Rotate2D(matrix, degrees);
+
+        // Assert
+        Assert.That(result.ToString(), Is.EqualTo(expectedResult));
+    }
 }
 
 public class MatrixImmutable2DTests

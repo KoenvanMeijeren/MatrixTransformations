@@ -221,6 +221,42 @@ public class MatrixImmutable
         return Identity(matrix, scale) * matrix;
     }
 
+    public static MatrixImmutable DegreesToRotationMatrix(float degrees)
+    {
+        var angle = Calculator.ConvertToRadians(degrees);
+        var cosAlfa = (float) Math.Cos(angle);
+        var sinALfa = (float) Math.Sin(angle);
+        
+        return new MatrixImmutable(
+            new VectorImmutable(cosAlfa, -sinALfa),
+            new VectorImmutable(sinALfa, cosAlfa)
+        );
+    }
+    
+    public static VectorImmutable RotateVector(VectorImmutable vector, float degrees)
+    {
+        return DegreesToRotationMatrix(degrees) * vector;
+    }
+
+    public static MatrixImmutable Rotate2D(MatrixImmutable matrix, double degrees)
+    {
+        return Rotate2D(matrix, (float)degrees);
+    }
+    
+    public static MatrixImmutable Rotate2D(MatrixImmutable matrix, float degrees)
+    {
+        var vectorsLength = matrix.Vectors.Length;
+        var newVectors = new VectorImmutable[vectorsLength];
+        for (var index = 0; index < vectorsLength; index++)
+        {
+            var vector = matrix.Vectors[index];
+            EnsureVectorIs2D(vector);
+            newVectors[index] = RotateVector(vector, degrees);
+        }
+        
+        return new MatrixImmutable(newVectors);
+    }
+
     public override string ToString()
     {
         var result = new StringBuilder();
@@ -283,6 +319,16 @@ public class MatrixImmutable
             throw new MatrixLeftColumnsAreNotEqualToMatrixRightRows();
         }
     }
+
+    private static void EnsureVectorIs2D(VectorImmutable vector)
+    {
+        if (vector.Length() == 2)
+        {
+            return;
+        }
+
+        throw new MatrixVectorsNot2DException();
+    }
 }
 
 public class MatrixIndexOutOfBoundsException : Exception
@@ -306,6 +352,11 @@ public class MatrixVectorsLengthNotEqualException : Exception
 }
 
 public class MatrixLeftColumnsAreNotEqualToMatrixRightRows : Exception
+{
+    
+}
+
+public class MatrixVectorsNot2DException : Exception
 {
     
 }

@@ -6,15 +6,14 @@ namespace MatrixTransformations;
 public partial class Form : System.Windows.Forms.Form
 {
     // Window dimensions
-    public const int FormWidth = 800;
-    public const int FormHeight = 600;
+    public const int FormWidth = 80, FormHeight = 600;
 
     // Axes
     private readonly AxisX _xAxis;
     private readonly AxisY _yAxis;
 
     // Objects
-    private readonly Square _square, _square2;
+    private readonly Square _square, _squareScaled, _squareRotated;
         
     public Form()
     {
@@ -54,7 +53,8 @@ public partial class Form : System.Windows.Forms.Form
 
         // Create objects
         _square = new Square(Color.Purple);
-        _square2 = new Square(Color.Cyan);
+        _squareScaled = new Square(Color.Cyan);
+        _squareRotated = new Square(Color.Orange);
     }
 
     protected override void OnPaint(PaintEventArgs eventArgs)
@@ -67,8 +67,12 @@ public partial class Form : System.Windows.Forms.Form
         AxisY.Draw(graphics, _yAxis.Matrix);
         
         _square.Draw(graphics, _square.Matrix);
-        _square2.Matrix = MatrixImmutable.Scale(_square2.Matrix, 1.5);
-        _square2.Draw(graphics, _square2.Matrix);
+        
+        _squareScaled.Matrix = MatrixImmutable.Scale(_squareScaled.Matrix, 1.5);
+        _squareScaled.Draw(graphics, _squareScaled.Matrix);
+        
+        _squareRotated.Matrix = MatrixImmutable.Rotate2D(_squareRotated.Matrix, 45);
+        _squareRotated.Draw(graphics, _squareRotated.Matrix);
     }
 
     private void Form_KeyDown(object sender, KeyEventArgs eventArgs)
