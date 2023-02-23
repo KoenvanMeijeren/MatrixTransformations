@@ -1,4 +1,4 @@
-using System.Drawing.Drawing2D;
+﻿using System.Drawing.Drawing2D;
 using Src;
 
 namespace MatrixTransformations;
@@ -7,7 +7,7 @@ public partial class Form : System.Windows.Forms.Form
 {
     // Window dimensions
     public const int FormWidth = 800, FormHeight = 600;
-    private const double DefaultSquareScale = 1.5, 
+    private const double DefaultSquareScale = 1.5,
         DefaultSquareRotationDegrees = 45;
 
     // Axes
@@ -15,12 +15,12 @@ public partial class Form : System.Windows.Forms.Form
     private readonly AxisY _yAxis;
 
     // Objects
-    private readonly Square _square, _squareBackup, 
-        _squareScaled, _squareScaledBackup, 
+    private readonly Square _square, _squareBackup,
+        _squareScaled, _squareScaledBackup,
         _squareRotated, _squareRotatedBackup;
 
     private double _squareScale = DefaultSquareScale, _squareRotationDegrees = DefaultSquareRotationDegrees;
-        
+
     public Form()
     {
         InitializeComponent();
@@ -52,9 +52,9 @@ public partial class Form : System.Windows.Forms.Form
         Console.WriteLine(matrix2 * matrix2); // 0, 20, -5, 5
 
         Console.WriteLine(matrix2 * vector3); // 28, 16
-        
+
         // Define axes
-        _xAxis = new AxisX(200); 
+        _xAxis = new AxisX(200);
         _yAxis = new AxisY(200);
 
         // Create objects
@@ -71,15 +71,15 @@ public partial class Form : System.Windows.Forms.Form
         base.OnPaint(eventArgs);
 
         var graphics = new GraphicsHelper(eventArgs.Graphics);
-        
+
         AxisX.Draw(graphics, _xAxis.Matrix);
         AxisY.Draw(graphics, _yAxis.Matrix);
-        
+
         _square.Draw(graphics, _square.Matrix);
-        
+
         _squareScaled.Matrix = MatrixImmutable.Scale(_squareScaledBackup.Matrix, _squareScale);
         _squareScaled.Draw(graphics, _squareScaled.Matrix);
-        
+
         _squareRotated.Matrix = MatrixImmutable.Rotate2D(_squareRotatedBackup.Matrix, _squareRotationDegrees);
         _squareRotated.Draw(graphics, _squareRotated.Matrix);
     }
@@ -91,7 +91,7 @@ public partial class Form : System.Windows.Forms.Form
             Application.Exit();
             return;
         }
-        
+
         switch (eventArgs.KeyCode)
         {
             case Keys.Add:
@@ -119,7 +119,7 @@ public partial class Form : System.Windows.Forms.Form
                 {
                     _squareScale = DefaultSquareScale;
                 }
-                
+
                 Refresh();
                 break;
             default:

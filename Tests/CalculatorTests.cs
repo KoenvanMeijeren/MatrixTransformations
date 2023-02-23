@@ -14,7 +14,7 @@ public class CalculatorTests
         // Act & Assert
         Assert.That(Calculator.ConvertToDegree(radians), Is.EqualTo(expected));
     }
-    
+
     [TestCase(0, 0.0d)]
     [TestCase(45, 0.78539816339744828d)]
     [TestCase(90, 1.5707963267948966d)]

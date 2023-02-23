@@ -6,7 +6,7 @@ public static class Calculator
     {
         return (180 / Math.PI) * radians;
     }
-    
+
     public static double ConvertToRadians(double degrees)
     {
         return (Math.PI / 180) * degrees;
