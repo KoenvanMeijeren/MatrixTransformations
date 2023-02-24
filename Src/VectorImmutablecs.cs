@@ -19,7 +19,7 @@ public class VectorImmutable
 
     public static VectorImmutable operator +(VectorImmutable left, VectorImmutable right)
     {
-        EnsureVectorsAreEqual(left, right);
+        EnsureVectorDimensionsAreEqual(left, right);
 
         var newPositions = new float[left.Positions.Length];
         for (var index = 0; index < newPositions.Length; index++)
@@ -48,7 +48,7 @@ public class VectorImmutable
 
     public static VectorImmutable operator -(VectorImmutable left, VectorImmutable right)
     {
-        EnsureVectorsAreEqual(left, right);
+        EnsureVectorDimensionsAreEqual(left, right);
 
         var newPositions = new float[left.Positions.Length];
         for (var index = 0; index < newPositions.Length; index++)
@@ -77,7 +77,7 @@ public class VectorImmutable
 
     public static VectorImmutable operator *(VectorImmutable left, VectorImmutable right)
     {
-        EnsureVectorsAreEqual(left, right);
+        EnsureVectorDimensionsAreEqual(left, right);
 
         var newPositions = new float[left.Positions.Length];
         for (var index = 0; index < newPositions.Length; index++)
@@ -104,25 +104,6 @@ public class VectorImmutable
         return vector * multiply;
     }
 
-    public static VectorImmutable operator /(VectorImmutable left, VectorImmutable right)
-    {
-        EnsureVectorsAreEqual(left, right);
-
-        var newPositions = new float[left.Positions.Length];
-        for (var index = 0; index < newPositions.Length; index++)
-        {
-            if (left.Positions[index] == 0 || right.Positions[index] == 0)
-            {
-                newPositions[index] = 0;
-                continue;
-            }
-
-            newPositions[index] = left.Positions[index] / right.Positions[index];
-        }
-
-        return new VectorImmutable(newPositions);
-    }
-
     public static VectorImmutable operator /(VectorImmutable vector, float divider)
     {
         if (divider == 0 || divider == 0.0)
@@ -134,22 +115,6 @@ public class VectorImmutable
         for (var index = 0; index < newPositions.Length; index++)
         {
             newPositions[index] = vector.Positions[index] / divider;
-        }
-
-        return new VectorImmutable(newPositions);
-    }
-
-    public static VectorImmutable operator /(float divider, VectorImmutable vector)
-    {
-        if (divider == 0 || divider == 0.0)
-        {
-            throw new ArithmeticException("Cannot divide vector by zero!");
-        }
-
-        var newPositions = new float[vector.Positions.Length];
-        for (var index = 0; index < newPositions.Length; index++)
-        {
-            newPositions[index] = divider / vector.Positions[index];
         }
 
         return new VectorImmutable(newPositions);
@@ -179,18 +144,18 @@ public class VectorImmutable
         return Length() < 1;
     }
 
-    private static void EnsureVectorsAreEqual(VectorImmutable left, VectorImmutable right)
+    private static void EnsureVectorDimensionsAreEqual(VectorImmutable left, VectorImmutable right)
     {
         if (left.Positions.Length == right.Positions.Length)
         {
             return;
         }
 
-        throw new VectorsAreNotEqualException();
+        throw new VectorsDimensionsNotEqualException();
     }
 }
 
-public class VectorsAreNotEqualException : Exception
+public class VectorsDimensionsNotEqualException : Exception
 {
 
 }
