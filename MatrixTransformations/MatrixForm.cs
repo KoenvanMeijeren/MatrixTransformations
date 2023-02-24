@@ -1,5 +1,4 @@
-﻿using System.Drawing.Drawing2D;
-using Src;
+﻿using Src;
 
 namespace MatrixTransformations;
 
@@ -7,12 +6,23 @@ public partial class MatrixForm : Form
 {
     // Window dimensions
     public const int DefaultFormWidth = 800, DefaultFormHeight = 600;
-    private int _formWidth = DefaultFormWidth, _formHeight = DefaultFormHeight;
+    private int _formWidth = DefaultFormWidth,
+        _formWidthMaximum = DefaultFormWidth / 2,
+        _formHeight = DefaultFormHeight,
+        _formHeightMaximum = DefaultFormHeight / 2;
     private const int DefaultAxisSize = 200;
 
+    // Object position settings
     private const double DefaultSquareScale = 1.5,
-        DefaultSquareRotationDegrees = 45;
+        DefaultSquareRotationDegrees = 20,
+        DefaultSquareTranslationX = 75,
+        DefaultSquareTranslationY = -25;
 
+    private double _squareScale = DefaultSquareScale, 
+        _squareRotationDegrees = DefaultSquareRotationDegrees,
+        _squareTranslationX = DefaultSquareTranslationX,
+        _squareTranslationY = DefaultSquareTranslationY;
+    
     // Axes
     private readonly AxisX _axisX;
     private readonly AxisY _axisY;
@@ -21,11 +31,10 @@ public partial class MatrixForm : Form
     // Objects
     private readonly Square _square, _squareBackup,
         _squareScaled, _squareScaledBackup,
-        _squareRotated, _squareRotatedBackup;
+        _squareRotated, _squareRotatedBackup,
+        _squareTranslated, _squareTranslatedBackup;
 
     private readonly Cube _cube, _cubeBackup;
-
-    private double _squareScale = DefaultSquareScale, _squareRotationDegrees = DefaultSquareRotationDegrees;
 
     public MatrixForm()
     {
@@ -37,7 +46,9 @@ public partial class MatrixForm : Form
         SizeChanged += (sender, args) =>
         {
             _formWidth = Width;
+            _formWidthMaximum = Width / 2;
             _formHeight = Height;
+            _formHeightMaximum = Height / 2;
             Refresh();
         };
 
@@ -77,6 +88,8 @@ public partial class MatrixForm : Form
         _squareScaledBackup = new Square(Color.Cyan);
         _squareRotated = new Square(Color.Orange);
         _squareRotatedBackup = new Square(Color.Orange);
+        _squareTranslated = new Square(Color.DarkBlue);
+        _squareTranslatedBackup = new Square(Color.DarkBlue);
         _cube = new Cube(Color.Purple);
         _cubeBackup = new Cube(Color.Purple);
     }
@@ -98,6 +111,12 @@ public partial class MatrixForm : Form
 
         _squareRotated.Matrix = MatrixImmutable.Rotate3D(Axis.Z, _squareRotatedBackup.Matrix, _squareRotationDegrees);
         _squareRotated.Draw(graphics, _squareRotated.Matrix);
+        
+        _squareTranslated.Matrix = MatrixImmutable.Translate3D(
+            _squareTranslatedBackup.Matrix,
+            new VectorImmutable((float) _squareTranslationX, (float) _squareTranslationY)
+        );
+        _squareTranslated.Draw(graphics, _squareTranslated.Matrix);
 
         _cube.Draw(graphics, _cube.Matrix);
     }
@@ -138,6 +157,38 @@ public partial class MatrixForm : Form
                     _squareScale = DefaultSquareScale;
                 }
 
+                Refresh();
+                break;
+            case Keys.Up:
+                _squareTranslationY += 2;
+                if (_squareTranslationY > _formHeightMaximum)
+                {
+                    _squareTranslationY = DefaultSquareTranslationY;
+                }
+                Refresh();
+                break;
+            case Keys.Down:
+                _squareTranslationY -= 2;
+                if (_squareTranslationY <= -_formHeightMaximum)
+                {
+                    _squareTranslationY = DefaultSquareTranslationY;
+                }
+                Refresh();
+                break;
+            case Keys.Right:
+                _squareTranslationX += 2;
+                if (_squareTranslationX > _formWidthMaximum)
+                {
+                    _squareTranslationX = DefaultSquareTranslationX;
+                }
+                Refresh();
+                break;
+            case Keys.Left:
+                _squareTranslationX -= 2;
+                if (_squareTranslationX <= -_formWidthMaximum)
+                {
+                    _squareTranslationX = DefaultSquareTranslationX;
+                }
                 Refresh();
                 break;
             default:
