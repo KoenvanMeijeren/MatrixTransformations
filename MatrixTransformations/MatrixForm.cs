@@ -1,7 +1,9 @@
-﻿using Src;
+﻿using System.Diagnostics.CodeAnalysis;
+using Src;
 
 namespace MatrixTransformations;
 
+[ExcludeFromCodeCoverage]
 public partial class MatrixForm : Form
 {
     // Window dimensions

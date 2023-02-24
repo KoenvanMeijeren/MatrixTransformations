@@ -1,5 +1,8 @@
-﻿namespace MatrixTransformations;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace MatrixTransformations;
+
+[ExcludeFromCodeCoverage]
 internal static class Program
 {
     /// <summary>
