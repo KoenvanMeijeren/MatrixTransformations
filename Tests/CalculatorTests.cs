@@ -12,7 +12,7 @@ public class CalculatorTests
     public void ConvertToDegree_01_Ok(double radians, double expected)
     {
         // Act & Assert
-        Assert.That(Calculator.ConvertToDegree(radians), Is.EqualTo(expected));
+        Assert.That(Calculator.RadiansToDegree(radians), Is.EqualTo(expected));
     }
 
     [TestCase(0, 0.0d)]
@@ -23,6 +23,6 @@ public class CalculatorTests
     public void ConvertToRadians_01_Ok(float degrees, double expected)
     {
         // Act & Assert
-        Assert.That(Calculator.ConvertToRadians(degrees), Is.EqualTo(expected));
+        Assert.That(Calculator.DegreesToRadians(degrees), Is.EqualTo(expected));
     }
 }

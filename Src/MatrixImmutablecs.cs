@@ -223,7 +223,7 @@ public class MatrixImmutable
 
     public static MatrixImmutable DegreesToRotationMatrix2D(float degrees)
     {
-        var angle = Calculator.ConvertToRadians(degrees);
+        var angle = Calculator.DegreesToRadians(degrees);
         var cosAlfa = (float)Math.Cos(angle);
         var sinALfa = (float)Math.Sin(angle);
 
@@ -259,7 +259,7 @@ public class MatrixImmutable
 
     public static MatrixImmutable DegreesToRotationMatrix3D(Axis axis, float degrees)
     {
-        var angle = Calculator.ConvertToRadians(degrees);
+        var angle = Calculator.DegreesToRadians(degrees);
         var cosAlfa = (float)Math.Cos(angle);
         var sinALfa = (float)Math.Sin(angle);
 
