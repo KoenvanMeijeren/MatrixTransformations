@@ -20,11 +20,11 @@ public partial class MatrixForm : Form
         DefaultSquareTranslationX = 75,
         DefaultSquareTranslationY = -25;
 
-    private double _squareScale = DefaultSquareScale, 
+    private double _squareScale = DefaultSquareScale,
         _squareRotationDegrees = DefaultSquareRotationDegrees,
         _squareTranslationX = DefaultSquareTranslationX,
         _squareTranslationY = DefaultSquareTranslationY;
-    
+
     // Axes
     private readonly AxisX _axisX;
     private readonly AxisY _axisY;
@@ -113,10 +113,10 @@ public partial class MatrixForm : Form
 
         _squareRotated.Matrix = MatrixImmutable.Rotate3D(Axis.Z, _squareRotatedBackup.Matrix, _squareRotationDegrees);
         _squareRotated.Draw(graphics, _squareRotated.Matrix);
-        
+
         _squareTranslated.Matrix = MatrixImmutable.Translate3D(
             _squareTranslatedBackup.Matrix,
-            new VectorImmutable((float) _squareTranslationX, (float) _squareTranslationY)
+            new VectorImmutable((float)_squareTranslationX, (float)_squareTranslationY)
         );
         _squareTranslated.Draw(graphics, _squareTranslated.Matrix);
 

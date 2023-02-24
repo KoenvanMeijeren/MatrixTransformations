@@ -246,13 +246,13 @@ public class VectorImmutableTests
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
-    
+
     [Test]
     public void DivideVectorByVector_01_ThrowsOnVectorsNotEqual()
     {
         // Arrange
-        var left = new VectorImmutable(new float[]{1, 2});
-        var right = new VectorImmutable(new float[]{1});
+        var left = new VectorImmutable(new float[] { 1, 2 });
+        var right = new VectorImmutable(new float[] { 1 });
 
         // Act & assert
         Assert.Throws<VectorsAreNotEqualException>(() =>

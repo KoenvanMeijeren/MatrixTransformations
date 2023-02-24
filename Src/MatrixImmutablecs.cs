@@ -306,11 +306,11 @@ public class MatrixImmutable
 
         return new MatrixImmutable(newVectors);
     }
-    
+
     public static MatrixImmutable VectorToTranslationMatrix3D(VectorImmutable vector)
     {
         EnsureVectorIs2D(vector);
-        
+
         return new MatrixImmutable(
             new VectorImmutable(1, 0, vector.X),
             new VectorImmutable(0, 1, vector.Y),
