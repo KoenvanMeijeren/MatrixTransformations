@@ -247,6 +247,7 @@ public class VectorImmutableTests
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
     
+    [Test]
     public void DivideVectorByVector_01_ThrowsOnVectorsNotEqual()
     {
         // Arrange

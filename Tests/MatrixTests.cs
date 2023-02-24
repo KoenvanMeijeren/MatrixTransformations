@@ -261,10 +261,7 @@ public class MatrixImmutableTests
         var matrix = new MatrixImmutable(vector1, vector2);
 
         // Act & assert
-        Assert.Throws<MatrixVectorsLengthNotEqualToVectorDimensionsException>(() =>
-        {
-            var result = MatrixImmutable.Identity(matrix);
-        });
+        Assert.Throws<MatrixVectorsLengthNotEqualToVectorDimensionsException>(() => MatrixImmutable.Identity(matrix));
     }
 
     [Test]
