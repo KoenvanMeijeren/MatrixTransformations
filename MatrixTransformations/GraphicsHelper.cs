@@ -1,5 +1,8 @@
-﻿namespace MatrixTransformations;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace MatrixTransformations;
+
+[ExcludeFromCodeCoverage]
 public class GraphicsHelper
 {
     private readonly int _width;

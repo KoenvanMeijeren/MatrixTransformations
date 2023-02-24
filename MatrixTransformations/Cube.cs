@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Numerics;
-using Src;
+﻿using Src;
 
 namespace MatrixTransformations
 {

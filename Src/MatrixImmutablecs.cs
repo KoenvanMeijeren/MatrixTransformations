@@ -307,6 +307,32 @@ public class MatrixImmutable
         return new MatrixImmutable(newVectors);
     }
 
+    public static MatrixImmutable VectorToTranslationMatrix3D(VectorImmutable vector)
+    {
+        EnsureVectorIs2D(vector);
+
+        return new MatrixImmutable(
+            new VectorImmutable(1, 0, vector.X),
+            new VectorImmutable(0, 1, vector.Y),
+            new VectorImmutable(0, 0, 1)
+        );
+    }
+
+    public static MatrixImmutable Translate3D(MatrixImmutable matrix, VectorImmutable vector)
+    {
+        var translationMatrix = VectorToTranslationMatrix3D(vector);
+        var vectorsLength = matrix.Vectors.Length;
+        var newVectors = new VectorImmutable[vectorsLength];
+        for (var index = 0; index < vectorsLength; index++)
+        {
+            var matrixVector = matrix.Vectors[index];
+            EnsureVectorIs3D(matrixVector);
+            newVectors[index] = translationMatrix * matrixVector;
+        }
+
+        return new MatrixImmutable(newVectors);
+    }
+
     public override string ToString()
     {
         var result = new StringBuilder();
