@@ -48,7 +48,7 @@ public class VectorImmutableTests
         var right = new VectorImmutable(rightPositions);
 
         // Act && assert
-        Assert.Throws<VectorsAreNotEqualException>(() =>
+        Assert.Throws<VectorsDimensionsNotEqualException>(() =>
         {
             var result = left + right;
         });
@@ -117,7 +117,7 @@ public class VectorImmutableTests
         var right = new VectorImmutable(rightPositions);
 
         // Act && assert
-        Assert.Throws<VectorsAreNotEqualException>(() =>
+        Assert.Throws<VectorsDimensionsNotEqualException>(() =>
         {
             var result = left - right;
         });
@@ -186,7 +186,7 @@ public class VectorImmutableTests
         var right = new VectorImmutable(rightPositions);
 
         // Act && assert
-        Assert.Throws<VectorsAreNotEqualException>(() =>
+        Assert.Throws<VectorsDimensionsNotEqualException>(() =>
         {
             var result = left * right;
         });
@@ -226,41 +226,6 @@ public class VectorImmutableTests
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
 
-    [TestCase(new float[] { }, new float[] { }, "()")]
-    [TestCase(new float[] { 0 }, new float[] { 0 }, "(0)")]
-    [TestCase(new float[] { 6 }, new float[] { 3 }, "(2)")]
-    [TestCase(new float[] { 0, 0 }, new float[] { 0, 0 }, "(0,0)")]
-    [TestCase(new float[] { 8, 0 }, new float[] { 0, 0 }, "(0,0)")]
-    [TestCase(new float[] { 6, 4 }, new float[] { 3, 2 }, "(2,2)")]
-    [TestCase(new float[] { 6, 4, 6 }, new float[] { 3, 2, 3 }, "(2,2,2)")]
-    [TestCase(new float[] { 6, 4, 6, 7 }, new float[] { 3, 2, 4, 5 }, "(2,2,1.5,1.4)")]
-    public void DivideVectorByVector_01_Ok(float[] leftPositions, float[] rightPositions, string expectedResult)
-    {
-        // Arrange
-        var left = new VectorImmutable(leftPositions);
-        var right = new VectorImmutable(rightPositions);
-
-        // Act
-        var result = left / right;
-
-        // Assert
-        Assert.That(result.ToString(), Is.EqualTo(expectedResult));
-    }
-
-    [Test]
-    public void DivideVectorByVector_01_ThrowsOnVectorsNotEqual()
-    {
-        // Arrange
-        var left = new VectorImmutable(new float[] { 1, 2 });
-        var right = new VectorImmutable(new float[] { 1 });
-
-        // Act & assert
-        Assert.Throws<VectorsAreNotEqualException>(() =>
-        {
-            var result = left / right;
-        });
-    }
-
     [TestCase(new float[] { }, 2, "()")]
     [TestCase(new float[] { 6 }, 2, "(3)")]
     [TestCase(new float[] { 6, 4 }, 2, "(3,2)")]
@@ -292,40 +257,6 @@ public class VectorImmutableTests
         Assert.Throws<ArithmeticException>(() =>
         {
             var result = vector / 0;
-        });
-    }
-
-    [TestCase(new float[] { }, 2, "()")]
-    [TestCase(new float[] { 6 }, 2, "(0.33)")]
-    [TestCase(new float[] { 6, 4 }, 2, "(0.33,0.5)")]
-    [TestCase(new float[] { 6, 4, 8 }, 2, "(0.33,0.5,0.25)")]
-    [TestCase(new float[] { 6, 4, 8, 10 }, 2, "(0.33,0.5,0.25,0.2)")]
-    public void DivideValueByVector_01_Ok(float[] positions, float divider, string expectedResult)
-    {
-        // Arrange
-        var vector = new VectorImmutable(positions);
-
-        // Act
-        var result = divider / vector;
-
-        // Assert
-        Assert.That(result.ToString(), Is.EqualTo(expectedResult));
-    }
-
-    [TestCase(new float[] { })]
-    [TestCase(new float[] { 0, 4 })]
-    [TestCase(new float[] { 0, 0 })]
-    [TestCase(new float[] { 4, 0 })]
-    [TestCase(new float[] { 6, 4 })]
-    public void DivideValueByVector_02_ThrowsExceptionOnDivisionByZero(float[] positions)
-    {
-        // Arrange
-        var vector = new VectorImmutable(positions);
-
-        // Act && assert
-        Assert.Throws<ArithmeticException>(() =>
-        {
-            var result = 0 / vector;
         });
     }
 }

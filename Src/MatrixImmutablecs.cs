@@ -118,6 +118,11 @@ public class MatrixImmutable
 
     public static MatrixImmutable operator *(MatrixImmutable matrix, float multiply)
     {
+        if (matrix.IsEmpty())
+        {
+            return new MatrixImmutable();
+        }
+        
         var vectorsLength = matrix.Vectors.Length;
         var newVectors = new VectorImmutable[vectorsLength];
         for (var index = 0; index < vectorsLength; index++)
@@ -199,6 +204,43 @@ public class MatrixImmutable
 
         return vectorMatrix * matrix;
     }
+    
+    public static MatrixImmutable ScalingMatrix(MatrixImmutable matrix, float scale = 1)
+    {
+        if (matrix.IsEmpty())
+        {
+            return new MatrixImmutable();
+        }
+
+        VectorImmutable? previousVector = null;
+        var vectors = new VectorImmutable[matrix.Vectors.Length];
+        var identityIndex = 0;
+        var vectorIndex = 0;
+        foreach (var vector in matrix.Vectors)
+        {
+            EnsureMatrixVectorsHaveEqualVectorDimensions(matrix.Vectors, vector);
+            if (previousVector != null)
+            {
+                EnsureVectorsHaveEqualDimensions(previousVector, vector);
+            }
+
+            var positions = new float[vector.Length()];
+            positions[identityIndex] = scale;
+            // Last position of scaling matrix should always be 1.
+            if (vectors.Length > 2 && vectorIndex + 1 == vectors.Length)
+            {
+                positions[identityIndex] = 1;
+            }
+            
+            vectors[vectorIndex++] = new VectorImmutable(positions);
+            previousVector = vector;
+            identityIndex++;
+        }
+
+        EnsureMatrixVectorsHaveEqualVectorDimensions(vectors, previousVector);
+
+        return new MatrixImmutable(vectors);
+    }
 
     public static MatrixImmutable Scale(MatrixImmutable matrix, double scale)
     {
@@ -210,7 +252,7 @@ public class MatrixImmutable
         var firstVector = matrix.Vectors[0];
         if (firstVector.IsEmpty())
         {
-            return matrix;
+            return new MatrixImmutable();
         }
 
         if (matrix.Length() != firstVector.Length())
@@ -218,7 +260,7 @@ public class MatrixImmutable
             return matrix * scale;
         }
 
-        return Identity(matrix, scale) * matrix;
+        return ScalingMatrix(matrix, scale) * matrix;
     }
 
     public static MatrixImmutable DegreesToRotationMatrix2D(float degrees)

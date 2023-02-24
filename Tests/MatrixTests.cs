@@ -486,7 +486,7 @@ public class MatrixImmutableTests
         var result = matrix * 2;
 
         // Assert
-        Assert.That(result.ToString(), Is.EqualTo("{(),()}"));
+        Assert.That(result.ToString(), Is.EqualTo("{}"));
     }
 
     [Test]
@@ -531,7 +531,7 @@ public class MatrixImmutableTests
         var result = 2 * matrix;
 
         // Assert
-        Assert.That(result.ToString(), Is.EqualTo("{(),()}"));
+        Assert.That(result.ToString(), Is.EqualTo("{}"));
     }
 
     [Test]
@@ -702,9 +702,39 @@ public class MatrixImmutableTests
         Assert.That(result.ToString(), Is.EqualTo("{(9,13)}"));
     }
 
-    [TestCase(new float[] { }, new float[] { }, 0, "{(),()}")]
-    [TestCase(new float[] { }, new float[] { }, 1, "{(),()}")]
-    [TestCase(new float[] { }, new float[] { }, 2, "{(),()}")]
+    [TestCase(0, "{}")]
+    [TestCase(1, "{(1)}")]
+    [TestCase(2, "{(2,0),(0,2)}")]
+    [TestCase(3, "{(3,0,0),(0,3,0),(0,0,1)}")]
+    [TestCase(4, "{(4,0,0,0),(0,4,0,0),(0,0,4,0),(0,0,0,1)}")]
+    public void ScalingMatrix_01_0D_Ok(float scale, string expectedResult)
+    {
+        // Arrange
+        var vectorsLength = (int)scale;
+        var vectors = new VectorImmutable[vectorsLength];
+        for (var vectorIndex = 0; vectorIndex < vectorsLength; vectorIndex++)
+        {
+            var positions = new float[vectorsLength];
+            for (var positionIndex = 0; positionIndex < positions.Length; positionIndex++)
+            {
+                positions[positionIndex] = (new Random()).Next();
+            }
+
+            vectors[vectorIndex] = new VectorImmutable(positions);
+        }
+
+        var matrix = new MatrixImmutable(vectors);
+        
+        // Act
+        var result = MatrixImmutable.ScalingMatrix(matrix, scale);
+
+        // Assert
+        Assert.That(result.ToString(), Is.EqualTo(expectedResult));
+    }
+    
+    [TestCase(new float[] { }, new float[] { }, 0, "{}")]
+    [TestCase(new float[] { }, new float[] { }, 1, "{}")]
+    [TestCase(new float[] { }, new float[] { }, 2, "{}")]
     public void ScaleMatrixByValue_01_0D_Ok(float[] leftPositions, float[] rightPositions, float scale, string expectedResult)
     {
         // Arrange
@@ -753,10 +783,10 @@ public class MatrixImmutableTests
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
 
-    [TestCase(new float[] { 3, 2, 7 }, new float[] { 6, -1, 8 }, new float[] { 3, 6, 8 }, 0, "{(0,0,0),(0,0,0),(0,0,0)}")]
-    [TestCase(new float[] { 3, 2, 6 }, new float[] { 6, -1, 3 }, new float[] { 3, 6, 8 }, 1, "{(3,2,6),(6,-1,3),(3,6,8)}")]
-    [TestCase(new float[] { 3, 2, 5 }, new float[] { 6, -1, 9 }, new float[] { 3, 6, 8 }, 2, "{(6,4,10),(12,-2,18),(6,12,16)}")]
-    [TestCase(new float[] { 3, 2, 4 }, new float[] { 6, -1, 9 }, new float[] { 3, 6, 8 }, 4, "{(12,8,16),(24,-4,36),(12,24,32)}")]
+    [TestCase(new float[] { 3, 2, 7 }, new float[] { 6, -1, 9 }, new float[] { 3, 6, 8 }, 0, "{(0,0,0),(0,0,0),(3,6,8)}")]
+    [TestCase(new float[] { 3, 2, 7 }, new float[] { 6, -1, 9 }, new float[] { 3, 6, 8 }, 1, "{(3,2,7),(6,-1,9),(3,6,8)}")]
+    [TestCase(new float[] { 3, 2, 7 }, new float[] { 6, -1, 9 }, new float[] { 3, 6, 8 }, 2, "{(6,4,14),(12,-2,18),(3,6,8)}")]
+    [TestCase(new float[] { 3, 2, 7 }, new float[] { 6, -1, 9 }, new float[] { 3, 6, 8 }, 4, "{(12,8,28),(24,-4,36),(3,6,8)}")]
     public void ScaleMatrixByValue_01_3D_Ok(float[] positions1, float[] positions2, float[] positions3, float scale, string expectedResult)
     {
         // Arrange
