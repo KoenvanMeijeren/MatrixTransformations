@@ -868,10 +868,7 @@ public class MatrixImmutableTests
         );
 
         // Act & assert
-        Assert.Throws<MatrixVectorsNot2DException>(() =>
-        {
-            var result = MatrixImmutable.Rotate2D(matrix, 0);
-        });
+        Assert.Throws<MatrixVectorsNot2DException>(() => MatrixImmutable.Rotate2D(matrix, 0));
     }
 
     [TestCase(Axis.X, 0, "{(1,0,0),(0,1,-0),(0,0,1)}")]
@@ -979,9 +976,56 @@ public class MatrixImmutableTests
         );
 
         // Act & assert
-        Assert.Throws<MatrixVectorsNot3DException>(() =>
-        {
-            var result = MatrixImmutable.Rotate3D(Axis.X, matrix, 0);
-        });
+        Assert.Throws<MatrixVectorsNot3DException>(() => MatrixImmutable.Rotate3D(Axis.X, matrix, 0));
+    }
+
+    [TestCase(new float[]{ 0, 0 }, "{(1,0,0),(0,1,0),(0,0,1)}")]
+    [TestCase(new float[]{ 1, 2 }, "{(1,0,1),(0,1,2),(0,0,1)}")]
+    [TestCase(new float[]{ 75, -25 }, "{(1,0,75),(0,1,-25),(0,0,1)}")]
+    public void VectorToTranslationMatrix_01_3D_Ok(float[] vectorPositions, string expectedResult)
+    {
+        // Arrange
+        var vector = new VectorImmutable(vectorPositions);
+
+        // Act
+        var result = MatrixImmutable.VectorToTranslationMatrix3D(vector);
+
+        // Assert
+        Assert.That(result.ToString(), Is.EqualTo(expectedResult));
+    }
+    
+    [TestCase(new float[] { })]
+    [TestCase(new float[] { 0 })]
+    public void VectorToTranslationMatrix_01_3D_ThrowsOnVectorNot2D(float[] vectorPositions)
+    {
+        // Arrange
+        var vector = new VectorImmutable(vectorPositions);
+
+        // Act & assert
+        Assert.Throws<MatrixVectorsNot2DException>(() => MatrixImmutable.VectorToTranslationMatrix3D(vector));
+    }
+    
+    [TestCase(new float[]{ 0, 0 }, "{(-100,-100,1),(100,-100,1),(100,100,1),(-100,100,1)}")]
+    [TestCase(new float[]{ 1, 2 }, "{(-99,-98,1),(101,-98,1),(101,102,1),(-99,102,1)}")]
+    [TestCase(new float[]{ 75, -25 }, "{(-25,-125,1),(175,-125,1),(175,75,1),(-25,75,1)}")]
+    public void TranslateMatrix_01_3D_Ok(float[] vectorPositions, string expectedResult)
+    {
+        // Mocked values
+        const int Size = 100;
+        
+        // Arrange
+        var vector = new VectorImmutable(vectorPositions);
+        var matrix = new MatrixImmutable(
+            new(-Size, -Size, 1),
+            new(Size, -Size, 1),
+            new(Size, Size, 1),
+            new(-Size, Size, 1)
+        );
+
+        // Act
+        var result = MatrixImmutable.Translate3D(matrix, vector);
+
+        // Assert
+        Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
 }
