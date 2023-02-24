@@ -10,11 +10,13 @@ public class AxisZ
     public AxisZ(int size = 100)
     {
         _size = size;
-
         Matrix = new MatrixImmutable(
             new VectorImmutable(0, 0, 1),
             new VectorImmutable(0, 0, size)
         );
+        
+        Matrix = MatrixImmutable.Rotate3D(Axis.X, Matrix, 20);
+        Matrix = MatrixImmutable.Rotate3D(Axis.Y, Matrix, -20);
     }
 
     public static void Draw(GraphicsHelper graphicsHelper, MatrixImmutable matrix)
