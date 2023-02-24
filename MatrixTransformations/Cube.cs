@@ -14,7 +14,7 @@ namespace MatrixTransformations
         //      |/         |/                  z
         //      2----------1
 
-        private const int Size = 1;
+        private const int Size = 70;
         public MatrixImmutable Matrix { get; set; }
 
         private readonly Color _color;
@@ -71,7 +71,10 @@ namespace MatrixTransformations
             var font = new Font("Arial", 12, FontStyle.Bold);
             for (var index = 0; index < 8; index++)
             {
-                var pointF = new PointF(vectors[index + 8].X, vectors[index + 8].Y);
+                var pointF = new PointF(
+                    graphicsHelper.TranslateX(vectors[index + 8].X),
+                    graphicsHelper.TranslateY(vectors[index + 8].Y)
+                );
                 graphics.DrawString(index.ToString(), font, brush, pointF);
             }
         }

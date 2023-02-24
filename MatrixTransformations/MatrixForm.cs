@@ -54,30 +54,6 @@ public partial class MatrixForm : Form
             Refresh();
         };
 
-        var vector1 = new VectorImmutable();
-        Console.WriteLine(vector1);
-        var vector2 = new VectorImmutable(1, 2);
-        Console.WriteLine(vector2);
-        var vector3 = new VectorImmutable(2, 6);
-        Console.WriteLine(vector3);
-        var vector4 = vector2 + vector3;
-        Console.WriteLine(vector4); // 3, 8
-
-        var vector5 = new VectorImmutable(2, 2);
-        var matrix1 = new MatrixImmutable(vector5, vector5);
-        var matrixIdentity = MatrixImmutable.Identity(matrix1);
-        Console.WriteLine(matrixIdentity); // 1, 0, 0, 1
-
-        var vector6 = new VectorImmutable(2, 4);
-        var vector7 = new VectorImmutable(-1, 3);
-        var matrix2 = new MatrixImmutable(vector6, vector7);
-        Console.WriteLine(matrix2);
-        Console.WriteLine(matrixIdentity + matrix2); // 3, 4, -1, 4
-        Console.WriteLine(matrixIdentity - matrix2); // -1, -4, 1, -2
-        Console.WriteLine(matrix2 * matrix2); // 0, 20, -5, 5
-
-        Console.WriteLine(matrix2 * vector3); // 28, 16
-
         // Define axes
         _axisX = new AxisX(DefaultAxisSize);
         _axisY = new AxisY(DefaultAxisSize);
@@ -106,20 +82,22 @@ public partial class MatrixForm : Form
         AxisY.Draw(graphics, _axisY.Matrix);
         AxisZ.Draw(graphics, _axisZ.Matrix);
 
-        _square.Draw(graphics, _square.Matrix);
+        // _square.Draw(graphics, _square.Matrix);
+        //
+        // _squareScaled.Matrix = MatrixImmutable.Scale(_squareScaledBackup.Matrix, _squareScale);
+        // _squareScaled.Draw(graphics, _squareScaled.Matrix);
+        //
+        // _squareRotated.Matrix = MatrixImmutable.Rotate3D(Axis.Z, _squareRotatedBackup.Matrix, _squareRotationDegrees);
+        // _squareRotated.Draw(graphics, _squareRotated.Matrix);
+        //
+        // _squareTranslated.Matrix = MatrixImmutable.Translate3D(
+        //     _squareTranslatedBackup.Matrix,
+        //     new VectorImmutable((float)_squareTranslationX, (float)_squareTranslationY)
+        // );
+        // _squareTranslated.Draw(graphics, _squareTranslated.Matrix);
 
-        _squareScaled.Matrix = MatrixImmutable.Scale(_squareScaledBackup.Matrix, _squareScale);
-        _squareScaled.Draw(graphics, _squareScaled.Matrix);
-
-        _squareRotated.Matrix = MatrixImmutable.Rotate3D(Axis.Z, _squareRotatedBackup.Matrix, _squareRotationDegrees);
-        _squareRotated.Draw(graphics, _squareRotated.Matrix);
-
-        _squareTranslated.Matrix = MatrixImmutable.Translate3D(
-            _squareTranslatedBackup.Matrix,
-            new VectorImmutable((float)_squareTranslationX, (float)_squareTranslationY)
-        );
-        _squareTranslated.Draw(graphics, _squareTranslated.Matrix);
-
+        _cube.Matrix = MatrixImmutable.Rotate3D(Axis.X, _cubeBackup.Matrix, 30);
+        _cube.Matrix = MatrixImmutable.Rotate3D(Axis.Y, _cube.Matrix, 10);
         _cube.Draw(graphics, _cube.Matrix);
     }
 
