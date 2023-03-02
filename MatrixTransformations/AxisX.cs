@@ -11,8 +11,8 @@ public class AxisX
     {
         _size = size;
         Matrix = new MatrixImmutable(
-            new(0, 0),
-            new(size, 0)
+            new(0, 0, 0, 1),
+            new(size, 0, 0, 1)
         );
     }
 

@@ -16,7 +16,7 @@ public partial class MatrixForm : Form
     private const double DefaultTranslateX = 0, DefaultTranslateY = 0, DefaultTranslateZ = 0;
 
     private const int DefaultScale = 1,
-        DefaultRotateX = 0, DefaultRotateY = 0, DefaultRotateZ = 0,
+        DefaultRotateX = 30, DefaultRotateY = 10, DefaultRotateZ = 0,
         DefaultRadius = 10,
         DefaultDistance = 800,
         DefaultPhi = 10,
@@ -43,9 +43,8 @@ public partial class MatrixForm : Form
         _theta = DefaultTheta;
 
     // Axes
-    private readonly AxisX _axisX;
-    private readonly AxisY _axisY;
-    private readonly AxisZ _axisZ;
+    private readonly AxisX _axisX, _axisXBackup;
+    private readonly AxisY _axisY, _axisYBackup;
 
     // Objects
     private readonly Cube _cube, _cubeBackup;
@@ -67,8 +66,9 @@ public partial class MatrixForm : Form
 
         // Define axes
         _axisX = new AxisX(DefaultAxisSize);
+        _axisXBackup = new AxisX(DefaultAxisSize);
         _axisY = new AxisY(DefaultAxisSize);
-        _axisZ = new AxisZ(DefaultAxisSize);
+        _axisYBackup = new AxisY(DefaultAxisSize);
 
         // Create objects
         _cube = new Cube(Color.Purple);
@@ -83,12 +83,11 @@ public partial class MatrixForm : Form
 
         AxisX.Draw(graphics, _axisX.Matrix);
         AxisY.Draw(graphics, _axisY.Matrix);
-        AxisZ.Draw(graphics, _axisZ.Matrix);
 
-        _cube.Matrix = MatrixImmutable.Rotate4D(Axis.X, _cubeBackup.Matrix, _rotateX);
+        _cube.Matrix = MatrixImmutable.Scale(_cubeBackup.Matrix, _scale);
+        _cube.Matrix = MatrixImmutable.Rotate4D(Axis.X, _cube.Matrix, _rotateX);
         _cube.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _cube.Matrix, _rotateY);
         _cube.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _cube.Matrix, _rotateZ);
-        _cube.Matrix = MatrixImmutable.Scale(_cube.Matrix, _scale);
         _cube.Draw(graphics, _cube.Matrix);
     }
 
