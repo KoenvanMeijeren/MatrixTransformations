@@ -45,6 +45,7 @@ public partial class MatrixForm : Form
     // Axes
     private readonly AxisX _axisX, _axisXBackup;
     private readonly AxisY _axisY, _axisYBackup;
+    private readonly AxisZ _axisZ, _axisZBackup;
 
     // Objects
     private readonly Cube _cube, _cubeBackup;
@@ -69,6 +70,8 @@ public partial class MatrixForm : Form
         _axisXBackup = new AxisX(DefaultAxisSize);
         _axisY = new AxisY(DefaultAxisSize);
         _axisYBackup = new AxisY(DefaultAxisSize);
+        _axisZ = new AxisZ(DefaultAxisSize);
+        _axisZBackup = new AxisZ(DefaultAxisSize);
 
         // Create objects
         _cube = new Cube(Color.Purple);
@@ -81,8 +84,18 @@ public partial class MatrixForm : Form
 
         var graphics = new GraphicsHelper(eventArgs.Graphics, _formWidth, _formHeight);
 
+        _axisX.Matrix = MatrixImmutable.Rotate4D(Axis.X, _axisXBackup.Matrix, _rotateX);
+        _axisX.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _axisX.Matrix, _rotateY);
+        _axisX.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _axisX.Matrix, _rotateZ);
         AxisX.Draw(graphics, _axisX.Matrix);
+        _axisY.Matrix = MatrixImmutable.Rotate4D(Axis.X, _axisYBackup.Matrix, _rotateX);
+        _axisY.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _axisY.Matrix, _rotateY);
+        _axisY.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _axisY.Matrix, _rotateZ);
         AxisY.Draw(graphics, _axisY.Matrix);
+        _axisZ.Matrix = MatrixImmutable.Rotate4D(Axis.X, _axisZBackup.Matrix, _rotateX);
+        _axisZ.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _axisZ.Matrix, _rotateY);
+        _axisZ.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _axisZ.Matrix, _rotateZ);
+        AxisZ.Draw(graphics, _axisZ.Matrix);
 
         _cube.Matrix = MatrixImmutable.Scale(_cubeBackup.Matrix, _scale);
         _cube.Matrix = MatrixImmutable.Rotate4D(Axis.X, _cube.Matrix, _rotateX);
