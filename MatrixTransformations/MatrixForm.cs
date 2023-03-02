@@ -85,8 +85,9 @@ public partial class MatrixForm : Form
         AxisY.Draw(graphics, _axisY.Matrix);
         AxisZ.Draw(graphics, _axisZ.Matrix);
 
-        _cube.Matrix = MatrixImmutable.Rotate3D(Axis.X, _cubeBackup.Matrix, 30);
-        _cube.Matrix = MatrixImmutable.Rotate3D(Axis.Y, _cube.Matrix, 10);
+        _cube.Matrix = MatrixImmutable.Rotate4D(Axis.X, _cubeBackup.Matrix, _rotateX);
+        _cube.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _cube.Matrix, _rotateY);
+        _cube.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _cube.Matrix, _rotateZ);
         _cube.Matrix = MatrixImmutable.Scale(_cube.Matrix, _scale);
         _cube.Draw(graphics, _cube.Matrix);
     }

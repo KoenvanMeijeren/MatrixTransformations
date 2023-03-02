@@ -23,26 +23,28 @@ namespace MatrixTransformations
         {
             _color = color;
             Matrix = new MatrixImmutable(
-                new VectorImmutable(1.0f * Size, 1.0f * Size, 1.0f * Size), //0
-                new VectorImmutable(1.0f * Size, -1.0f * Size, 1.0f * Size), //1
-                new VectorImmutable(-1.0f * Size, -1.0f * Size, 1.0f * Size), //2
-                new VectorImmutable(-1.0f * Size, 1.0f * Size, 1.0f * Size), //3
+                new VectorImmutable(1.0f, 1.0f, 1.0f, 1), //0
+                new VectorImmutable(1.0f, -1.0f, 1.0f, 1), //1
+                new VectorImmutable(-1.0f, -1.0f, 1.0f, 1), //2
+                new VectorImmutable(-1.0f, 1.0f, 1.0f, 1), //3
 
-                new VectorImmutable(1.0f * Size, 1.0f * Size, -1.0f * Size), //4
-                new VectorImmutable(1.0f * Size, -1.0f * Size, -1.0f * Size), //5
-                new VectorImmutable(-1.0f * Size, -1.0f * Size, -1.0f * Size), //6
-                new VectorImmutable(-1.0f * Size, 1.0f * Size, -1.0f * Size), //7
+                new VectorImmutable(1.0f, 1.0f, -1.0f, 1), //4
+                new VectorImmutable(1.0f, -1.0f, -1.0f, 1), //5
+                new VectorImmutable(-1.0f, -1.0f, -1.0f, 1), //6
+                new VectorImmutable(-1.0f, 1.0f, -1.0f, 1), //7
 
-                new VectorImmutable(1.2f * Size, 1.2f * Size, 1.2f * Size), //0
-                new VectorImmutable(1.2f * Size, -1.2f * Size, 1.2f * Size), //1
-                new VectorImmutable(-1.2f * Size, -1.2f * Size, 1.2f * Size), //2
-                new VectorImmutable(-1.2f * Size, 1.2f * Size, 1.2f * Size), //3
+                new VectorImmutable(1.2f, 1.2f, 1.2f, 1), //0
+                new VectorImmutable(1.2f, -1.2f, 1.2f, 1), //1
+                new VectorImmutable(-1.2f, -1.2f, 1.2f, 1), //2
+                new VectorImmutable(-1.2f, 1.2f, 1.2f, 1), //3
 
-                new VectorImmutable(1.2f * Size, 1.2f * Size, -1.2f * Size), //4
-                new VectorImmutable(1.2f * Size, -1.2f * Size, -1.2f * Size), //5
-                new VectorImmutable(-1.2f * Size, -1.2f * Size, -1.2f * Size), //6
-                new VectorImmutable(-1.2f * Size, 1.2f * Size, -1.2f * Size) //7
+                new VectorImmutable(1.2f, 1.2f, -1.2f, 1), //4
+                new VectorImmutable(1.2f, -1.2f, -1.2f, 1), //5
+                new VectorImmutable(-1.2f, -1.2f, -1.2f, 1), //6
+                new VectorImmutable(-1.2f, 1.2f, -1.2f, 1) //7
             );
+
+            Matrix *= Size;
         }
 
         public void Draw(GraphicsHelper graphicsHelper, MatrixImmutable matrix)

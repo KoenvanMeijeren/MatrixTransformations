@@ -353,6 +353,54 @@ public class MatrixImmutable
 
         return new MatrixImmutable(newVectors);
     }
+    
+    public static MatrixImmutable DegreesToRotationMatrix4D(Axis axis, float degrees)
+    {
+        var angle = Calculator.DegreesToRadians(degrees);
+        var cosAlfa = (float)Math.Cos(angle);
+        var sinALfa = (float)Math.Sin(angle);
+
+        return axis switch
+        {
+            Axis.Z => new MatrixImmutable(
+                new VectorImmutable(cosAlfa, -sinALfa, 0, 0),
+                new VectorImmutable(sinALfa, cosAlfa, 0, 0),
+                new VectorImmutable(0, 0, 1, 0),
+                new VectorImmutable(0, 0, 0, 1)
+            ),
+            Axis.X => new MatrixImmutable(
+                new VectorImmutable(1, 0, 0, 0),
+                new VectorImmutable(0, cosAlfa, -sinALfa, 0),
+                new VectorImmutable(0, sinALfa, cosAlfa, 0),
+                new VectorImmutable(0, 0, 0, 1)
+            ),
+            Axis.Y => new MatrixImmutable(
+                new VectorImmutable(cosAlfa, 0, sinALfa, 0),
+                new VectorImmutable(0, 1, 0, 0),
+                new VectorImmutable(sinALfa, 0, cosAlfa, 0),
+                new VectorImmutable(0, 0, 0, 1)
+            ),
+        };
+    }
+
+    public static VectorImmutable RotateVector4D(Axis axis, VectorImmutable vector, float degrees)
+    {
+        return DegreesToRotationMatrix4D(axis, degrees) * vector;
+    }
+    
+    public static MatrixImmutable Rotate4D(Axis axis, MatrixImmutable matrix, float degrees)
+    {
+        var vectorsLength = matrix.Vectors.Length;
+        var newVectors = new VectorImmutable[vectorsLength];
+        for (var index = 0; index < vectorsLength; index++)
+        {
+            var vector = matrix.Vectors[index];
+            EnsureVectorIs4D(vector);
+            newVectors[index] = RotateVector4D(axis, vector, degrees);
+        }
+
+        return new MatrixImmutable(newVectors);
+    }
 
     public static MatrixImmutable VectorToTranslationMatrix3D(VectorImmutable vector)
     {
@@ -462,6 +510,16 @@ public class MatrixImmutable
 
         throw new MatrixVectorsNot3DException();
     }
+    
+    private static void EnsureVectorIs4D(VectorImmutable vector)
+    {
+        if (vector.Length() == 4)
+        {
+            return;
+        }
+
+        throw new MatrixVectorsNot4DException();
+    }
 }
 
 public enum Axis
@@ -502,6 +560,11 @@ public class MatrixVectorsNot2DException : Exception
 }
 
 public class MatrixVectorsNot3DException : Exception
+{
+
+}
+
+public class MatrixVectorsNot4DException : Exception
 {
 
 }
