@@ -37,10 +37,10 @@ public partial class MatrixForm : Form
         _translateX = DefaultTranslateX, _translateY = DefaultTranslateY, _translateZ = DefaultTranslateZ;
     private int _phase = DefaultPhase,
         _rotateX = DefaultRotateX, _rotateY = DefaultRotateY, _rotateZ = DefaultRotateZ,
-        _radius = DefaultRadius,
+        _radius = DefaultRadius, // length of the vector
         _distance = DefaultDistance,
-        _phi = DefaultPhi,
-        _theta = DefaultTheta;
+        _phi = DefaultPhi, // angle z-axis
+        _theta = DefaultTheta; // angle y-axis
 
     // Axes
     private readonly AxisX _axisX, _axisXBackup;
