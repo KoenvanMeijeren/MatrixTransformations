@@ -122,7 +122,7 @@ public class MatrixImmutable
         {
             return new MatrixImmutable();
         }
-        
+
         var vectorsLength = matrix.Vectors.Length;
         var newVectors = new VectorImmutable[vectorsLength];
         for (var index = 0; index < vectorsLength; index++)
@@ -204,7 +204,7 @@ public class MatrixImmutable
 
         return vectorMatrix * matrix;
     }
-    
+
     public static MatrixImmutable ScalingMatrix(MatrixImmutable matrix, float scale = 1)
     {
         if (matrix.IsEmpty())
@@ -231,7 +231,7 @@ public class MatrixImmutable
             {
                 positions[identityIndex] = 1;
             }
-            
+
             vectors[vectorIndex++] = new VectorImmutable(positions);
             previousVector = vector;
             identityIndex++;
@@ -240,6 +240,11 @@ public class MatrixImmutable
         EnsureMatrixVectorsHaveEqualVectorDimensions(vectors, previousVector);
 
         return new MatrixImmutable(vectors);
+    }
+
+    public static MatrixImmutable Scale(MatrixImmutable matrix, int scale)
+    {
+        return Scale(matrix, (float)scale);
     }
 
     public static MatrixImmutable Scale(MatrixImmutable matrix, double scale)

@@ -724,14 +724,14 @@ public class MatrixImmutableTests
         }
 
         var matrix = new MatrixImmutable(vectors);
-        
+
         // Act
         var result = MatrixImmutable.ScalingMatrix(matrix, scale);
 
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
-    
+
     [TestCase(new float[] { }, new float[] { }, 0, "{}")]
     [TestCase(new float[] { }, new float[] { }, 1, "{}")]
     [TestCase(new float[] { }, new float[] { }, 2, "{}")]
