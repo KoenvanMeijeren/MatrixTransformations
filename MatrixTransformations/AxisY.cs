@@ -11,8 +11,10 @@ public class AxisY
     {
         _size = size;
         Matrix = new MatrixImmutable(
-            new(0, 0),
-            new(0, size)
+            new(0, 0, 0, 1),
+            new(0, size, 0, 1),
+            new(0, 0, 0, 1),
+            new(0, 0, 0, 1)
         );
     }
 
