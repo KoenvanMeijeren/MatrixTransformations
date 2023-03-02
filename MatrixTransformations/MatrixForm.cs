@@ -43,12 +43,12 @@ public partial class MatrixForm : Form
         _theta = DefaultTheta; // angle y-axis
 
     // Axes
-    private readonly AxisX _axisX, _axisXBackup;
-    private readonly AxisY _axisY, _axisYBackup;
-    private readonly AxisZ _axisZ, _axisZBackup;
+    private readonly AxisX _axisX, _axisXOriginal;
+    private readonly AxisY _axisY, _axisYOriginal;
+    private readonly AxisZ _axisZ, _axisZOriginal;
 
     // Objects
-    private readonly Cube _cube, _cubeBackup;
+    private readonly Cube _cube, _cubeOriginal;
 
     public MatrixForm()
     {
@@ -67,15 +67,15 @@ public partial class MatrixForm : Form
 
         // Define axes
         _axisX = new AxisX(DefaultAxisSize);
-        _axisXBackup = new AxisX(DefaultAxisSize);
+        _axisXOriginal = new AxisX(DefaultAxisSize);
         _axisY = new AxisY(DefaultAxisSize);
-        _axisYBackup = new AxisY(DefaultAxisSize);
+        _axisYOriginal = new AxisY(DefaultAxisSize);
         _axisZ = new AxisZ(DefaultAxisSize);
-        _axisZBackup = new AxisZ(DefaultAxisSize);
+        _axisZOriginal = new AxisZ(DefaultAxisSize);
 
         // Create objects
         _cube = new Cube(Color.Purple);
-        _cubeBackup = new Cube(Color.Purple);
+        _cubeOriginal = new Cube(Color.Purple);
     }
 
     protected override void OnPaint(PaintEventArgs eventArgs)
@@ -84,20 +84,20 @@ public partial class MatrixForm : Form
 
         var graphics = new GraphicsHelper(eventArgs.Graphics, _formWidth, _formHeight);
 
-        _axisX.Matrix = MatrixImmutable.Rotate4D(Axis.X, _axisXBackup.Matrix, _rotateX);
+        _axisX.Matrix = MatrixImmutable.Rotate4D(Axis.X, _axisXOriginal.Matrix, _rotateX);
         _axisX.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _axisX.Matrix, _rotateY);
         _axisX.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _axisX.Matrix, _rotateZ);
         AxisX.Draw(graphics, _axisX.Matrix);
-        _axisY.Matrix = MatrixImmutable.Rotate4D(Axis.X, _axisYBackup.Matrix, _rotateX);
+        _axisY.Matrix = MatrixImmutable.Rotate4D(Axis.X, _axisYOriginal.Matrix, _rotateX);
         _axisY.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _axisY.Matrix, _rotateY);
         _axisY.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _axisY.Matrix, _rotateZ);
         AxisY.Draw(graphics, _axisY.Matrix);
-        _axisZ.Matrix = MatrixImmutable.Rotate4D(Axis.X, _axisZBackup.Matrix, _rotateX);
+        _axisZ.Matrix = MatrixImmutable.Rotate4D(Axis.X, _axisZOriginal.Matrix, _rotateX);
         _axisZ.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _axisZ.Matrix, _rotateY);
         _axisZ.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _axisZ.Matrix, _rotateZ);
         AxisZ.Draw(graphics, _axisZ.Matrix);
 
-        _cube.Matrix = MatrixImmutable.Scale(_cubeBackup.Matrix, _scale);
+        _cube.Matrix = MatrixImmutable.Scale(_cubeOriginal.Matrix, _scale);
         _cube.Matrix = MatrixImmutable.Rotate4D(Axis.X, _cube.Matrix, _rotateX);
         _cube.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _cube.Matrix, _rotateY);
         _cube.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _cube.Matrix, _rotateZ);
@@ -174,6 +174,7 @@ public partial class MatrixForm : Form
         _distance = DefaultDistance;
         _phi = DefaultPhi;
         _theta = DefaultTheta;
+        _phase = DefaultPhase;
 
         Refresh();
         SetInitialValuesToControls();
