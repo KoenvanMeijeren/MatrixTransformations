@@ -807,7 +807,7 @@ public class MatrixImmutableTests
     {
         // Mocked values
         var size = 100;
-        var scale = 1.5;
+        var scale = 1.5F;
 
         // Arrange
         var matrix = new MatrixImmutable(

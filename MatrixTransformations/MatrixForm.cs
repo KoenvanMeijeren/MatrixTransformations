@@ -13,7 +13,7 @@ public partial class MatrixForm : Form
     private const int DefaultAxisSize = 200;
 
     // Object position settings
-    private const double DefaultTranslateX = 0, DefaultTranslateY = 0, DefaultTranslateZ = 0;
+    private const float DefaultTranslateX = 0F, DefaultTranslateY = 0F, DefaultTranslateZ = 0F;
 
     private const int DefaultScale = 1,
         DefaultRotateX = 30, DefaultRotateY = 10, DefaultRotateZ = 0,
@@ -24,8 +24,8 @@ public partial class MatrixForm : Form
         DefaultStepSize = 1,
         DefaultPhase = 0;
 
-    private const double ScaleStepSize = 0.1,
-        TranslateStepSize = 0.1;
+    private const float ScaleStepSize = 0.1F,
+        TranslateStepSize = 0.1F;
 
     private const int RotateStepSize = DefaultStepSize,
         RadiusStepSize = DefaultStepSize,
@@ -33,7 +33,7 @@ public partial class MatrixForm : Form
         PhiStepSize = DefaultStepSize,
         ThetaStepSize = DefaultStepSize;
 
-    private double _scale = DefaultScale,
+    private float _scale = DefaultScale,
         _translateX = DefaultTranslateX, _translateY = DefaultTranslateY, _translateZ = DefaultTranslateZ;
     private int _phase = DefaultPhase,
         _rotateX = DefaultRotateX, _rotateY = DefaultRotateY, _rotateZ = DefaultRotateZ,
@@ -101,6 +101,8 @@ public partial class MatrixForm : Form
         _cube.Matrix = MatrixImmutable.Rotate4D(Axis.X, _cube.Matrix, _rotateX);
         _cube.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _cube.Matrix, _rotateY);
         _cube.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _cube.Matrix, _rotateZ);
+        var translateVector = new VectorImmutable(_translateX, _translateY, _translateZ);
+        _cube.Matrix = MatrixImmutable.Translate4D(_cube.Matrix, translateVector);
         _cube.Draw(graphics, _cube.Matrix);
     }
 

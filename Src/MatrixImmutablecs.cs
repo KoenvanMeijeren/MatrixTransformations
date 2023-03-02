@@ -37,11 +37,6 @@ public class MatrixImmutable
         return new VectorImmutable(newPositions.ToArray());
     }
 
-    public static MatrixImmutable Identity(MatrixImmutable matrix, double identity)
-    {
-        return Identity(matrix, (float)identity);
-    }
-
     public static MatrixImmutable Identity(MatrixImmutable matrix, float identity = 1)
     {
         if (matrix.IsEmpty())
@@ -134,19 +129,9 @@ public class MatrixImmutable
         return new MatrixImmutable(newVectors);
     }
 
-    public static MatrixImmutable operator *(MatrixImmutable matrix, double multiply)
-    {
-        return matrix * (float)multiply;
-    }
-
     public static MatrixImmutable operator *(float multiply, MatrixImmutable matrix)
     {
         return matrix * multiply;
-    }
-
-    public static MatrixImmutable operator *(double multiply, MatrixImmutable matrix)
-    {
-        return matrix * (float)multiply;
     }
 
     public static MatrixImmutable operator *(MatrixImmutable left, MatrixImmutable right)
@@ -247,11 +232,6 @@ public class MatrixImmutable
         return Scale(matrix, (float)scale);
     }
 
-    public static MatrixImmutable Scale(MatrixImmutable matrix, double scale)
-    {
-        return Scale(matrix, (float)scale);
-    }
-
     public static MatrixImmutable Scale(MatrixImmutable matrix, float scale)
     {
         var firstVector = matrix.Vectors[0];
@@ -283,11 +263,6 @@ public class MatrixImmutable
     public static VectorImmutable RotateVector2D(VectorImmutable vector, float degrees)
     {
         return DegreesToRotationMatrix2D(degrees) * vector;
-    }
-
-    public static MatrixImmutable Rotate2D(MatrixImmutable matrix, double degrees)
-    {
-        return Rotate2D(matrix, (float)degrees);
     }
 
     public static MatrixImmutable Rotate2D(MatrixImmutable matrix, float degrees)
@@ -333,11 +308,6 @@ public class MatrixImmutable
     public static VectorImmutable RotateVector3D(Axis axis, VectorImmutable vector, float degrees)
     {
         return DegreesToRotationMatrix3D(axis, degrees) * vector;
-    }
-
-    public static MatrixImmutable Rotate3D(Axis axis, MatrixImmutable matrix, double degrees)
-    {
-        return Rotate3D(axis, matrix, (float)degrees);
     }
 
     public static MatrixImmutable Rotate3D(Axis axis, MatrixImmutable matrix, float degrees)
@@ -422,6 +392,33 @@ public class MatrixImmutable
         {
             var matrixVector = matrix.Vectors[index];
             EnsureVectorIs3D(matrixVector);
+            newVectors[index] = translationMatrix * matrixVector;
+        }
+
+        return new MatrixImmutable(newVectors);
+    }
+    
+    public static MatrixImmutable VectorToTranslationMatrix4D(VectorImmutable vector)
+    {
+        EnsureVectorIs3D(vector);
+
+        return new MatrixImmutable(
+            new VectorImmutable(1, 0, 0, vector.X),
+            new VectorImmutable(0, 1, 0, vector.Y),
+            new VectorImmutable(0, 0, 1, vector.Z),
+            new VectorImmutable(0, 0, 0, 1)
+        );
+    }
+
+    public static MatrixImmutable Translate4D(MatrixImmutable matrix, VectorImmutable vector)
+    {
+        var translationMatrix = VectorToTranslationMatrix4D(vector);
+        var vectorsLength = matrix.Vectors.Length;
+        var newVectors = new VectorImmutable[vectorsLength];
+        for (var index = 0; index < vectorsLength; index++)
+        {
+            var matrixVector = matrix.Vectors[index];
+            EnsureVectorIs4D(matrixVector);
             newVectors[index] = translationMatrix * matrixVector;
         }
 
