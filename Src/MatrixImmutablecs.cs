@@ -397,6 +397,33 @@ public class MatrixImmutable
 
         return new MatrixImmutable(newVectors);
     }
+    
+    public static MatrixImmutable VectorToTranslationMatrix4D(VectorImmutable vector)
+    {
+        EnsureVectorIs3D(vector);
+
+        return new MatrixImmutable(
+            new VectorImmutable(1, 0, 0, vector.X),
+            new VectorImmutable(0, 1, 0, vector.Y),
+            new VectorImmutable(0, 0, 1, vector.Z),
+            new VectorImmutable(0, 0, 0, 1)
+        );
+    }
+
+    public static MatrixImmutable Translate4D(MatrixImmutable matrix, VectorImmutable vector)
+    {
+        var translationMatrix = VectorToTranslationMatrix4D(vector);
+        var vectorsLength = matrix.Vectors.Length;
+        var newVectors = new VectorImmutable[vectorsLength];
+        for (var index = 0; index < vectorsLength; index++)
+        {
+            var matrixVector = matrix.Vectors[index];
+            EnsureVectorIs4D(matrixVector);
+            newVectors[index] = translationMatrix * matrixVector;
+        }
+
+        return new MatrixImmutable(newVectors);
+    }
 
     public override string ToString()
     {
