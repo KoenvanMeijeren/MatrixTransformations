@@ -421,12 +421,12 @@ public class MatrixImmutable
     }
 
     /// <summary>
-    /// Returns the viewing matrix.
+    /// Gets the viewing matrix.
     /// </summary>
     /// <param name="radians">The selected radians of the circle.</param>
     /// <param name="theta">Theta looks like this: θ.</param>
     /// <param name="phi">Phi looks like this: φ.</param>
-    /// <returns></returns>
+    /// <returns>The viewing matrix, mostly used for viewing pipelines.</returns>
     public static MatrixImmutable ViewMatrix4D(float radians, float theta, float phi)
     {
         var radiansTheta = theta * (float)Math.PI / 180;
