@@ -421,12 +421,11 @@ public class MatrixImmutable
     }
 
     /// <summary>
-    /// Phi looks like this: φ.
-    /// Theta looks like this: θ.
+    /// Returns the viewing matrix.
     /// </summary>
-    /// <param name="radians"></param>
-    /// <param name="theta"></param>
-    /// <param name="phi"></param>
+    /// <param name="radians">The selected radians of the circle.</param>
+    /// <param name="theta">Theta looks like this: θ.</param>
+    /// <param name="phi">Phi looks like this: φ.</param>
     /// <returns></returns>
     public static MatrixImmutable ViewMatrix4D(float radians, float theta, float phi)
     {
