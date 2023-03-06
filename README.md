@@ -1,6 +1,9 @@
 # Matrix transformations
 This repository demonstrates matrix transformations.
 
+# Demo
+![image](https://user-images.githubusercontent.com/52493874/223101854-90cca952-6bcd-498b-a3df-613f15005f53.png)
+
 # Tests
 The application is tested on the formatting of the code and the unit tests are executed.
 
