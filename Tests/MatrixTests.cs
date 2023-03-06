@@ -1136,7 +1136,7 @@ public class MatrixImmutableTests
         // Act & assert
         Assert.Throws<MatrixVectorsNot4DException>(() => MatrixImmutable.Rotate4D(Axis.X, matrix, 0));
     }
-    
+
     [TestCase(new float[] { 0, 0 }, "{(1,0,0),(0,1,0),(0,0,1)}")]
     [TestCase(new float[] { 1, 2 }, "{(1,0,1),(0,1,2),(0,0,1)}")]
     [TestCase(new float[] { 75, -25 }, "{(1,0,75),(0,1,-25),(0,0,1)}")]
@@ -1186,7 +1186,7 @@ public class MatrixImmutableTests
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
-    
+
     [TestCase(new float[] { 0, 0, 0 }, "{(1,0,0,0),(0,1,0,0),(0,0,1,0),(0,0,0,1)}")]
     [TestCase(new float[] { 1, 2, 3 }, "{(1,0,0,1),(0,1,0,2),(0,0,1,3),(0,0,0,1)}")]
     [TestCase(new float[] { 75, -25, 1 }, "{(1,0,0,75),(0,1,0,-25),(0,0,1,1),(0,0,0,1)}")]
@@ -1238,7 +1238,7 @@ public class MatrixImmutableTests
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
-    
+
     [TestCase(0, 0, 0, "{(-0,1,0,0),(-1,-0,0,0),(0,0,1,-0),(0,0,0,1)}")]
     [TestCase(10, -100, -10, "{(0.98,-0.17,0,0),(0.17,0.97,-0.17,0),(0.03,0.17,0.98,-10),(0,0,0,1)}")]
     [TestCase(33, 50, 65, "{(-0.77,0.64,0,0),(-0.27,-0.32,0.91,0),(0.58,0.69,0.42,-33),(0,0,0,1)}")]
@@ -1250,22 +1250,22 @@ public class MatrixImmutableTests
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
-    
-    [TestCase(0,  new float[] {3, 4, 5}, "{(-0,0,0,0),(0,-0,0,0),(0,0,1,0),(0,0,0,1)}")]
-    [TestCase(10, new float[] {3, 4, 5}, "{(-2,0,0,0),(0,-2,0,0),(0,0,1,0),(0,0,0,1)}")]
-    [TestCase(33, new float[] {3, 4, 5}, "{(-6.6,0,0,0),(0,-6.6,0,0),(0,0,1,0),(0,0,0,1)}")]
+
+    [TestCase(0, new float[] { 3, 4, 5 }, "{(-0,0,0,0),(0,-0,0,0),(0,0,1,0),(0,0,0,1)}")]
+    [TestCase(10, new float[] { 3, 4, 5 }, "{(-2,0,0,0),(0,-2,0,0),(0,0,1,0),(0,0,0,1)}")]
+    [TestCase(33, new float[] { 3, 4, 5 }, "{(-6.6,0,0,0),(0,-6.6,0,0),(0,0,1,0),(0,0,0,1)}")]
     public void ProjectionMatrix_01_4D_Ok(float distance, float[] distancePositions, string expectedResult)
     {
         // Arrange
         var vector = new VectorImmutable(distancePositions);
-        
+
         // Act
         var result = MatrixImmutable.ProjectionMatrix4D(distance, vector);
 
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
-    
+
     [TestCase(0, 0, 0, 0, "{(0,0,1,1),(0,0,1,1),(0,0,1,1),(0,0,1,1)}")]
     [TestCase(10, 10, -100, -10, "{(-27.84,-39.22,-29.13,1),(50.15,-34.66,-23.1,1),(-73.07,-102.61,11.1,1),(228.47,-157.21,5.07,1)}")]
     [TestCase(33, 33, 50, 65, "{(2.54,12.45,-160.26,1),(-106.27,4.61,-43.75,1),(4.28,20.34,95.11,1),(217.18,-6.63,-21.41,1)}")]
@@ -1273,7 +1273,7 @@ public class MatrixImmutableTests
     {
         // Mocked values
         const int Size = 100;
-        
+
         // Arrange
         var matrix = new MatrixImmutable(
             new(-Size, -Size, 1, 1),
@@ -1281,7 +1281,7 @@ public class MatrixImmutableTests
             new(Size, Size, 1, 1),
             new(-Size, Size, 1, 1)
         );
-        
+
         // Act
         var result = MatrixImmutable.ViewingPipeline4D(matrix, distance, radians, theta, phi);
 
