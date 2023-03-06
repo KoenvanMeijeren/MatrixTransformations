@@ -16,11 +16,11 @@ public partial class MatrixForm : Form
     private const float DefaultTranslateX = 0F, DefaultTranslateY = 0F, DefaultTranslateZ = 0F;
 
     private const int DefaultScale = 1,
-        DefaultRotateX = 30, DefaultRotateY = 10, DefaultRotateZ = 0,
-        DefaultRadius = 10,
+        DefaultRotateX = 0, DefaultRotateY = 0, DefaultRotateZ = 0,
+        DefaultRadians = 10,
         DefaultDistance = 800,
-        DefaultPhi = 10,
-        DefaultTheta = 100,
+        DefaultPhi = -10,
+        DefaultTheta = -100,
         DefaultStepSize = 1,
         DefaultPhase = 0;
 
@@ -28,7 +28,7 @@ public partial class MatrixForm : Form
         TranslateStepSize = 0.1F;
 
     private const int RotateStepSize = DefaultStepSize,
-        RadiusStepSize = DefaultStepSize,
+        RadiansStepSize = DefaultStepSize,
         DistanceStepSize = DefaultStepSize,
         PhiStepSize = DefaultStepSize,
         ThetaStepSize = DefaultStepSize;
@@ -37,7 +37,7 @@ public partial class MatrixForm : Form
         _translateX = DefaultTranslateX, _translateY = DefaultTranslateY, _translateZ = DefaultTranslateZ;
     private int _phase = DefaultPhase,
         _rotateX = DefaultRotateX, _rotateY = DefaultRotateY, _rotateZ = DefaultRotateZ,
-        _radius = DefaultRadius, // length of the vector
+        _radians = DefaultRadians, // length of the vector
         _distance = DefaultDistance,
         _phi = DefaultPhi, // angle z-axis
         _theta = DefaultTheta; // angle y-axis
@@ -97,12 +97,12 @@ public partial class MatrixForm : Form
         _axisZ.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _axisZ.Matrix, _rotateZ);
         AxisZ.Draw(graphics, _axisZ.Matrix);
 
-        _cube.Matrix = MatrixImmutable.Scale(_cubeOriginal.Matrix, _scale);
-        _cube.Matrix = MatrixImmutable.Rotate4D(Axis.X, _cube.Matrix, _rotateX);
+        _cube.Matrix = MatrixImmutable.Rotate4D(Axis.X, _cubeOriginal.Matrix, _rotateX);
         _cube.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _cube.Matrix, _rotateY);
         _cube.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _cube.Matrix, _rotateZ);
-        var translateVector = new VectorImmutable(_translateX, _translateY, _translateZ);
-        _cube.Matrix = MatrixImmutable.Translate4D(_cube.Matrix, translateVector);
+        _cube.Matrix = MatrixImmutable.Translate4D(_cube.Matrix, new VectorImmutable(_translateX, _translateY, _translateZ));
+        _cube.Matrix = MatrixImmutable.ViewingPipeline4D(_cube.Matrix, _distance, _radians, _theta, _phi);
+        _cube.Matrix = MatrixImmutable.Scale(_cube.Matrix, _scale);
         _cube.Draw(graphics, _cube.Matrix);
     }
 
@@ -144,7 +144,7 @@ public partial class MatrixForm : Form
                 HandleRotateControl(Axis.Z, eventArgs);
                 break;
             case Keys.R:
-                HandleRadiusControl(eventArgs);
+                HandleRadiansControl(eventArgs);
                 break;
             case Keys.D:
                 HandleDistanceControl(eventArgs);
@@ -170,7 +170,7 @@ public partial class MatrixForm : Form
         _rotateX = DefaultRotateX;
         _rotateY = DefaultRotateY;
         _rotateZ = DefaultRotateZ;
-        _radius = DefaultRadius;
+        _radians = DefaultRadians;
         _distance = DefaultDistance;
         _phi = DefaultPhi;
         _theta = DefaultTheta;
@@ -285,18 +285,18 @@ public partial class MatrixForm : Form
         Refresh();
     }
 
-    private void HandleRadiusControl(KeyEventArgs eventArgs)
+    private void HandleRadiansControl(KeyEventArgs eventArgs)
     {
         if (eventArgs.Modifiers == Keys.Shift)
         {
-            _radius -= RadiusStepSize;
+            _radians -= RadiansStepSize;
         }
         else
         {
-            _radius += RadiusStepSize;
+            _radians += RadiansStepSize;
         }
 
-        radiusValue.Text = _radius.ToString(CultureInfo.InvariantCulture);
+        radiansValue.Text = _radians.ToString(CultureInfo.InvariantCulture);
         Refresh();
     }
 
@@ -354,7 +354,7 @@ public partial class MatrixForm : Form
         rotateXValue.Text = _rotateX.ToString(CultureInfo.InvariantCulture);
         rotateYValue.Text = _rotateY.ToString(CultureInfo.InvariantCulture);
         rotateZValue.Text = _rotateZ.ToString(CultureInfo.InvariantCulture);
-        radiusValue.Text = _radius.ToString(CultureInfo.InvariantCulture);
+        radiansValue.Text = _radians.ToString(CultureInfo.InvariantCulture);
         distanceValue.Text = _distance.ToString(CultureInfo.InvariantCulture);
         phiValue.Text = _phi.ToString(CultureInfo.InvariantCulture);
         thetaValue.Text = _theta.ToString(CultureInfo.InvariantCulture);

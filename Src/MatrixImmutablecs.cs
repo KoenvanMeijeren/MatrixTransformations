@@ -227,11 +227,6 @@ public class MatrixImmutable
         return new MatrixImmutable(vectors);
     }
 
-    public static MatrixImmutable Scale(MatrixImmutable matrix, int scale)
-    {
-        return Scale(matrix, (float)scale);
-    }
-
     public static MatrixImmutable Scale(MatrixImmutable matrix, float scale)
     {
         var firstVector = matrix.Vectors[0];
@@ -323,7 +318,7 @@ public class MatrixImmutable
 
         return new MatrixImmutable(newVectors);
     }
-    
+
     public static MatrixImmutable DegreesToRotationMatrix4D(Axis axis, float degrees)
     {
         var angle = Calculator.DegreesToRadians(degrees);
@@ -357,7 +352,7 @@ public class MatrixImmutable
     {
         return DegreesToRotationMatrix4D(axis, degrees) * vector;
     }
-    
+
     public static MatrixImmutable Rotate4D(Axis axis, MatrixImmutable matrix, float degrees)
     {
         var vectorsLength = matrix.Vectors.Length;
@@ -397,7 +392,7 @@ public class MatrixImmutable
 
         return new MatrixImmutable(newVectors);
     }
-    
+
     public static MatrixImmutable VectorToTranslationMatrix4D(VectorImmutable vector)
     {
         EnsureVectorIs3D(vector);
@@ -420,6 +415,58 @@ public class MatrixImmutable
             var matrixVector = matrix.Vectors[index];
             EnsureVectorIs4D(matrixVector);
             newVectors[index] = translationMatrix * matrixVector;
+        }
+
+        return new MatrixImmutable(newVectors);
+    }
+
+    /// <summary>
+    /// Gets the viewing matrix.
+    /// </summary>
+    /// <param name="radians">The selected radians of the circle.</param>
+    /// <param name="theta">Theta looks like this: θ.</param>
+    /// <param name="phi">Phi looks like this: φ.</param>
+    /// <returns>The viewing matrix, mostly used for viewing pipelines.</returns>
+    public static MatrixImmutable ViewMatrix4D(float radians, float theta, float phi)
+    {
+        var radiansTheta = theta * (float)Math.PI / 180;
+        var radiansPhi = phi * (float)Math.PI / 180;
+        var cosTheta = (float)Math.Cos(radiansTheta);
+        var sinTheta = (float)Math.Sin(radiansTheta);
+        var cosPhi = (float)Math.Cos(radiansPhi);
+        var sinPhi = (float)Math.Sin(radiansPhi);
+
+        return new MatrixImmutable(
+          new VectorImmutable(-sinTheta, cosTheta, 0, 0),
+          new VectorImmutable(-cosTheta * cosPhi, -cosPhi * sinTheta, sinPhi, 0),
+          new VectorImmutable(cosTheta * sinPhi, sinTheta * sinPhi, cosPhi, -radians),
+          new VectorImmutable(0, 0, 0, 1)
+        );
+    }
+
+    public static MatrixImmutable ProjectionMatrix4D(float distance, VectorImmutable vector)
+    {
+        var projection = distance / vector.Z;
+
+        return new MatrixImmutable(
+            new VectorImmutable(-projection, 0, 0, 0),
+            new VectorImmutable(0, -projection, 0, 0),
+            new VectorImmutable(0, 0, 1, 0),
+            new VectorImmutable(0, 0, 0, 1)
+        );
+    }
+
+    public static MatrixImmutable ViewingPipeline4D(MatrixImmutable matrix, float distance, float radians, float theta, float phi)
+    {
+        var viewMatrix = ViewMatrix4D(radians, theta, phi);
+
+        var vectorsLength = matrix.Vectors.Length;
+        var newVectors = new VectorImmutable[vectorsLength];
+        for (var index = 0; index < vectorsLength; index++)
+        {
+            var matrixVector = matrix.Vectors[index];
+            var viewMatrixResult = viewMatrix * matrixVector;
+            newVectors[index] = ProjectionMatrix4D(distance, viewMatrixResult) * viewMatrixResult;
         }
 
         return new MatrixImmutable(newVectors);
@@ -507,7 +554,7 @@ public class MatrixImmutable
 
         throw new MatrixVectorsNot3DException();
     }
-    
+
     private static void EnsureVectorIs4D(VectorImmutable vector)
     {
         if (vector.Length() == 4)
