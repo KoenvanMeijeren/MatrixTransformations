@@ -227,11 +227,6 @@ public class MatrixImmutable
         return new MatrixImmutable(vectors);
     }
 
-    public static MatrixImmutable Scale(MatrixImmutable matrix, int scale)
-    {
-        return Scale(matrix, (float)scale);
-    }
-
     public static MatrixImmutable Scale(MatrixImmutable matrix, float scale)
     {
         var firstVector = matrix.Vectors[0];
