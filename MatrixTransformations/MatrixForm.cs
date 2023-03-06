@@ -102,7 +102,7 @@ public partial class MatrixForm : Form
         _cube.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _cube.Matrix, _rotateY);
         _cube.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _cube.Matrix, _rotateZ);
         _cube.Matrix = MatrixImmutable.Translate4D(_cube.Matrix, new VectorImmutable(_translateX, _translateY, _translateZ));
-        _cube.Matrix = MatrixImmutable.ViewingPipeline(_cube.Matrix, _distance, _radians, _theta, _phi);
+        _cube.Matrix = MatrixImmutable.ViewingPipeline4D(_cube.Matrix, _distance, _radians, _theta, _phi);
         _cube.Draw(graphics, _cube.Matrix);
     }
 

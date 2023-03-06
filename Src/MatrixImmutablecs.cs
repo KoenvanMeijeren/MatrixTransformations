@@ -428,7 +428,7 @@ public class MatrixImmutable
     /// <param name="theta"></param>
     /// <param name="phi"></param>
     /// <returns></returns>
-    public static MatrixImmutable ViewMatrix(float radians, float theta, float phi)
+    public static MatrixImmutable ViewMatrix4D(float radians, float theta, float phi)
     {
         var radiansTheta = theta * (float)Math.PI / 180;
         var radiansPhi = phi * (float)Math.PI / 180;
@@ -445,7 +445,7 @@ public class MatrixImmutable
         );
     }
 
-    public static MatrixImmutable ProjectionMatrix(float distance, VectorImmutable vector)
+    public static MatrixImmutable ProjectionMatrix4D(float distance, VectorImmutable vector)
     {
         var projection = distance / vector.Z;
 
@@ -457,9 +457,9 @@ public class MatrixImmutable
         );
     }
 
-    public static MatrixImmutable ViewingPipeline(MatrixImmutable matrix, float distance, float radians, float theta, float phi)
+    public static MatrixImmutable ViewingPipeline4D(MatrixImmutable matrix, float distance, float radians, float theta, float phi)
     {
-        var viewMatrix = ViewMatrix(radians, theta, phi);
+        var viewMatrix = ViewMatrix4D(radians, theta, phi);
 
         var vectorsLength = matrix.Vectors.Length;
         var newVectors = new VectorImmutable[vectorsLength];
@@ -467,7 +467,7 @@ public class MatrixImmutable
         {
             var matrixVector = matrix.Vectors[index];
             var viewMatrixResult = viewMatrix * matrixVector;
-            newVectors[index] = ProjectionMatrix(distance, viewMatrixResult) * viewMatrixResult;
+            newVectors[index] = ProjectionMatrix4D(distance, viewMatrixResult) * viewMatrixResult;
         }
 
         return new MatrixImmutable(newVectors);
