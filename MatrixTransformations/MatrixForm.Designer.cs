@@ -223,32 +223,32 @@
             rotateZControls.Text = "z/Z";
             Controls.Add(rotateZControls);
             
-            radiusText = new Label();
-            radiusText.AutoSize = true;
-            radiusText.Location = new Point(1, LabelHeigt * 7 + 10);
-            radiusText.Name = "radiusText";
-            radiusText.Size = new Size(LabelWidth, LabelHeigt);
-            radiusText.TabIndex = 0;
-            radiusText.Text = "Radius";
-            Controls.Add(radiusText);
+            radiansText = new Label();
+            radiansText.AutoSize = true;
+            radiansText.Location = new Point(1, LabelHeigt * 7 + 10);
+            radiansText.Name = "radiansText";
+            radiansText.Size = new Size(LabelWidth, LabelHeigt);
+            radiansText.TabIndex = 0;
+            radiansText.Text = "Radians";
+            Controls.Add(radiansText);
             
-            radiusValue = new Label();
-            radiusValue.AutoSize = true;
-            radiusValue.Location = new Point(90, LabelHeigt * 7 + 10);
-            radiusValue.Name = "radiusValue";
-            radiusValue.Size = new Size(LabelWidth, LabelHeigt);
-            radiusValue.TabIndex = 1;
-            radiusValue.Text = "0";
-            Controls.Add(radiusValue);
+            radiansValue = new Label();
+            radiansValue.AutoSize = true;
+            radiansValue.Location = new Point(90, LabelHeigt * 7 + 10);
+            radiansValue.Name = "radiansValue";
+            radiansValue.Size = new Size(LabelWidth, LabelHeigt);
+            radiansValue.TabIndex = 1;
+            radiansValue.Text = "0";
+            Controls.Add(radiansValue);
             
-            radiusControls = new Label();
-            radiusControls.AutoSize = true;
-            radiusControls.Location = new Point(140, LabelHeigt * 7 + 10);
-            radiusControls.Name = "radiusControls";
-            radiusControls.Size = new Size(LabelWidth, LabelHeigt);
-            radiusControls.TabIndex = 2;
-            radiusControls.Text = "r/R";
-            Controls.Add(radiusControls);
+            radiansControls = new Label();
+            radiansControls.AutoSize = true;
+            radiansControls.Location = new Point(140, LabelHeigt * 7 + 10);
+            radiansControls.Name = "radiansControls";
+            radiansControls.Size = new Size(LabelWidth, LabelHeigt);
+            radiansControls.TabIndex = 2;
+            radiansControls.Text = "r/R";
+            Controls.Add(radiansControls);
             
             distanceText = new Label();
             distanceText.AutoSize = true;
@@ -390,7 +390,7 @@
         private Label rotateXText, rotateXValue, rotateXControls;
         private Label rotateYText, rotateYValue, rotateYControls;
         private Label rotateZText, rotateZValue, rotateZControls;
-        private Label radiusText, radiusValue, radiusControls;
+        private Label radiansText, radiansValue, radiansControls;
         private Label distanceText, distanceValue, distanceControls;
         private Label phiText, phiValue, phiControls;
         private Label thetaText, thetaValue, thetaControls;

@@ -14,7 +14,7 @@ namespace MatrixTransformations
         //      |/         |/                  z
         //      2----------1
 
-        private const int Size = 70;
+        private const int Size = 1;
         public MatrixImmutable Matrix { get; set; }
 
         private readonly Color _color;

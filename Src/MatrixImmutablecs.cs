@@ -425,6 +425,59 @@ public class MatrixImmutable
         return new MatrixImmutable(newVectors);
     }
 
+    /// <summary>
+    /// Phi looks like this: φ.
+    /// Theta looks like this: θ.
+    /// </summary>
+    /// <param name="radians"></param>
+    /// <param name="theta"></param>
+    /// <param name="phi"></param>
+    /// <returns></returns>
+    public static MatrixImmutable ViewMatrix(float radians, float theta, float phi)
+    {
+        var radiansTheta = theta * (float)Math.PI / 180;
+        var radiansPhi = phi * (float)Math.PI / 180;
+        var cosTheta = (float)Math.Cos(radiansTheta);
+        var sinTheta = (float)Math.Sin(radiansTheta);
+        var cosPhi = (float)Math.Cos(radiansPhi);
+        var sinPhi = (float)Math.Sin(radiansPhi);
+        
+        return new MatrixImmutable(
+          new VectorImmutable(-sinTheta, cosTheta, 0, 0),
+          new VectorImmutable(-cosTheta * cosPhi, -cosPhi * sinTheta, sinPhi, 0),
+          new VectorImmutable(cosTheta * sinPhi, sinTheta * sinPhi, cosPhi, -radians),
+          new VectorImmutable(0, 0, 0, 1)
+        );
+    }
+
+    public static MatrixImmutable ProjectionMatrix(float distance, VectorImmutable vector)
+    {
+        var projection = distance / vector.Z;
+        
+        return new MatrixImmutable(
+            new VectorImmutable(-projection, 0, 0, 0),
+            new VectorImmutable(0, -projection, 0, 0),
+            new VectorImmutable(0, 0, 1, 0),
+            new VectorImmutable(0, 0, 0, 1)
+        );
+    }
+    
+    public static MatrixImmutable ViewingPipeline(MatrixImmutable matrix, float distance, float radians, float theta, float phi)
+    {
+        var viewMatrix = ViewMatrix(radians, theta, phi);
+        
+        var vectorsLength = matrix.Vectors.Length;
+        var newVectors = new VectorImmutable[vectorsLength];
+        for (var index = 0; index < vectorsLength; index++)
+        {
+            var matrixVector = matrix.Vectors[index];
+            var viewMatrixResult = viewMatrix * matrixVector;
+            newVectors[index] = ProjectionMatrix(distance, viewMatrixResult) * viewMatrixResult;
+        }
+
+        return new MatrixImmutable(newVectors);
+    }
+    
     public override string ToString()
     {
         var result = new StringBuilder();
