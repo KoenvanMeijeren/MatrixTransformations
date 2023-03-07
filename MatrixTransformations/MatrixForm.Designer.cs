@@ -349,9 +349,36 @@
             phaseValue.Text = "0";
             Controls.Add(phaseValue);
 
+            animationText = new Label();
+            animationText.AutoSize = true;
+            animationText.Location = new Point(1, LabelHeigt * 13);
+            animationText.Name = "animationText";
+            animationText.Size = new Size(LabelWidth, LabelHeigt);
+            animationText.TabIndex = 0;
+            animationText.Text = "Animation";
+            Controls.Add(animationText);
+
+            animationValue = new Label();
+            animationValue.AutoSize = true;
+            animationValue.Location = new Point(90, LabelHeigt * 13);
+            animationValue.Name = "animationValue";
+            animationValue.Size = new Size(LabelWidth, LabelHeigt);
+            animationValue.TabIndex = 2;
+            animationValue.Text = "Play";
+            Controls.Add(animationValue);
+            
+            animationControls = new Label();
+            animationControls.AutoSize = true;
+            animationControls.Location = new Point(140, LabelHeigt * 13);
+            animationControls.Name = "animationControls";
+            animationControls.Size = new Size(LabelWidth, LabelHeigt);
+            animationControls.TabIndex = 2;
+            animationControls.Text = "A/O";
+            Controls.Add(animationControls);
+            
             resetText = new Label();
             resetText.AutoSize = true;
-            resetText.Location = new Point(1, LabelHeigt * 13);
+            resetText.Location = new Point(1, LabelHeigt * 15);
             resetText.Name = "resetText";
             resetText.Size = new Size(LabelWidth, LabelHeigt);
             resetText.TabIndex = 0;
@@ -360,7 +387,7 @@
 
             resetControls = new Label();
             resetControls.AutoSize = true;
-            resetControls.Location = new Point(90, LabelHeigt * 13);
+            resetControls.Location = new Point(90, LabelHeigt * 15);
             resetControls.Name = "resetControls";
             resetControls.Size = new Size(LabelWidth, LabelHeigt);
             resetControls.TabIndex = 2;
@@ -396,5 +423,6 @@
         private Label thetaText, thetaValue, thetaControls;
         private Label phaseText, phaseValue;
         private Label resetText, resetControls;
+        private Label animationText, animationValue, animationControls;
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Timers;
 using Src;
+using Timer = System.Timers.Timer;
 
 namespace MatrixTransformations;
 
@@ -10,7 +12,7 @@ public partial class MatrixForm : Form
     // Window dimensions
     public const int DefaultFormWidth = 800, DefaultFormHeight = 600;
     private int _formWidth = DefaultFormWidth, _formHeight = DefaultFormHeight;
-    private const int DefaultAxisSize = 200;
+    private const int DefaultAxisSize = 3;
 
     // Object position settings
     private const float DefaultTranslateX = 0F, DefaultTranslateY = 0F, DefaultTranslateZ = 0F;
@@ -21,8 +23,7 @@ public partial class MatrixForm : Form
         DefaultDistance = 800,
         DefaultPhi = -10,
         DefaultTheta = -100,
-        DefaultStepSize = 1,
-        DefaultPhase = 0;
+        DefaultStepSize = 1;
 
     private const float ScaleStepSize = 0.1F,
         TranslateStepSize = 0.1F;
@@ -35,8 +36,7 @@ public partial class MatrixForm : Form
 
     private float _scale = DefaultScale,
         _translateX = DefaultTranslateX, _translateY = DefaultTranslateY, _translateZ = DefaultTranslateZ;
-    private int _phase = DefaultPhase,
-        _rotateX = DefaultRotateX, _rotateY = DefaultRotateY, _rotateZ = DefaultRotateZ,
+    private int _rotateX = DefaultRotateX, _rotateY = DefaultRotateY, _rotateZ = DefaultRotateZ,
         _radians = DefaultRadians, // length of the vector
         _distance = DefaultDistance,
         _phi = DefaultPhi, // angle z-axis
@@ -49,6 +49,19 @@ public partial class MatrixForm : Form
 
     // Objects
     private readonly Cube _cube, _cubeOriginal;
+    
+    // Animation
+    private const Phase DefaultPhase = Phase.One;
+    private Phase _phase = DefaultPhase;
+    private readonly Timer _timer;
+    private bool _shouldPlayAnimation, 
+        _shouldPlayPhaseAnimationForward = true, 
+        _shouldEndPhaseAnimation;
+
+    private const float AnimationScaleStepSize = 0.01f;
+    private const float MinimumAnimationScale = 1.0f, MaximumAnimationScale = 1.5f;
+    private const int MinimumAnimationRotateX = 0, MaximumAnimationRotateX = 45;
+    private const int MinimumAnimationRotateY = 0, MaximumAnimationRotateY = 45;
 
     public MatrixForm()
     {
@@ -76,6 +89,12 @@ public partial class MatrixForm : Form
         // Create objects
         _cube = new Cube(Color.Purple);
         _cubeOriginal = new Cube(Color.Purple);
+        
+        // Initialize the timer and runs asn animation which ticks every 50 ms
+        _timer = new Timer(50);
+        _timer.AutoReset = true;
+        _timer.Elapsed += CubeAnimation;
+        _timer.Start();
     }
 
     protected override void OnPaint(PaintEventArgs eventArgs)
@@ -87,14 +106,17 @@ public partial class MatrixForm : Form
         _axisX.Matrix = MatrixImmutable.Rotate4D(Axis.X, _axisXOriginal.Matrix, _rotateX);
         _axisX.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _axisX.Matrix, _rotateY);
         _axisX.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _axisX.Matrix, _rotateZ);
+        _axisX.Matrix = MatrixImmutable.ViewingPipeline4D(_axisX.Matrix, _distance, _radians, _theta, _phi);
         AxisX.Draw(graphics, _axisX.Matrix);
         _axisY.Matrix = MatrixImmutable.Rotate4D(Axis.X, _axisYOriginal.Matrix, _rotateX);
         _axisY.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _axisY.Matrix, _rotateY);
         _axisY.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _axisY.Matrix, _rotateZ);
+        _axisY.Matrix = MatrixImmutable.ViewingPipeline4D(_axisY.Matrix, _distance, _radians, _theta, _phi);
         AxisY.Draw(graphics, _axisY.Matrix);
         _axisZ.Matrix = MatrixImmutable.Rotate4D(Axis.X, _axisZOriginal.Matrix, _rotateX);
         _axisZ.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _axisZ.Matrix, _rotateY);
         _axisZ.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _axisZ.Matrix, _rotateZ);
+        _axisZ.Matrix = MatrixImmutable.ViewingPipeline4D(_axisZ.Matrix, _distance, _radians, _theta, _phi);
         AxisZ.Draw(graphics, _axisZ.Matrix);
 
         _cube.Matrix = MatrixImmutable.Rotate4D(Axis.X, _cubeOriginal.Matrix, _rotateX);
@@ -105,7 +127,168 @@ public partial class MatrixForm : Form
         _cube.Matrix = MatrixImmutable.Scale(_cube.Matrix, _scale);
         _cube.Draw(graphics, _cube.Matrix);
     }
+    
+    private void CubeAnimation(object? sender, ElapsedEventArgs eventArgs)
+    {
+        if (!_shouldPlayAnimation)
+        {
+            return;
+        }
 
+        switch (_phase)
+        {
+            case Phase.One:
+                HandlePhaseOne();
+                break;
+            case Phase.Two:
+                HandlePhaseTwo();
+                break;
+            case Phase.Three:
+                HandlePhaseThree();
+                break;
+            case Phase.Zero:
+            default:
+                HandlePhaseZero();
+                break;
+        }
+        
+        Invalidate();
+    }
+
+    private void HandlePhaseOne()
+    {
+        switch (_shouldPlayPhaseAnimationForward)
+        {
+            case false when _scale <= MinimumAnimationScale:
+                _shouldEndPhaseAnimation = true;
+                break;
+            case true when _scale > MaximumAnimationScale:
+                _shouldPlayPhaseAnimationForward = false;
+                break;
+        }
+
+        if (_shouldEndPhaseAnimation)
+        {
+            _phase = Phase.Two;
+            phaseValue.Invoke((MethodInvoker) (() => phaseValue.Text = _phase.ToString()));
+            
+            _shouldEndPhaseAnimation = false;
+            _shouldPlayPhaseAnimationForward = true;
+            return;
+        }
+
+        switch (_shouldPlayPhaseAnimationForward)
+        {
+            case true:
+                _scale += AnimationScaleStepSize;
+                break;
+            case false:
+                _scale -= AnimationScaleStepSize;
+                break;
+        }
+
+        _theta -= ThetaStepSize;
+        scaleValue.Invoke((MethodInvoker) (() => scaleValue.Text = Math.Round(_scale, 2).ToString(CultureInfo.InvariantCulture)));
+        thetaValue.Invoke((MethodInvoker) (() => thetaValue.Text = _theta.ToString()));
+    }
+    
+    private void HandlePhaseTwo()
+    {
+        switch (_shouldPlayPhaseAnimationForward)
+        {
+            case false when _rotateX <= MinimumAnimationRotateX:
+                _shouldEndPhaseAnimation = true;
+                break;
+            case true when _rotateX > MaximumAnimationRotateX:
+                _shouldPlayPhaseAnimationForward = false;
+                break;
+        }
+
+        if (_shouldEndPhaseAnimation)
+        {
+            _phase = Phase.Three;
+            phaseValue.Invoke((MethodInvoker) (() => phaseValue.Text = _phase.ToString()));
+            
+            _shouldEndPhaseAnimation = false;
+            _shouldPlayPhaseAnimationForward = true;
+            return;
+        }
+
+        switch (_shouldPlayPhaseAnimationForward)
+        {
+            case true:
+                _rotateX += RotateStepSize;
+                break;
+            case false:
+                _rotateX -= RotateStepSize;
+                break;
+        }
+
+        _theta -= ThetaStepSize;
+        rotateXValue.Invoke((MethodInvoker) (() => rotateXValue.Text = _rotateX.ToString(CultureInfo.InvariantCulture)));
+        thetaValue.Invoke((MethodInvoker) (() => thetaValue.Text = _theta.ToString()));
+    }
+    
+    private void HandlePhaseThree()
+    {
+        switch (_shouldPlayPhaseAnimationForward)
+        {
+            case false when _rotateY <= MinimumAnimationRotateY:
+                _shouldEndPhaseAnimation = true;
+                break;
+            case true when _rotateY > MaximumAnimationRotateY:
+                _shouldPlayPhaseAnimationForward = false;
+                break;
+        }
+
+        if (_shouldEndPhaseAnimation)
+        {
+            _phase = Phase.Zero;
+            phaseValue.Invoke((MethodInvoker) (() => phaseValue.Text = _phase.ToString()));
+            
+            _shouldEndPhaseAnimation = false;
+            _shouldPlayPhaseAnimationForward = true;
+            return;
+        }
+
+        switch (_shouldPlayPhaseAnimationForward)
+        {
+            case true:
+                _rotateY += RotateStepSize;
+                break;
+            case false:
+                _rotateY -= RotateStepSize;
+                break;
+        }
+        
+        _phi += PhiStepSize;
+        rotateYValue.Invoke((MethodInvoker) (() => rotateYValue.Text = _rotateY.ToString(CultureInfo.InvariantCulture)));
+        phiValue.Invoke((MethodInvoker) (() => phiValue.Text = _phi.ToString()));
+    }
+
+    private void HandlePhaseZero()
+    {
+        if (_phi == DefaultPhi && _theta == DefaultTheta)
+        {
+            _phase = Phase.One;
+            phaseValue.Invoke((MethodInvoker) (() => phaseValue.Text = _phase.ToString()));
+            return;
+        }
+
+        if (_theta != DefaultTheta)
+        {
+            _theta += ThetaStepSize;
+        }
+
+        if (_phi != DefaultPhi)
+        {
+            _phi -= PhiStepSize;
+        }
+        
+        phiValue.Invoke((MethodInvoker) (() => phiValue.Text = _phi.ToString()));
+        thetaValue.Invoke((MethodInvoker) (() => thetaValue.Text = _theta.ToString()));
+    }
+    
     private void Form_KeyDown(object sender, KeyEventArgs eventArgs)
     {
         if (eventArgs.KeyCode == Keys.Escape)
@@ -155,6 +338,16 @@ public partial class MatrixForm : Form
             case Keys.T:
                 HandleThetaControl(eventArgs);
                 break;
+            case Keys.A:
+                _shouldPlayAnimation = true;
+                animationValue.Text = "Stop";
+                Refresh();
+                break;
+            case Keys.O:
+                _shouldPlayAnimation = false;
+                animationValue.Text = "Play";
+                Refresh();
+                break;
             default:
                 break;
         }
@@ -175,6 +368,7 @@ public partial class MatrixForm : Form
         _phi = DefaultPhi;
         _theta = DefaultTheta;
         _phase = DefaultPhase;
+        _shouldPlayAnimation = false;
 
         Refresh();
         SetInitialValuesToControls();
@@ -358,6 +552,15 @@ public partial class MatrixForm : Form
         distanceValue.Text = _distance.ToString(CultureInfo.InvariantCulture);
         phiValue.Text = _phi.ToString(CultureInfo.InvariantCulture);
         thetaValue.Text = _theta.ToString(CultureInfo.InvariantCulture);
-        phaseValue.Text = _phase.ToString(CultureInfo.InvariantCulture);
+        phaseValue.Text = _phase.ToString();
+        animationValue.Text = "Play";
     }
+}
+
+public enum Phase
+{
+    Zero = 0,
+    One = 1,
+    Two = 2,
+    Three = 3,
 }
