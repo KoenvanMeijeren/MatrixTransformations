@@ -11,10 +11,10 @@ public class AxisZ
     {
         _size = size;
         Matrix = new MatrixImmutable(
-            new VectorImmutable(0, 0, 1, 1),
+            new VectorImmutable(0, 0, 0, 1),
             new VectorImmutable(0, 0, size, 1),
-            new(0, 0, 1, 1),
-            new(0, 0, 1, 1)
+            new(0, 0, 0, 1),
+            new(0, 0, 0, 1)
         );
     }
 
