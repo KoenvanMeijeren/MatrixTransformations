@@ -146,9 +146,9 @@ public partial class MatrixForm : Form
             case Phase.Three:
                 HandlePhaseThree();
                 break;
-            case Phase.Zero:
+            case Phase.Four:
             default:
-                HandlePhaseZero();
+                HandlePhaseFour();
                 break;
         }
         
@@ -243,7 +243,7 @@ public partial class MatrixForm : Form
 
         if (_shouldEndPhaseAnimation)
         {
-            _phase = Phase.Zero;
+            _phase = Phase.Four;
             phaseValue.Invoke((MethodInvoker) (() => phaseValue.Text = _phase.ToString()));
             
             _shouldEndPhaseAnimation = false;
@@ -266,7 +266,7 @@ public partial class MatrixForm : Form
         phiValue.Invoke((MethodInvoker) (() => phiValue.Text = _phi.ToString()));
     }
 
-    private void HandlePhaseZero()
+    private void HandlePhaseFour()
     {
         if (_phi == DefaultPhi && _theta == DefaultTheta)
         {
@@ -559,8 +559,8 @@ public partial class MatrixForm : Form
 
 public enum Phase
 {
-    Zero = 0,
     One = 1,
     Two = 2,
     Three = 3,
+    Four = 4,
 }
