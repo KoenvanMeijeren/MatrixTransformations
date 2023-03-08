@@ -28,372 +28,121 @@
         /// </summary>
         private void InitializeComponent()
         {
-            const int LabelWidth = 50, LabelHeigt = 20;
+            const int LabelWidth = 50, LabelHeigt = 20, 
+                TextColumn = 1, ValueColumn = 90, ControlsColumn = 140;
             SuspendLayout();
 
             // 
             // Control labels
             // 
-            scaleText = new Label();
-            scaleText.AutoSize = true;
-            scaleText.Location = new Point(1, 0);
-            scaleText.Name = "scaleText";
-            scaleText.Size = new Size(LabelWidth, LabelHeigt);
-            scaleText.TabIndex = 0;
-            scaleText.Text = "Scale";
+            const int scaleRow = 0;
+            scaleText = CreateLabel(LabelWidth, LabelHeigt, scaleRow, TextColumn, 0, "Scale");
             Controls.Add(scaleText);
-            
-            scaleValue = new Label();
-            scaleValue.AutoSize = true;
-            scaleValue.Location = new Point(90, 0);
-            scaleValue.Name = "scaleValue";
-            scaleValue.Size = new Size(LabelWidth, LabelHeigt);
-            scaleValue.TabIndex = 1;
-            scaleValue.Text = "0";
+            scaleValue = CreateLabel(LabelWidth, LabelHeigt, scaleRow, ValueColumn, 1, "0");
             Controls.Add(scaleValue);
-            
-            scaleControls = new Label();
-            scaleControls.AutoSize = true;
-            scaleControls.Location = new Point(140, 0);
-            scaleControls.Name = "scaleControls";
-            scaleControls.Size = new Size(LabelWidth, LabelHeigt);
-            scaleControls.TabIndex = 2;
-            scaleControls.Text = "s/S";
+            scaleControls = CreateLabel(LabelWidth, LabelHeigt, scaleRow, ControlsColumn, 1, "s/S");
             Controls.Add(scaleControls);
 
-            translateXText = new Label();
-            translateXText.AutoSize = true;
-            translateXText.Location = new Point(1, LabelHeigt * 1);
-            translateXText.Name = "translateXText";
-            translateXText.Size = new Size(LabelWidth, LabelHeigt);
-            translateXText.TabIndex = 0;
-            translateXText.Text = "Translate X";
+            const int translateXRow = 1;
+            translateXText = CreateLabel(LabelWidth, LabelHeigt, translateXRow, TextColumn, 0, "Translate X");
             Controls.Add(translateXText);
-            
-            translateXValue = new Label();
-            translateXValue.AutoSize = true;
-            translateXValue.Location = new Point(90, LabelHeigt * 1);
-            translateXValue.Name = "translateXValue";
-            translateXValue.Size = new Size(LabelWidth, LabelHeigt);
-            translateXValue.TabIndex = 1;
-            translateXValue.Text = "0.0";
+            translateXValue = CreateLabel(LabelWidth, LabelHeigt, translateXRow, ValueColumn, 1, "0.0");
             Controls.Add(translateXValue);
-            
-            translateXControls = new Label();
-            translateXControls.AutoSize = true;
-            translateXControls.Location = new Point(140, LabelHeigt * 1);
-            translateXControls.Name = "translateXControls";
-            translateXControls.Size = new Size(LabelWidth, LabelHeigt);
-            translateXControls.TabIndex = 2;
-            translateXControls.Text = "Left/Right";
+            translateXControls = CreateLabel(LabelWidth, LabelHeigt, translateXRow, ControlsColumn, 1, "Left/Right");
             Controls.Add(translateXControls);
             
-            translateYText = new Label();
-            translateYText.AutoSize = true;
-            translateYText.Location = new Point(1, LabelHeigt * 2);
-            translateYText.Name = "translateYText";
-            translateYText.Size = new Size(LabelWidth, LabelHeigt);
-            translateYText.TabIndex = 0;
-            translateYText.Text = "Translate Y";
+            const int translateYRow = 2;
+            translateYText = CreateLabel(LabelWidth, LabelHeigt, translateYRow, TextColumn, 0, "Translate Y");
             Controls.Add(translateYText);
-            
-            translateYValue = new Label();
-            translateYValue.AutoSize = true;
-            translateYValue.Location = new Point(90, LabelHeigt * 2);
-            translateYValue.Name = "translateYValue";
-            translateYValue.Size = new Size(LabelWidth, LabelHeigt);
-            translateYValue.TabIndex = 1;
-            translateYValue.Text = "0.0";
+            translateYValue = CreateLabel(LabelWidth, LabelHeigt, translateYRow, ValueColumn, 1, "0.0");
             Controls.Add(translateYValue);
-            
-            translateYControls = new Label();
-            translateYControls.AutoSize = true;
-            translateYControls.Location = new Point(140, LabelHeigt * 2);
-            translateYControls.Name = "translateYControls";
-            translateYControls.Size = new Size(LabelWidth, LabelHeigt);
-            translateYControls.TabIndex = 2;
-            translateYControls.Text = "Up/Down";
+            translateYControls = CreateLabel(LabelWidth, LabelHeigt, translateYRow, ControlsColumn, 1, "Up/Down");
             Controls.Add(translateYControls);
             
-            translateZText = new Label();
-            translateZText.AutoSize = true;
-            translateZText.Location = new Point(1, LabelHeigt * 3);
-            translateZText.Name = "translateZText";
-            translateZText.Size = new Size(LabelWidth, LabelHeigt);
-            translateZText.TabIndex = 0;
-            translateZText.Text = "Translate Z";
+            const int translateZRow = 3;
+            translateZText = CreateLabel(LabelWidth, LabelHeigt, translateZRow, TextColumn, 0, "Translate Z");
             Controls.Add(translateZText);
-            
-            translateZValue = new Label();
-            translateZValue.AutoSize = true;
-            translateZValue.Location = new Point(90, LabelHeigt * 3);
-            translateZValue.Name = "translateZValue";
-            translateZValue.Size = new Size(LabelWidth, LabelHeigt);
-            translateZValue.TabIndex = 1;
-            translateZValue.Text = "0.0";
+            translateZValue = CreateLabel(LabelWidth, LabelHeigt, translateZRow, ValueColumn, 1, "0.0");
             Controls.Add(translateZValue);
-            
-            translateZControls = new Label();
-            translateZControls.AutoSize = true;
-            translateZControls.Location = new Point(140, LabelHeigt * 3);
-            translateZControls.Name = "translateZControls";
-            translateZControls.Size = new Size(LabelWidth, LabelHeigt);
-            translateZControls.TabIndex = 2;
-            translateZControls.Text = "PgUp/PgDn";
+            translateZControls = CreateLabel(LabelWidth, LabelHeigt, translateZRow, ControlsColumn, 1, "PgUp/PgDn");
             Controls.Add(translateZControls);
             
-            rotateXText = new Label();
-            rotateXText.AutoSize = true;
-            rotateXText.Location = new Point(1, LabelHeigt * 4);
-            rotateXText.Name = "rotateXText";
-            rotateXText.Size = new Size(LabelWidth, LabelHeigt);
-            rotateXText.TabIndex = 0;
-            rotateXText.Text = "Rotate X";
+            const int rotateXRow = 4;
+            rotateXText = CreateLabel(LabelWidth, LabelHeigt, rotateXRow, TextColumn, 0, "Rotate X");
             Controls.Add(rotateXText);
-            
-            rotateXValue = new Label();
-            rotateXValue.AutoSize = true;
-            rotateXValue.Location = new Point(90, LabelHeigt * 4);
-            rotateXValue.Name = "rotateXValue";
-            rotateXValue.Size = new Size(LabelWidth, LabelHeigt);
-            rotateXValue.TabIndex = 1;
-            rotateXValue.Text = "0";
+            rotateXValue = CreateLabel(LabelWidth, LabelHeigt, rotateXRow, ValueColumn, 1, "0");
             Controls.Add(rotateXValue);
-            
-            rotateXControls = new Label();
-            rotateXControls.AutoSize = true;
-            rotateXControls.Location = new Point(140, LabelHeigt * 4);
-            rotateXControls.Name = "rotateXControls";
-            rotateXControls.Size = new Size(LabelWidth, LabelHeigt);
-            rotateXControls.TabIndex = 2;
-            rotateXControls.Text = "x/X";
+            rotateXControls = CreateLabel(LabelWidth, LabelHeigt, rotateXRow, ControlsColumn, 1, "x/X");
             Controls.Add(rotateXControls);
             
-            rotateYText = new Label();
-            rotateYText.AutoSize = true;
-            rotateYText.Location = new Point(1, LabelHeigt * 5);
-            rotateYText.Name = "rotateYText";
-            rotateYText.Size = new Size(LabelWidth, LabelHeigt);
-            rotateYText.TabIndex = 0;
-            rotateYText.Text = "Rotate Y";
+            const int rotateYRow = 5;
+            rotateYText = CreateLabel(LabelWidth, LabelHeigt, rotateYRow, TextColumn, 0, "Rotate Y");
             Controls.Add(rotateYText);
-            
-            rotateYValue = new Label();
-            rotateYValue.AutoSize = true;
-            rotateYValue.Location = new Point(90, LabelHeigt * 5);
-            rotateYValue.Name = "rotateYValue";
-            rotateYValue.Size = new Size(LabelWidth, LabelHeigt);
-            rotateYValue.TabIndex = 1;
-            rotateYValue.Text = "0";
+            rotateYValue = CreateLabel(LabelWidth, LabelHeigt, rotateYRow, ValueColumn, 1, "0");
             Controls.Add(rotateYValue);
-            
-            rotateYControls = new Label();
-            rotateYControls.AutoSize = true;
-            rotateYControls.Location = new Point(140, LabelHeigt * 5);
-            rotateYControls.Name = "rotateYControls";
-            rotateYControls.Size = new Size(LabelWidth, LabelHeigt);
-            rotateYControls.TabIndex = 2;
-            rotateYControls.Text = "y/Y";
+            rotateYControls = CreateLabel(LabelWidth, LabelHeigt, rotateYRow, ControlsColumn, 1, "y/Y");
             Controls.Add(rotateYControls);
             
-            rotateZText = new Label();
-            rotateZText.AutoSize = true;
-            rotateZText.Location = new Point(1, LabelHeigt * 6);
-            rotateZText.Name = "rotateZText";
-            rotateZText.Size = new Size(LabelWidth, LabelHeigt);
-            rotateZText.TabIndex = 0;
-            rotateZText.Text = "Rotate Z";
+            const int rotateZRow = 6;
+            rotateZText = CreateLabel(LabelWidth, LabelHeigt, rotateZRow, TextColumn, 0, "Rotate Z");
             Controls.Add(rotateZText);
-            
-            rotateZValue = new Label();
-            rotateZValue.AutoSize = true;
-            rotateZValue.Location = new Point(90, LabelHeigt * 6);
-            rotateZValue.Name = "rotateZValue";
-            rotateZValue.Size = new Size(LabelWidth, LabelHeigt);
-            rotateZValue.TabIndex = 1;
-            rotateZValue.Text = "0";
+            rotateZValue = CreateLabel(LabelWidth, LabelHeigt, rotateZRow, ValueColumn, 1, "0");
             Controls.Add(rotateZValue);
-            
-            rotateZControls = new Label();
-            rotateZControls.AutoSize = true;
-            rotateZControls.Location = new Point(140, LabelHeigt * 6);
-            rotateZControls.Name = "rotateZControls";
-            rotateZControls.Size = new Size(LabelWidth, LabelHeigt);
-            rotateZControls.TabIndex = 2;
-            rotateZControls.Text = "z/Z";
+            rotateZControls = CreateLabel(LabelWidth, LabelHeigt, rotateZRow, ControlsColumn, 1, "z/Z");
             Controls.Add(rotateZControls);
             
-            radiansText = new Label();
-            radiansText.AutoSize = true;
-            radiansText.Location = new Point(1, LabelHeigt * 7 + 10);
-            radiansText.Name = "radiansText";
-            radiansText.Size = new Size(LabelWidth, LabelHeigt);
-            radiansText.TabIndex = 0;
-            radiansText.Text = "Radians";
+            const int radiansRow = 8;
+            radiansText = CreateLabel(LabelWidth, LabelHeigt, radiansRow, TextColumn, 0, "Radians");
             Controls.Add(radiansText);
-            
-            radiansValue = new Label();
-            radiansValue.AutoSize = true;
-            radiansValue.Location = new Point(90, LabelHeigt * 7 + 10);
-            radiansValue.Name = "radiansValue";
-            radiansValue.Size = new Size(LabelWidth, LabelHeigt);
-            radiansValue.TabIndex = 1;
-            radiansValue.Text = "0";
+            radiansValue = CreateLabel(LabelWidth, LabelHeigt, radiansRow, ValueColumn, 1, "0");
             Controls.Add(radiansValue);
-            
-            radiansControls = new Label();
-            radiansControls.AutoSize = true;
-            radiansControls.Location = new Point(140, LabelHeigt * 7 + 10);
-            radiansControls.Name = "radiansControls";
-            radiansControls.Size = new Size(LabelWidth, LabelHeigt);
-            radiansControls.TabIndex = 2;
-            radiansControls.Text = "r/R";
+            radiansControls = CreateLabel(LabelWidth, LabelHeigt, radiansRow, ControlsColumn, 1, "r/R");
             Controls.Add(radiansControls);
             
-            distanceText = new Label();
-            distanceText.AutoSize = true;
-            distanceText.Location = new Point(1, LabelHeigt * 8 + 10);
-            distanceText.Name = "distanceText";
-            distanceText.Size = new Size(LabelWidth, LabelHeigt);
-            distanceText.TabIndex = 0;
-            distanceText.Text = "Distance";
+            const int distanceRow = 9;
+            distanceText = CreateLabel(LabelWidth, LabelHeigt, distanceRow, TextColumn, 0, "Distance");
             Controls.Add(distanceText);
-            
-            distanceValue = new Label();
-            distanceValue.AutoSize = true;
-            distanceValue.Location = new Point(90, LabelHeigt * 8 + 10);
-            distanceValue.Name = "distanceValue";
-            distanceValue.Size = new Size(LabelWidth, LabelHeigt);
-            distanceValue.TabIndex = 1;
-            distanceValue.Text = "0";
+            distanceValue = CreateLabel(LabelWidth, LabelHeigt, distanceRow, ValueColumn, 1, "0");
             Controls.Add(distanceValue);
-            
-            distanceControls = new Label();
-            distanceControls.AutoSize = true;
-            distanceControls.Location = new Point(140, LabelHeigt * 8 + 10);
-            distanceControls.Name = "distanceControls";
-            distanceControls.Size = new Size(LabelWidth, LabelHeigt);
-            distanceControls.TabIndex = 2;
-            distanceControls.Text = "d/D";
+            distanceControls = CreateLabel(LabelWidth, LabelHeigt, distanceRow, ControlsColumn, 1, "d/D");
             Controls.Add(distanceControls);
             
-            phiText = new Label();
-            phiText.AutoSize = true;
-            phiText.Location = new Point(1, LabelHeigt * 9 + 10);
-            phiText.Name = "phiText";
-            phiText.Size = new Size(LabelWidth, LabelHeigt);
-            phiText.TabIndex = 0;
-            phiText.Text = "Phi";
+            const int phiRow = 10;
+            phiText = CreateLabel(LabelWidth, LabelHeigt, phiRow, TextColumn, 0, "Phi");
             Controls.Add(phiText);
-            
-            phiValue = new Label();
-            phiValue.AutoSize = true;
-            phiValue.Location = new Point(90, LabelHeigt * 9 + 10);
-            phiValue.Name = "phiValue";
-            phiValue.Size = new Size(LabelWidth, LabelHeigt);
-            phiValue.TabIndex = 1;
-            phiValue.Text = "0";
+            phiValue = CreateLabel(LabelWidth, LabelHeigt, phiRow, ValueColumn, 1, "0");
             Controls.Add(phiValue);
-            
-            phiControls = new Label();
-            phiControls.AutoSize = true;
-            phiControls.Location = new Point(140, LabelHeigt * 9 + 10);
-            phiControls.Name = "phiControls";
-            phiControls.Size = new Size(LabelWidth, LabelHeigt);
-            phiControls.TabIndex = 2;
-            phiControls.Text = "p/P";
+            phiControls = CreateLabel(LabelWidth, LabelHeigt, phiRow, ControlsColumn, 1, "p/P");
             Controls.Add(phiControls);
-            
-            thetaText = new Label();
-            thetaText.AutoSize = true;
-            thetaText.Location = new Point(1, LabelHeigt * 10 + 10);
-            thetaText.Name = "thetaText";
-            thetaText.Size = new Size(LabelWidth, LabelHeigt);
-            thetaText.TabIndex = 0;
-            thetaText.Text = "Theta";
+
+            const int thetaRow = 11;
+            thetaText = CreateLabel(LabelWidth, LabelHeigt, thetaRow, TextColumn, 0, "Theta");
             Controls.Add(thetaText);
-            
-            thetaValue = new Label();
-            thetaValue.AutoSize = true;
-            thetaValue.Location = new Point(90, LabelHeigt * 10 + 10);
-            thetaValue.Name = "thetaValue";
-            thetaValue.Size = new Size(LabelWidth, LabelHeigt);
-            thetaValue.TabIndex = 1;
-            thetaValue.Text = "0";
+            thetaValue = CreateLabel(LabelWidth, LabelHeigt, thetaRow, ValueColumn, 1, "0");
             Controls.Add(thetaValue);
-            
-            thetaControls = new Label();
-            thetaControls.AutoSize = true;
-            thetaControls.Location = new Point(140, LabelHeigt * 10 + 10);
-            thetaControls.Name = "thetaControls";
-            thetaControls.Size = new Size(LabelWidth, LabelHeigt);
-            thetaControls.TabIndex = 2;
-            thetaControls.Text = "t/T";
+            thetaControls = CreateLabel(LabelWidth, LabelHeigt, thetaRow, ControlsColumn, 1, "t/T");
             Controls.Add(thetaControls);
             
-            phaseText = new Label();
-            phaseText.AutoSize = true;
-            phaseText.Location = new Point(1, LabelHeigt * 12);
-            phaseText.Name = "phaseText";
-            phaseText.Size = new Size(LabelWidth, LabelHeigt);
-            phaseText.TabIndex = 0;
-            phaseText.Text = "Phase";
+            const int phaseRow = 13;
+            phaseText = CreateLabel(LabelWidth, LabelHeigt, phaseRow, TextColumn, 0, "Phase");
             Controls.Add(phaseText);
-            
-            phaseValue = new Label();
-            phaseValue.AutoSize = true;
-            phaseValue.Location = new Point(90, LabelHeigt * 12);
-            phaseValue.Name = "phaseValue";
-            phaseValue.Size = new Size(LabelWidth, LabelHeigt);
-            phaseValue.TabIndex = 1;
-            phaseValue.Text = "0";
+            phaseValue = CreateLabel(LabelWidth, LabelHeigt, phaseRow, ValueColumn, 1, "0");
             Controls.Add(phaseValue);
-
-            animationText = new Label();
-            animationText.AutoSize = true;
-            animationText.Location = new Point(1, LabelHeigt * 13);
-            animationText.Name = "animationText";
-            animationText.Size = new Size(LabelWidth, LabelHeigt);
-            animationText.TabIndex = 0;
-            animationText.Text = "Animation";
+            
+            const int animationRow = 14;
+            animationText = CreateLabel(LabelWidth, LabelHeigt, animationRow, TextColumn, 0, "Animation");
             Controls.Add(animationText);
-
-            animationValue = new Label();
-            animationValue.AutoSize = true;
-            animationValue.Location = new Point(90, LabelHeigt * 13);
-            animationValue.Name = "animationValue";
-            animationValue.Size = new Size(LabelWidth, LabelHeigt);
-            animationValue.TabIndex = 2;
-            animationValue.Text = "Play";
+            animationValue = CreateLabel(LabelWidth, LabelHeigt, animationRow, ValueColumn, 1, "Play");
             Controls.Add(animationValue);
-            
-            animationControls = new Label();
-            animationControls.AutoSize = true;
-            animationControls.Location = new Point(140, LabelHeigt * 13);
-            animationControls.Name = "animationControls";
-            animationControls.Size = new Size(LabelWidth, LabelHeigt);
-            animationControls.TabIndex = 2;
-            animationControls.Text = "A/O";
+            animationControls = CreateLabel(LabelWidth, LabelHeigt, animationRow, ControlsColumn, 1, "a/o");
             Controls.Add(animationControls);
-            
-            resetText = new Label();
-            resetText.AutoSize = true;
-            resetText.Location = new Point(1, LabelHeigt * 15);
-            resetText.Name = "resetText";
-            resetText.Size = new Size(LabelWidth, LabelHeigt);
-            resetText.TabIndex = 0;
-            resetText.Text = "Reset";
-            Controls.Add(resetText);
 
-            resetControls = new Label();
-            resetControls.AutoSize = true;
-            resetControls.Location = new Point(90, LabelHeigt * 15);
-            resetControls.Name = "resetControls";
-            resetControls.Size = new Size(LabelWidth, LabelHeigt);
-            resetControls.TabIndex = 2;
-            resetControls.Text = "C";
+            const int resetRow = 16;
+            resetText = CreateLabel(LabelWidth, LabelHeigt, resetRow, TextColumn, 0, "Reset");
+            Controls.Add(resetText);
+            resetControls = CreateLabel(LabelWidth, LabelHeigt, resetRow, ValueColumn, 1, "C");
             Controls.Add(resetControls);
-            
+
             // 
             // MatrixForm
             // 
@@ -402,7 +151,7 @@
             ClientSize = new Size(914, 600);
             Margin = new Padding(3, 4, 3, 4);
             Name = "MatrixForm";
-            Text = "Form";
+            Text = "Matrix transformations";
             KeyDown += Form_KeyDown;
             ResumeLayout(false);
             PerformLayout();
@@ -424,5 +173,17 @@
         private Label phaseText, phaseValue;
         private Label resetText, resetControls;
         private Label animationText, animationValue, animationControls;
+        
+        private Label CreateLabel(int labelWidth, int labelHeigt, int row, int column, int tabIndex, string text)
+        {
+            var label = new Label();
+            label.AutoSize = true;
+            label.Location = new Point(column, labelHeigt * row);
+            label.Size = new Size(labelWidth, labelHeigt);
+            label.TabIndex = tabIndex;
+            label.Text = text;
+
+            return label;
+        }
     }
 }
