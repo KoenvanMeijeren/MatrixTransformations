@@ -1167,7 +1167,7 @@ public class MatrixImmutableTests
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
-    
+
     [TestCase(new float[] { 0, 0, 0 }, "{(1,0,0,0),(0,1,0,0),(0,0,1,0),(0,0,0,1)}")]
     [TestCase(new float[] { 1, 2, 3 }, "{(1,0,0,1),(0,1,0,2),(0,0,1,3),(0,0,0,1)}")]
     [TestCase(new float[] { 75, -25, 1 }, "{(1,0,0,75),(0,1,0,-25),(0,0,1,1),(0,0,0,1)}")]
@@ -1183,7 +1183,7 @@ public class MatrixImmutableTests
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
-    
+
     [TestCase(new float[] { 0, 0, 0, 0 }, "{(1,0,0,0,0),(0,1,0,0,0),(0,0,1,0,0),(0,0,0,1,0),(0,0,0,0,1)}")]
     [TestCase(new float[] { 1, 2, 3, 4 }, "{(1,0,0,0,1),(0,1,0,0,2),(0,0,1,0,3),(0,0,0,1,4),(0,0,0,0,1)}")]
     [TestCase(new float[] { 75, -25, 1, 34 }, "{(1,0,0,0,75),(0,1,0,0,-25),(0,0,1,0,1),(0,0,0,1,34),(0,0,0,0,1)}")]
@@ -1222,8 +1222,8 @@ public class MatrixImmutableTests
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
-    
-    [TestCase(new float[] { 0, 0 }, new float[] { 0, 1, 3, 4, 5 }, new float[] {}, new float[] {}, new float[] {})]
+
+    [TestCase(new float[] { 0, 0 }, new float[] { 0, 1, 3, 4, 5 }, new float[] { }, new float[] { }, new float[] { })]
     [TestCase(new float[] { 0 }, new float[] { 0, 1, 3 }, new float[] { 0, 1, 3 }, new float[] { 0, 1, 3 }, new float[] { 0, 1, 3 })]
     [TestCase(new float[] { 0, 0, 0 }, new float[] { 0, 1, 3 }, new float[] { 0, 1, 3 }, new float[] { 0, 1, 3 }, new float[] { 0, 1, 3 })]
     [TestCase(new float[] { 0, 0 }, new float[] { 0, 1, 3 }, new float[] { 0, 1, 3 }, new float[] { 0, 1 }, new float[] { 0, 1, 3 })]

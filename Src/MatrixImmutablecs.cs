@@ -390,7 +390,7 @@ public class MatrixImmutable
 
             vectors[vectorIndex] = new VectorImmutable(positions);
         }
-        
+
         return new MatrixImmutable(vectors);
     }
 
@@ -523,7 +523,7 @@ public class MatrixImmutable
             throw new MatrixLeftColumnsAreNotEqualToMatrixRightRowsException();
         }
     }
-    
+
     private static void EnsureVectorColumnsAreEqualToTranslationMatrix(VectorImmutable vector, MatrixImmutable translationMatrix)
     {
         if (vector.Length() != translationMatrix.Length())
