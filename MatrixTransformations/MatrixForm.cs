@@ -157,6 +157,9 @@ public partial class MatrixForm : Form
 
     private void HandlePhaseOne()
     {
+        _theta -= ThetaStepSize;
+        thetaValue.Invoke((MethodInvoker) (() => thetaValue.Text = _theta.ToString()));
+        
         switch (_shouldPlayPhaseAnimationForward)
         {
             case false when _scale <= MinimumAnimationScale:
@@ -187,13 +190,14 @@ public partial class MatrixForm : Form
                 break;
         }
 
-        _theta -= ThetaStepSize;
         scaleValue.Invoke((MethodInvoker) (() => scaleValue.Text = Math.Round(_scale, 2).ToString(CultureInfo.InvariantCulture)));
-        thetaValue.Invoke((MethodInvoker) (() => thetaValue.Text = _theta.ToString()));
     }
     
     private void HandlePhaseTwo()
     {
+        _theta -= ThetaStepSize;
+        thetaValue.Invoke((MethodInvoker) (() => thetaValue.Text = _theta.ToString()));
+        
         switch (_shouldPlayPhaseAnimationForward)
         {
             case false when _rotateX <= MinimumAnimationRotateX:
@@ -224,13 +228,14 @@ public partial class MatrixForm : Form
                 break;
         }
 
-        _theta -= ThetaStepSize;
         rotateXValue.Invoke((MethodInvoker) (() => rotateXValue.Text = _rotateX.ToString(CultureInfo.InvariantCulture)));
-        thetaValue.Invoke((MethodInvoker) (() => thetaValue.Text = _theta.ToString()));
     }
     
     private void HandlePhaseThree()
     {
+        _phi += PhiStepSize;
+        phiValue.Invoke((MethodInvoker) (() => phiValue.Text = _phi.ToString()));
+        
         switch (_shouldPlayPhaseAnimationForward)
         {
             case false when _rotateY <= MinimumAnimationRotateY:
@@ -261,9 +266,7 @@ public partial class MatrixForm : Form
                 break;
         }
         
-        _phi += PhiStepSize;
         rotateYValue.Invoke((MethodInvoker) (() => rotateYValue.Text = _rotateY.ToString(CultureInfo.InvariantCulture)));
-        phiValue.Invoke((MethodInvoker) (() => phiValue.Text = _phi.ToString()));
     }
 
     private void HandlePhaseFour()
