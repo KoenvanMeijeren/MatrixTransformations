@@ -282,6 +282,11 @@ public class MatrixImmutable
 
         return axis switch
         {
+            Axis.Z => new MatrixImmutable(
+                new VectorImmutable(cosAlfa, -sinALfa, 0),
+                new VectorImmutable(sinALfa, cosAlfa, 0),
+                new VectorImmutable(0, 0, 1)
+            ),
             Axis.X => new MatrixImmutable(
                 new VectorImmutable(1, 0, 0),
                 new VectorImmutable(0, cosAlfa, -sinALfa),
@@ -290,12 +295,7 @@ public class MatrixImmutable
             Axis.Y => new MatrixImmutable(
                 new VectorImmutable(cosAlfa, 0, sinALfa),
                 new VectorImmutable(0, 1, 0),
-                new VectorImmutable(sinALfa, 0, cosAlfa)
-            ),
-            _ => new MatrixImmutable(
-                new VectorImmutable(cosAlfa, -sinALfa, 0),
-                new VectorImmutable(sinALfa, cosAlfa, 0),
-                new VectorImmutable(0, 0, 1)
+                new VectorImmutable(-sinALfa, 0, cosAlfa)
             )
         };
     }
@@ -342,7 +342,7 @@ public class MatrixImmutable
             Axis.Y => new MatrixImmutable(
                 new VectorImmutable(cosAlfa, 0, sinALfa, 0),
                 new VectorImmutable(0, 1, 0, 0),
-                new VectorImmutable(sinALfa, 0, cosAlfa, 0),
+                new VectorImmutable(-sinALfa, 0, cosAlfa, 0),
                 new VectorImmutable(0, 0, 0, 1)
             ),
         };
