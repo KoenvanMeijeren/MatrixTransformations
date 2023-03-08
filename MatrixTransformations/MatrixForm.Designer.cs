@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            const int LabelWidth = 50, LabelHeigt = 20, 
+            const int LabelWidth = 50, LabelHeigth = 20, 
                 TextColumn = 1, ValueColumn = 90, ControlsColumn = 140;
             SuspendLayout();
 
@@ -36,111 +36,111 @@
             // Control labels
             // 
             const int scaleRow = 0;
-            scaleText = CreateLabel(LabelWidth, LabelHeigt, scaleRow, TextColumn, 0, "Scale");
+            scaleText = CreateLabel(LabelWidth, LabelHeigth, scaleRow, TextColumn, 0, "Scale");
             Controls.Add(scaleText);
-            scaleValue = CreateLabel(LabelWidth, LabelHeigt, scaleRow, ValueColumn, 1, "0");
+            scaleValue = CreateLabel(LabelWidth, LabelHeigth, scaleRow, ValueColumn, 1, "0");
             Controls.Add(scaleValue);
-            scaleControls = CreateLabel(LabelWidth, LabelHeigt, scaleRow, ControlsColumn, 1, "s/S");
+            scaleControls = CreateLabel(LabelWidth, LabelHeigth, scaleRow, ControlsColumn, 1, "s/S");
             Controls.Add(scaleControls);
 
             const int translateXRow = 1;
-            translateXText = CreateLabel(LabelWidth, LabelHeigt, translateXRow, TextColumn, 0, "Translate X");
+            translateXText = CreateLabel(LabelWidth, LabelHeigth, translateXRow, TextColumn, 0, "Translate X");
             Controls.Add(translateXText);
-            translateXValue = CreateLabel(LabelWidth, LabelHeigt, translateXRow, ValueColumn, 1, "0.0");
+            translateXValue = CreateLabel(LabelWidth, LabelHeigth, translateXRow, ValueColumn, 1, "0.0");
             Controls.Add(translateXValue);
-            translateXControls = CreateLabel(LabelWidth, LabelHeigt, translateXRow, ControlsColumn, 1, "Left/Right");
+            translateXControls = CreateLabel(LabelWidth, LabelHeigth, translateXRow, ControlsColumn, 1, "Left/Right");
             Controls.Add(translateXControls);
             
             const int translateYRow = 2;
-            translateYText = CreateLabel(LabelWidth, LabelHeigt, translateYRow, TextColumn, 0, "Translate Y");
+            translateYText = CreateLabel(LabelWidth, LabelHeigth, translateYRow, TextColumn, 0, "Translate Y");
             Controls.Add(translateYText);
-            translateYValue = CreateLabel(LabelWidth, LabelHeigt, translateYRow, ValueColumn, 1, "0.0");
+            translateYValue = CreateLabel(LabelWidth, LabelHeigth, translateYRow, ValueColumn, 1, "0.0");
             Controls.Add(translateYValue);
-            translateYControls = CreateLabel(LabelWidth, LabelHeigt, translateYRow, ControlsColumn, 1, "Up/Down");
+            translateYControls = CreateLabel(LabelWidth, LabelHeigth, translateYRow, ControlsColumn, 1, "Up/Down");
             Controls.Add(translateYControls);
             
             const int translateZRow = 3;
-            translateZText = CreateLabel(LabelWidth, LabelHeigt, translateZRow, TextColumn, 0, "Translate Z");
+            translateZText = CreateLabel(LabelWidth, LabelHeigth, translateZRow, TextColumn, 0, "Translate Z");
             Controls.Add(translateZText);
-            translateZValue = CreateLabel(LabelWidth, LabelHeigt, translateZRow, ValueColumn, 1, "0.0");
+            translateZValue = CreateLabel(LabelWidth, LabelHeigth, translateZRow, ValueColumn, 1, "0.0");
             Controls.Add(translateZValue);
-            translateZControls = CreateLabel(LabelWidth, LabelHeigt, translateZRow, ControlsColumn, 1, "PgUp/PgDn");
+            translateZControls = CreateLabel(LabelWidth, LabelHeigth, translateZRow, ControlsColumn, 1, "PgUp/PgDn");
             Controls.Add(translateZControls);
             
             const int rotateXRow = 4;
-            rotateXText = CreateLabel(LabelWidth, LabelHeigt, rotateXRow, TextColumn, 0, "Rotate X");
+            rotateXText = CreateLabel(LabelWidth, LabelHeigth, rotateXRow, TextColumn, 0, "Rotate X");
             Controls.Add(rotateXText);
-            rotateXValue = CreateLabel(LabelWidth, LabelHeigt, rotateXRow, ValueColumn, 1, "0");
+            rotateXValue = CreateLabel(LabelWidth, LabelHeigth, rotateXRow, ValueColumn, 1, "0");
             Controls.Add(rotateXValue);
-            rotateXControls = CreateLabel(LabelWidth, LabelHeigt, rotateXRow, ControlsColumn, 1, "x/X");
+            rotateXControls = CreateLabel(LabelWidth, LabelHeigth, rotateXRow, ControlsColumn, 1, "x/X");
             Controls.Add(rotateXControls);
             
             const int rotateYRow = 5;
-            rotateYText = CreateLabel(LabelWidth, LabelHeigt, rotateYRow, TextColumn, 0, "Rotate Y");
+            rotateYText = CreateLabel(LabelWidth, LabelHeigth, rotateYRow, TextColumn, 0, "Rotate Y");
             Controls.Add(rotateYText);
-            rotateYValue = CreateLabel(LabelWidth, LabelHeigt, rotateYRow, ValueColumn, 1, "0");
+            rotateYValue = CreateLabel(LabelWidth, LabelHeigth, rotateYRow, ValueColumn, 1, "0");
             Controls.Add(rotateYValue);
-            rotateYControls = CreateLabel(LabelWidth, LabelHeigt, rotateYRow, ControlsColumn, 1, "y/Y");
+            rotateYControls = CreateLabel(LabelWidth, LabelHeigth, rotateYRow, ControlsColumn, 1, "y/Y");
             Controls.Add(rotateYControls);
             
             const int rotateZRow = 6;
-            rotateZText = CreateLabel(LabelWidth, LabelHeigt, rotateZRow, TextColumn, 0, "Rotate Z");
+            rotateZText = CreateLabel(LabelWidth, LabelHeigth, rotateZRow, TextColumn, 0, "Rotate Z");
             Controls.Add(rotateZText);
-            rotateZValue = CreateLabel(LabelWidth, LabelHeigt, rotateZRow, ValueColumn, 1, "0");
+            rotateZValue = CreateLabel(LabelWidth, LabelHeigth, rotateZRow, ValueColumn, 1, "0");
             Controls.Add(rotateZValue);
-            rotateZControls = CreateLabel(LabelWidth, LabelHeigt, rotateZRow, ControlsColumn, 1, "z/Z");
+            rotateZControls = CreateLabel(LabelWidth, LabelHeigth, rotateZRow, ControlsColumn, 1, "z/Z");
             Controls.Add(rotateZControls);
             
             const int radiansRow = 8;
-            radiansText = CreateLabel(LabelWidth, LabelHeigt, radiansRow, TextColumn, 0, "Radians");
+            radiansText = CreateLabel(LabelWidth, LabelHeigth, radiansRow, TextColumn, 0, "Radians");
             Controls.Add(radiansText);
-            radiansValue = CreateLabel(LabelWidth, LabelHeigt, radiansRow, ValueColumn, 1, "0");
+            radiansValue = CreateLabel(LabelWidth, LabelHeigth, radiansRow, ValueColumn, 1, "0");
             Controls.Add(radiansValue);
-            radiansControls = CreateLabel(LabelWidth, LabelHeigt, radiansRow, ControlsColumn, 1, "r/R");
+            radiansControls = CreateLabel(LabelWidth, LabelHeigth, radiansRow, ControlsColumn, 1, "r/R");
             Controls.Add(radiansControls);
             
             const int distanceRow = 9;
-            distanceText = CreateLabel(LabelWidth, LabelHeigt, distanceRow, TextColumn, 0, "Distance");
+            distanceText = CreateLabel(LabelWidth, LabelHeigth, distanceRow, TextColumn, 0, "Distance");
             Controls.Add(distanceText);
-            distanceValue = CreateLabel(LabelWidth, LabelHeigt, distanceRow, ValueColumn, 1, "0");
+            distanceValue = CreateLabel(LabelWidth, LabelHeigth, distanceRow, ValueColumn, 1, "0");
             Controls.Add(distanceValue);
-            distanceControls = CreateLabel(LabelWidth, LabelHeigt, distanceRow, ControlsColumn, 1, "d/D");
+            distanceControls = CreateLabel(LabelWidth, LabelHeigth, distanceRow, ControlsColumn, 1, "d/D");
             Controls.Add(distanceControls);
             
             const int phiRow = 10;
-            phiText = CreateLabel(LabelWidth, LabelHeigt, phiRow, TextColumn, 0, "Phi");
+            phiText = CreateLabel(LabelWidth, LabelHeigth, phiRow, TextColumn, 0, "Phi");
             Controls.Add(phiText);
-            phiValue = CreateLabel(LabelWidth, LabelHeigt, phiRow, ValueColumn, 1, "0");
+            phiValue = CreateLabel(LabelWidth, LabelHeigth, phiRow, ValueColumn, 1, "0");
             Controls.Add(phiValue);
-            phiControls = CreateLabel(LabelWidth, LabelHeigt, phiRow, ControlsColumn, 1, "p/P");
+            phiControls = CreateLabel(LabelWidth, LabelHeigth, phiRow, ControlsColumn, 1, "p/P");
             Controls.Add(phiControls);
 
             const int thetaRow = 11;
-            thetaText = CreateLabel(LabelWidth, LabelHeigt, thetaRow, TextColumn, 0, "Theta");
+            thetaText = CreateLabel(LabelWidth, LabelHeigth, thetaRow, TextColumn, 0, "Theta");
             Controls.Add(thetaText);
-            thetaValue = CreateLabel(LabelWidth, LabelHeigt, thetaRow, ValueColumn, 1, "0");
+            thetaValue = CreateLabel(LabelWidth, LabelHeigth, thetaRow, ValueColumn, 1, "0");
             Controls.Add(thetaValue);
-            thetaControls = CreateLabel(LabelWidth, LabelHeigt, thetaRow, ControlsColumn, 1, "t/T");
+            thetaControls = CreateLabel(LabelWidth, LabelHeigth, thetaRow, ControlsColumn, 1, "t/T");
             Controls.Add(thetaControls);
             
             const int phaseRow = 13;
-            phaseText = CreateLabel(LabelWidth, LabelHeigt, phaseRow, TextColumn, 0, "Phase");
+            phaseText = CreateLabel(LabelWidth, LabelHeigth, phaseRow, TextColumn, 0, "Phase");
             Controls.Add(phaseText);
-            phaseValue = CreateLabel(LabelWidth, LabelHeigt, phaseRow, ValueColumn, 1, "0");
+            phaseValue = CreateLabel(LabelWidth, LabelHeigth, phaseRow, ValueColumn, 1, "0");
             Controls.Add(phaseValue);
             
             const int animationRow = 14;
-            animationText = CreateLabel(LabelWidth, LabelHeigt, animationRow, TextColumn, 0, "Animation");
+            animationText = CreateLabel(LabelWidth, LabelHeigth, animationRow, TextColumn, 0, "Animation");
             Controls.Add(animationText);
-            animationValue = CreateLabel(LabelWidth, LabelHeigt, animationRow, ValueColumn, 1, "Play");
+            animationValue = CreateLabel(LabelWidth, LabelHeigth, animationRow, ValueColumn, 1, "Play");
             Controls.Add(animationValue);
-            animationControls = CreateLabel(LabelWidth, LabelHeigt, animationRow, ControlsColumn, 1, "a/o");
+            animationControls = CreateLabel(LabelWidth, LabelHeigth, animationRow, ControlsColumn, 1, "a/o");
             Controls.Add(animationControls);
 
             const int resetRow = 16;
-            resetText = CreateLabel(LabelWidth, LabelHeigt, resetRow, TextColumn, 0, "Reset");
+            resetText = CreateLabel(LabelWidth, LabelHeigth, resetRow, TextColumn, 0, "Reset");
             Controls.Add(resetText);
-            resetControls = CreateLabel(LabelWidth, LabelHeigt, resetRow, ValueColumn, 1, "C");
+            resetControls = CreateLabel(LabelWidth, LabelHeigth, resetRow, ValueColumn, 1, "C");
             Controls.Add(resetControls);
 
             // 
