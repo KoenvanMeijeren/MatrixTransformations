@@ -520,7 +520,7 @@ public class MatrixImmutable
     {
         if (left.Length() != right.Length())
         {
-            throw new MatrixLeftColumnsAreNotEqualToMatrixRightRows();
+            throw new MatrixLeftColumnsAreNotEqualToMatrixRightRowsException();
         }
     }
     
@@ -590,7 +590,7 @@ public class MatrixVectorsLengthNotEqualException : Exception
 
 }
 
-public class MatrixLeftColumnsAreNotEqualToMatrixRightRows : Exception
+public class MatrixLeftColumnsAreNotEqualToMatrixRightRowsException : Exception
 {
 
 }

@@ -667,7 +667,7 @@ public class MatrixImmutableTests
         var right = new MatrixImmutable(vector3);
 
         // Act & assert
-        Assert.Throws<MatrixLeftColumnsAreNotEqualToMatrixRightRows>(() =>
+        Assert.Throws<MatrixLeftColumnsAreNotEqualToMatrixRightRowsException>(() =>
         {
             var result = left * right;
         });
