@@ -367,53 +367,42 @@ public class MatrixImmutable
         return new MatrixImmutable(newVectors);
     }
 
-    public static MatrixImmutable VectorToTranslationMatrix3D(VectorImmutable vector)
+    public static MatrixImmutable VectorToTranslationMatrix(VectorImmutable vector)
     {
-        EnsureVectorIs2D(vector);
-
-        return new MatrixImmutable(
-            new VectorImmutable(1, 0, vector.X),
-            new VectorImmutable(0, 1, vector.Y),
-            new VectorImmutable(0, 0, 1)
-        );
-    }
-
-    public static MatrixImmutable Translate3D(MatrixImmutable matrix, VectorImmutable vector)
-    {
-        var translationMatrix = VectorToTranslationMatrix3D(vector);
-        var vectorsLength = matrix.Vectors.Length;
-        var newVectors = new VectorImmutable[vectorsLength];
-        for (var index = 0; index < vectorsLength; index++)
+        if (vector.IsEmpty())
         {
-            var matrixVector = matrix.Vectors[index];
-            EnsureVectorIs3D(matrixVector);
-            newVectors[index] = translationMatrix * matrixVector;
+            return new MatrixImmutable();
         }
 
-        return new MatrixImmutable(newVectors);
+        var vectorsLength = vector.Length() + 1;
+        var vectors = new VectorImmutable[vectorsLength];
+        var identityIndex = 0;
+        for (var vectorIndex = 0; vectorIndex < vectorsLength; vectorIndex++)
+        {
+            var positions = new float[vectorsLength];
+            positions[identityIndex++] = 1;
+
+            positions[vectorsLength - 1] = 1;
+            if (vectorIndex < vector.Positions.Length)
+            {
+                positions[vectorsLength - 1] = vector.Positions[vectorIndex];
+            }
+
+            vectors[vectorIndex] = new VectorImmutable(positions);
+        }
+        
+        return new MatrixImmutable(vectors);
     }
 
-    public static MatrixImmutable VectorToTranslationMatrix4D(VectorImmutable vector)
+    public static MatrixImmutable Translate(MatrixImmutable matrix, VectorImmutable vector)
     {
-        EnsureVectorIs3D(vector);
-
-        return new MatrixImmutable(
-            new VectorImmutable(1, 0, 0, vector.X),
-            new VectorImmutable(0, 1, 0, vector.Y),
-            new VectorImmutable(0, 0, 1, vector.Z),
-            new VectorImmutable(0, 0, 0, 1)
-        );
-    }
-
-    public static MatrixImmutable Translate4D(MatrixImmutable matrix, VectorImmutable vector)
-    {
-        var translationMatrix = VectorToTranslationMatrix4D(vector);
+        var translationMatrix = VectorToTranslationMatrix(vector);
         var vectorsLength = matrix.Vectors.Length;
         var newVectors = new VectorImmutable[vectorsLength];
         for (var index = 0; index < vectorsLength; index++)
         {
             var matrixVector = matrix.Vectors[index];
-            EnsureVectorIs4D(matrixVector);
+            EnsureVectorColumnsAreEqualToTranslationMatrix(matrixVector, translationMatrix);
             newVectors[index] = translationMatrix * matrixVector;
         }
 
@@ -534,6 +523,14 @@ public class MatrixImmutable
             throw new MatrixLeftColumnsAreNotEqualToMatrixRightRows();
         }
     }
+    
+    private static void EnsureVectorColumnsAreEqualToTranslationMatrix(VectorImmutable vector, MatrixImmutable translationMatrix)
+    {
+        if (vector.Length() != translationMatrix.Length())
+        {
+            throw new MatrixVectorColumnsAreNotEqualToTranslationMatrixException();
+        }
+    }
 
     private static void EnsureVectorIs2D(VectorImmutable vector)
     {
@@ -594,6 +591,11 @@ public class MatrixVectorsLengthNotEqualException : Exception
 }
 
 public class MatrixLeftColumnsAreNotEqualToMatrixRightRows : Exception
+{
+
+}
+
+public class MatrixVectorColumnsAreNotEqualToTranslationMatrixException : Exception
 {
 
 }

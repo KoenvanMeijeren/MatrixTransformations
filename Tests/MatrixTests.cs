@@ -1137,6 +1137,22 @@ public class MatrixImmutableTests
         Assert.Throws<MatrixVectorsNot4DException>(() => MatrixImmutable.Rotate4D(Axis.X, matrix, 0));
     }
 
+    [TestCase(new float[] { }, "{}")]
+    [TestCase(new float[] { 0 }, "{(1,0),(0,1)}")]
+    [TestCase(new float[] { 1 }, "{(1,1),(0,1)}")]
+    [TestCase(new float[] { 75 }, "{(1,75),(0,1)}")]
+    public void VectorToTranslationMatrix_01_1D_and_2D_Ok(float[] vectorPositions, string expectedResult)
+    {
+        // Arrange
+        var vector = new VectorImmutable(vectorPositions);
+
+        // Act
+        var result = MatrixImmutable.VectorToTranslationMatrix(vector);
+
+        // Assert
+        Assert.That(result.ToString(), Is.EqualTo(expectedResult));
+    }
+
     [TestCase(new float[] { 0, 0 }, "{(1,0,0),(0,1,0),(0,0,1)}")]
     [TestCase(new float[] { 1, 2 }, "{(1,0,1),(0,1,2),(0,0,1)}")]
     [TestCase(new float[] { 75, -25 }, "{(1,0,75),(0,1,-25),(0,0,1)}")]
@@ -1146,21 +1162,41 @@ public class MatrixImmutableTests
         var vector = new VectorImmutable(vectorPositions);
 
         // Act
-        var result = MatrixImmutable.VectorToTranslationMatrix3D(vector);
+        var result = MatrixImmutable.VectorToTranslationMatrix(vector);
 
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
-
-    [TestCase(new float[] { })]
-    [TestCase(new float[] { 0 })]
-    public void VectorToTranslationMatrix_01_3D_ThrowsOnVectorNot2D(float[] vectorPositions)
+    
+    [TestCase(new float[] { 0, 0, 0 }, "{(1,0,0,0),(0,1,0,0),(0,0,1,0),(0,0,0,1)}")]
+    [TestCase(new float[] { 1, 2, 3 }, "{(1,0,0,1),(0,1,0,2),(0,0,1,3),(0,0,0,1)}")]
+    [TestCase(new float[] { 75, -25, 1 }, "{(1,0,0,75),(0,1,0,-25),(0,0,1,1),(0,0,0,1)}")]
+    [TestCase(new float[] { 75, -25, 34 }, "{(1,0,0,75),(0,1,0,-25),(0,0,1,34),(0,0,0,1)}")]
+    public void VectorToTranslationMatrix_01_4D_Ok(float[] vectorPositions, string expectedResult)
     {
         // Arrange
         var vector = new VectorImmutable(vectorPositions);
 
-        // Act & assert
-        Assert.Throws<MatrixVectorsNot2DException>(() => MatrixImmutable.VectorToTranslationMatrix3D(vector));
+        // Act
+        var result = MatrixImmutable.VectorToTranslationMatrix(vector);
+
+        // Assert
+        Assert.That(result.ToString(), Is.EqualTo(expectedResult));
+    }
+    
+    [TestCase(new float[] { 0, 0, 0, 0 }, "{(1,0,0,0,0),(0,1,0,0,0),(0,0,1,0,0),(0,0,0,1,0),(0,0,0,0,1)}")]
+    [TestCase(new float[] { 1, 2, 3, 4 }, "{(1,0,0,0,1),(0,1,0,0,2),(0,0,1,0,3),(0,0,0,1,4),(0,0,0,0,1)}")]
+    [TestCase(new float[] { 75, -25, 1, 34 }, "{(1,0,0,0,75),(0,1,0,0,-25),(0,0,1,0,1),(0,0,0,1,34),(0,0,0,0,1)}")]
+    public void VectorToTranslationMatrix_01_5D_Ok(float[] vectorPositions, string expectedResult)
+    {
+        // Arrange
+        var vector = new VectorImmutable(vectorPositions);
+
+        // Act
+        var result = MatrixImmutable.VectorToTranslationMatrix(vector);
+
+        // Assert
+        Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
 
     [TestCase(new float[] { 0, 0 }, "{(-100,-100,1),(100,-100,1),(100,100,1),(-100,100,1)}")]
@@ -1181,44 +1217,35 @@ public class MatrixImmutableTests
         );
 
         // Act
-        var result = MatrixImmutable.Translate3D(matrix, vector);
+        var result = MatrixImmutable.Translate(matrix, vector);
 
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
-
-    [TestCase(new float[] { 0, 0, 0 }, "{(1,0,0,0),(0,1,0,0),(0,0,1,0),(0,0,0,1)}")]
-    [TestCase(new float[] { 1, 2, 3 }, "{(1,0,0,1),(0,1,0,2),(0,0,1,3),(0,0,0,1)}")]
-    [TestCase(new float[] { 75, -25, 1 }, "{(1,0,0,75),(0,1,0,-25),(0,0,1,1),(0,0,0,1)}")]
-    [TestCase(new float[] { 75, -25, 34 }, "{(1,0,0,75),(0,1,0,-25),(0,0,1,34),(0,0,0,1)}")]
-    public void VectorToTranslationMatrix_01_4D_Ok(float[] vectorPositions, string expectedResult)
+    
+    [TestCase(new float[] { 0, 0 }, new float[] { 0, 1, 3, 4, 5 }, new float[] {}, new float[] {}, new float[] {})]
+    [TestCase(new float[] { 0 }, new float[] { 0, 1, 3 }, new float[] { 0, 1, 3 }, new float[] { 0, 1, 3 }, new float[] { 0, 1, 3 })]
+    [TestCase(new float[] { 0, 0, 0 }, new float[] { 0, 1, 3 }, new float[] { 0, 1, 3 }, new float[] { 0, 1, 3 }, new float[] { 0, 1, 3 })]
+    [TestCase(new float[] { 0, 0 }, new float[] { 0, 1, 3 }, new float[] { 0, 1, 3 }, new float[] { 0, 1 }, new float[] { 0, 1, 3 })]
+    public void TranslateMatrix_02_ThrowsOnTranslationMatrixNotEqualToInputMatrix(float[] vectorPositions, float[] matrixVectorPositions1, float[] matrixVectorPositions2, float[] matrixVectorPositions3, float[] matrixVectorPositions4)
     {
         // Arrange
         var vector = new VectorImmutable(vectorPositions);
-
-        // Act
-        var result = MatrixImmutable.VectorToTranslationMatrix4D(vector);
-
-        // Assert
-        Assert.That(result.ToString(), Is.EqualTo(expectedResult));
-    }
-
-    [TestCase(new float[] { })]
-    [TestCase(new float[] { 0 })]
-    [TestCase(new float[] { 0, 1 })]
-    public void VectorToTranslationMatrix_01_4D_ThrowsOnVectorNot2D(float[] vectorPositions)
-    {
-        // Arrange
-        var vector = new VectorImmutable(vectorPositions);
+        var matrix = new MatrixImmutable(
+            new VectorImmutable(matrixVectorPositions1),
+            new VectorImmutable(matrixVectorPositions2),
+            new VectorImmutable(matrixVectorPositions3),
+            new VectorImmutable(matrixVectorPositions4)
+        );
 
         // Act & assert
-        Assert.Throws<MatrixVectorsNot3DException>(() => MatrixImmutable.VectorToTranslationMatrix4D(vector));
+        Assert.Throws<MatrixVectorColumnsAreNotEqualToTranslationMatrixException>(() => MatrixImmutable.Translate(matrix, vector));
     }
 
     [TestCase(new float[] { 0, 0, 0 }, "{(-100,-100,1,1),(100,-100,1,1),(100,100,1,1),(-100,100,1,1)}")]
     [TestCase(new float[] { 1, 2, 3 }, "{(-99,-98,4,1),(101,-98,4,1),(101,102,4,1),(-99,102,4,1)}")]
     [TestCase(new float[] { 75, -25, 1 }, "{(-25,-125,2,1),(175,-125,2,1),(175,75,2,1),(-25,75,2,1)}")]
-    public void TranslateMatrix_01_4D_Ok(float[] vectorPositions, string expectedResult)
+    public void TranslateMatrix_03_4D_Ok(float[] vectorPositions, string expectedResult)
     {
         // Mocked values
         const int Size = 100;
@@ -1233,7 +1260,7 @@ public class MatrixImmutableTests
         );
 
         // Act
-        var result = MatrixImmutable.Translate4D(matrix, vector);
+        var result = MatrixImmutable.Translate(matrix, vector);
 
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
