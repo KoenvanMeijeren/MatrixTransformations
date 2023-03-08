@@ -49,13 +49,13 @@ public partial class MatrixForm : Form
 
     // Objects
     private readonly Cube _cube, _cubeOriginal;
-    
+
     // Animation
     private const Phase DefaultPhase = Phase.One;
     private Phase _phase = DefaultPhase;
     private readonly Timer _timer;
-    private bool _shouldPlayAnimation, 
-        _shouldPlayPhaseAnimationForward = true, 
+    private bool _shouldPlayAnimation,
+        _shouldPlayPhaseAnimationForward = true,
         _shouldEndPhaseAnimation;
 
     private const float AnimationScaleStepSize = 0.01f;
@@ -89,7 +89,7 @@ public partial class MatrixForm : Form
         // Create objects
         _cube = new Cube(Color.Purple);
         _cubeOriginal = new Cube(Color.Purple);
-        
+
         // Initialize the timer and runs asn animation which ticks every 50 ms
         _timer = new Timer(50);
         _timer.AutoReset = true;
@@ -127,7 +127,7 @@ public partial class MatrixForm : Form
         _cube.Matrix = MatrixImmutable.Scale(_cube.Matrix, _scale);
         _cube.Draw(graphics, _cube.Matrix);
     }
-    
+
     private void CubeAnimation(object? sender, ElapsedEventArgs eventArgs)
     {
         if (!_shouldPlayAnimation)
@@ -151,15 +151,15 @@ public partial class MatrixForm : Form
                 HandlePhaseFour();
                 break;
         }
-        
+
         Invalidate();
     }
 
     private void HandlePhaseOne()
     {
         _theta -= ThetaStepSize;
-        thetaValue.Invoke((MethodInvoker) (() => thetaValue.Text = _theta.ToString()));
-        
+        thetaValue.Invoke((MethodInvoker)(() => thetaValue.Text = _theta.ToString()));
+
         switch (_shouldPlayPhaseAnimationForward)
         {
             case false when _scale <= MinimumAnimationScale:
@@ -173,8 +173,8 @@ public partial class MatrixForm : Form
         if (_shouldEndPhaseAnimation)
         {
             _phase = Phase.Two;
-            phaseValue.Invoke((MethodInvoker) (() => phaseValue.Text = _phase.ToString()));
-            
+            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = _phase.ToString()));
+
             _shouldEndPhaseAnimation = false;
             _shouldPlayPhaseAnimationForward = true;
             return;
@@ -190,14 +190,14 @@ public partial class MatrixForm : Form
                 break;
         }
 
-        scaleValue.Invoke((MethodInvoker) (() => scaleValue.Text = Math.Round(_scale, 2).ToString(CultureInfo.InvariantCulture)));
+        scaleValue.Invoke((MethodInvoker)(() => scaleValue.Text = Math.Round(_scale, 2).ToString(CultureInfo.InvariantCulture)));
     }
-    
+
     private void HandlePhaseTwo()
     {
         _theta -= ThetaStepSize;
-        thetaValue.Invoke((MethodInvoker) (() => thetaValue.Text = _theta.ToString()));
-        
+        thetaValue.Invoke((MethodInvoker)(() => thetaValue.Text = _theta.ToString()));
+
         switch (_shouldPlayPhaseAnimationForward)
         {
             case false when _rotateX <= MinimumAnimationRotateX:
@@ -211,8 +211,8 @@ public partial class MatrixForm : Form
         if (_shouldEndPhaseAnimation)
         {
             _phase = Phase.Three;
-            phaseValue.Invoke((MethodInvoker) (() => phaseValue.Text = _phase.ToString()));
-            
+            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = _phase.ToString()));
+
             _shouldEndPhaseAnimation = false;
             _shouldPlayPhaseAnimationForward = true;
             return;
@@ -228,14 +228,14 @@ public partial class MatrixForm : Form
                 break;
         }
 
-        rotateXValue.Invoke((MethodInvoker) (() => rotateXValue.Text = _rotateX.ToString(CultureInfo.InvariantCulture)));
+        rotateXValue.Invoke((MethodInvoker)(() => rotateXValue.Text = _rotateX.ToString(CultureInfo.InvariantCulture)));
     }
-    
+
     private void HandlePhaseThree()
     {
         _phi += PhiStepSize;
-        phiValue.Invoke((MethodInvoker) (() => phiValue.Text = _phi.ToString()));
-        
+        phiValue.Invoke((MethodInvoker)(() => phiValue.Text = _phi.ToString()));
+
         switch (_shouldPlayPhaseAnimationForward)
         {
             case false when _rotateY <= MinimumAnimationRotateY:
@@ -249,8 +249,8 @@ public partial class MatrixForm : Form
         if (_shouldEndPhaseAnimation)
         {
             _phase = Phase.Four;
-            phaseValue.Invoke((MethodInvoker) (() => phaseValue.Text = _phase.ToString()));
-            
+            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = _phase.ToString()));
+
             _shouldEndPhaseAnimation = false;
             _shouldPlayPhaseAnimationForward = true;
             return;
@@ -265,8 +265,8 @@ public partial class MatrixForm : Form
                 _rotateY -= RotateStepSize;
                 break;
         }
-        
-        rotateYValue.Invoke((MethodInvoker) (() => rotateYValue.Text = _rotateY.ToString(CultureInfo.InvariantCulture)));
+
+        rotateYValue.Invoke((MethodInvoker)(() => rotateYValue.Text = _rotateY.ToString(CultureInfo.InvariantCulture)));
     }
 
     private void HandlePhaseFour()
@@ -274,7 +274,7 @@ public partial class MatrixForm : Form
         if (_phi == DefaultPhi && _theta == DefaultTheta)
         {
             _phase = Phase.One;
-            phaseValue.Invoke((MethodInvoker) (() => phaseValue.Text = _phase.ToString()));
+            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = _phase.ToString()));
             return;
         }
 
@@ -287,11 +287,11 @@ public partial class MatrixForm : Form
         {
             _phi -= PhiStepSize;
         }
-        
-        phiValue.Invoke((MethodInvoker) (() => phiValue.Text = _phi.ToString()));
-        thetaValue.Invoke((MethodInvoker) (() => thetaValue.Text = _theta.ToString()));
+
+        phiValue.Invoke((MethodInvoker)(() => phiValue.Text = _phi.ToString()));
+        thetaValue.Invoke((MethodInvoker)(() => thetaValue.Text = _theta.ToString()));
     }
-    
+
     private void Form_KeyDown(object sender, KeyEventArgs eventArgs)
     {
         if (eventArgs.KeyCode == Keys.Escape)
