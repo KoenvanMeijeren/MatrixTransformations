@@ -453,9 +453,9 @@ public class MatrixImmutable
         var newVectors = new VectorImmutable[vectorsLength];
         for (var index = 0; index < vectorsLength; index++)
         {
-            var matrixVector = matrix.Vectors[index];
-            var viewMatrixResult = viewMatrix * matrixVector;
-            newVectors[index] = ProjectionMatrix4D(distance, viewMatrixResult) * viewMatrixResult;
+            var vector = matrix.Vectors[index];
+            var viewMatrixVector = viewMatrix * vector;
+            newVectors[index] = ProjectionMatrix4D(distance, viewMatrixVector) * viewMatrixVector;
         }
 
         return new MatrixImmutable(newVectors);
