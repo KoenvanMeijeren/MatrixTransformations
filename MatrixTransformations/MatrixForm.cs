@@ -164,7 +164,7 @@ public partial class MatrixForm : Form
         if (_shouldEndPhaseAnimation)
         {
             _phase = Phase.Two;
-            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = ((int) _phase).ToString()));
+            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = ((int)_phase).ToString()));
 
             _shouldEndPhaseAnimation = false;
             _shouldPlayPhaseAnimationForward = true;
@@ -202,7 +202,7 @@ public partial class MatrixForm : Form
         if (_shouldEndPhaseAnimation)
         {
             _phase = Phase.Three;
-            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = ((int) _phase).ToString()));
+            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = ((int)_phase).ToString()));
 
             _shouldEndPhaseAnimation = false;
             _shouldPlayPhaseAnimationForward = true;
@@ -240,7 +240,7 @@ public partial class MatrixForm : Form
         if (_shouldEndPhaseAnimation)
         {
             _phase = Phase.Four;
-            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = ((int) _phase).ToString()));
+            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = ((int)_phase).ToString()));
 
             _shouldEndPhaseAnimation = false;
             _shouldPlayPhaseAnimationForward = true;
@@ -265,7 +265,7 @@ public partial class MatrixForm : Form
         if (_phi == DefaultPhi && _theta == DefaultTheta)
         {
             _phase = Phase.One;
-            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = ((int) _phase).ToString()));
+            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = ((int)_phase).ToString()));
             return;
         }
 
@@ -546,7 +546,7 @@ public partial class MatrixForm : Form
         distanceValue.Text = _distance.ToString(CultureInfo.InvariantCulture);
         phiValue.Text = _phi.ToString(CultureInfo.InvariantCulture);
         thetaValue.Text = _theta.ToString(CultureInfo.InvariantCulture);
-        phaseValue.Text = ((int) _phase).ToString();
+        phaseValue.Text = ((int)_phase).ToString();
         animationValue.Text = "Play";
     }
 }

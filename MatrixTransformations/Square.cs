@@ -5,7 +5,7 @@ namespace MatrixTransformations;
 public class Square
 {
     private readonly Color _color;
-    private int _size;
+    private readonly int _size;
     private readonly float _weight;
 
     public MatrixImmutable Matrix { get; set; }

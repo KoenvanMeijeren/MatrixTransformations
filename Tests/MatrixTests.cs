@@ -149,7 +149,6 @@ public class MatrixImmutableTests
         var vector2 = new VectorImmutable(1, 0);
         var matrix = new MatrixImmutable(vector1, vector2);
 
-
         // Act && assert
         Assert.Throws<MatrixIndexOutOfBoundsException>(() => MatrixImmutable.ToVector(matrix, 2));
     }

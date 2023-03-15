@@ -418,7 +418,7 @@ public class MatrixImmutable
     /// <returns>The viewing matrix, mostly used for viewing pipelines.</returns>
     public static MatrixImmutable ViewMatrix4D(float radians, float theta, float phi)
     {
-        var radiansTheta =  Calculator.DegreesToRadians(theta);
+        var radiansTheta = Calculator.DegreesToRadians(theta);
         var radiansPhi = Calculator.DegreesToRadians(phi);
         var cosTheta = (float)Math.Cos(radiansTheta);
         var sinTheta = (float)Math.Sin(radiansTheta);
