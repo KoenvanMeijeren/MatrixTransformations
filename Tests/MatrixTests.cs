@@ -149,7 +149,6 @@ public class MatrixImmutableTests
         var vector2 = new VectorImmutable(1, 0);
         var matrix = new MatrixImmutable(vector1, vector2);
 
-
         // Act && assert
         Assert.Throws<MatrixIndexOutOfBoundsException>(() => MatrixImmutable.ToVector(matrix, 2));
     }
@@ -826,19 +825,19 @@ public class MatrixImmutableTests
     public void ScaleMatrixByValue_02_4x2D_Ok()
     {
         // Mocked values
-        var size = 100;
-        var scale = 1.5F;
+        const int Size = 100;
+        const float Scale = 1.5F;
 
         // Arrange
         var matrix = new MatrixImmutable(
-            new VectorImmutable(-size, -size),
-            new VectorImmutable(size, -size),
-            new VectorImmutable(size, size),
-            new VectorImmutable(-size, size)
+            new VectorImmutable(-Size, -Size),
+            new VectorImmutable(Size, -Size),
+            new VectorImmutable(Size, Size),
+            new VectorImmutable(-Size, Size)
         );
 
         // Act
-        var result = MatrixImmutable.Scale(matrix, scale);
+        var result = MatrixImmutable.Scale(matrix, Scale);
 
         // Assert
         Assert.That(result.ToString(), Is.EqualTo("{(-150,-150),(150,-150),(150,150),(-150,150)}"));

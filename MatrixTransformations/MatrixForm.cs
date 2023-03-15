@@ -103,20 +103,11 @@ public partial class MatrixForm : Form
 
         var graphics = new GraphicsHelper(eventArgs.Graphics, _formWidth, _formHeight);
 
-        _axisX.Matrix = MatrixImmutable.Rotate4D(Axis.X, _axisXOriginal.Matrix, _rotateX);
-        _axisX.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _axisX.Matrix, _rotateY);
-        _axisX.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _axisX.Matrix, _rotateZ);
-        _axisX.Matrix = MatrixImmutable.ViewingPipeline4D(_axisX.Matrix, _distance, _radians, _theta, _phi);
+        _axisX.Matrix = MatrixImmutable.ViewingPipeline4D(_axisXOriginal.Matrix, _distance, _radians, _theta, _phi);
         AxisX.Draw(graphics, _axisX.Matrix);
-        _axisY.Matrix = MatrixImmutable.Rotate4D(Axis.X, _axisYOriginal.Matrix, _rotateX);
-        _axisY.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _axisY.Matrix, _rotateY);
-        _axisY.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _axisY.Matrix, _rotateZ);
-        _axisY.Matrix = MatrixImmutable.ViewingPipeline4D(_axisY.Matrix, _distance, _radians, _theta, _phi);
+        _axisY.Matrix = MatrixImmutable.ViewingPipeline4D(_axisYOriginal.Matrix, _distance, _radians, _theta, _phi);
         AxisY.Draw(graphics, _axisY.Matrix);
-        _axisZ.Matrix = MatrixImmutable.Rotate4D(Axis.X, _axisZOriginal.Matrix, _rotateX);
-        _axisZ.Matrix = MatrixImmutable.Rotate4D(Axis.Y, _axisZ.Matrix, _rotateY);
-        _axisZ.Matrix = MatrixImmutable.Rotate4D(Axis.Z, _axisZ.Matrix, _rotateZ);
-        _axisZ.Matrix = MatrixImmutable.ViewingPipeline4D(_axisZ.Matrix, _distance, _radians, _theta, _phi);
+        _axisZ.Matrix = MatrixImmutable.ViewingPipeline4D(_axisZOriginal.Matrix, _distance, _radians, _theta, _phi);
         AxisZ.Draw(graphics, _axisZ.Matrix);
 
         _cube.Matrix = MatrixImmutable.Rotate4D(Axis.X, _cubeOriginal.Matrix, _rotateX);
@@ -173,7 +164,7 @@ public partial class MatrixForm : Form
         if (_shouldEndPhaseAnimation)
         {
             _phase = Phase.Two;
-            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = ((int) _phase).ToString()));
+            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = ((int)_phase).ToString()));
 
             _shouldEndPhaseAnimation = false;
             _shouldPlayPhaseAnimationForward = true;
@@ -211,7 +202,7 @@ public partial class MatrixForm : Form
         if (_shouldEndPhaseAnimation)
         {
             _phase = Phase.Three;
-            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = ((int) _phase).ToString()));
+            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = ((int)_phase).ToString()));
 
             _shouldEndPhaseAnimation = false;
             _shouldPlayPhaseAnimationForward = true;
@@ -249,7 +240,7 @@ public partial class MatrixForm : Form
         if (_shouldEndPhaseAnimation)
         {
             _phase = Phase.Four;
-            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = ((int) _phase).ToString()));
+            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = ((int)_phase).ToString()));
 
             _shouldEndPhaseAnimation = false;
             _shouldPlayPhaseAnimationForward = true;
@@ -274,7 +265,7 @@ public partial class MatrixForm : Form
         if (_phi == DefaultPhi && _theta == DefaultTheta)
         {
             _phase = Phase.One;
-            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = ((int) _phase).ToString()));
+            phaseValue.Invoke((MethodInvoker)(() => phaseValue.Text = ((int)_phase).ToString()));
             return;
         }
 
@@ -555,7 +546,7 @@ public partial class MatrixForm : Form
         distanceValue.Text = _distance.ToString(CultureInfo.InvariantCulture);
         phiValue.Text = _phi.ToString(CultureInfo.InvariantCulture);
         thetaValue.Text = _theta.ToString(CultureInfo.InvariantCulture);
-        phaseValue.Text = ((int) _phase).ToString();
+        phaseValue.Text = ((int)_phase).ToString();
         animationValue.Text = "Play";
     }
 }

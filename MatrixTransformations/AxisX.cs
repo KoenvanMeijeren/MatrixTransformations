@@ -4,7 +4,7 @@ namespace MatrixTransformations;
 
 public class AxisX
 {
-    private int _size;
+    private readonly int _size;
     public MatrixImmutable Matrix { get; set; }
 
     public AxisX(int size = 100)
