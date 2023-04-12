@@ -329,7 +329,8 @@ namespace Src
                 new VectorImmutable(cosAlfa, 0, sinALfa),
                 new VectorImmutable(0, 1, 0),
                 new VectorImmutable(-sinALfa, 0, cosAlfa)
-            )
+            ),
+            _ => throw new ArgumentOutOfRangeException(nameof(axis), axis, "Unsupported axis given!")
         };
     }
 
@@ -378,6 +379,7 @@ namespace Src
                 new VectorImmutable(-sinALfa, 0, cosAlfa, 0),
                 new VectorImmutable(0, 0, 0, 1)
             ),
+            _ => throw new ArgumentOutOfRangeException(nameof(axis), axis, "Unsupported axis given!")
         };
     }
 
