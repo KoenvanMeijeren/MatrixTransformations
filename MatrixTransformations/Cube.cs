@@ -14,7 +14,6 @@ namespace MatrixTransformations
         //      |/         |/                  z
         //      2----------1
 
-        private const int Size = 1;
         public MatrixImmutable Matrix { get; set; }
 
         private readonly Color _color;
@@ -43,8 +42,6 @@ namespace MatrixTransformations
                 new VectorImmutable(-1.2f, -1.2f, -1.2f, 1), //6
                 new VectorImmutable(-1.2f, 1.2f, -1.2f, 1) //7
             );
-
-            Matrix *= Size;
         }
 
         public void Draw(GraphicsHelper graphicsHelper, MatrixImmutable matrix)
