@@ -63,7 +63,7 @@ public class MatrixImmutable
             {
                 positions[identityIndex] = 1;
             }
-            
+
             vectors[vectorIndex++] = new VectorImmutable(positions);
             previousVector = vector;
             identityIndex++;
@@ -73,7 +73,7 @@ public class MatrixImmutable
 
         return new MatrixImmutable(vectors);
     }
-    
+
     public static MatrixImmutable Identity(int matrixSize, float identity = 1)
     {
         var vectors = new VectorImmutable[matrixSize];
@@ -87,7 +87,7 @@ public class MatrixImmutable
             {
                 positions[identityIndex] = 1;
             }
-            
+
             vectors[vectorIndex++] = new VectorImmutable(positions);
         }
 

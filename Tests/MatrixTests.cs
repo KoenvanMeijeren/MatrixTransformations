@@ -282,7 +282,7 @@ public class MatrixImmutableTests
         // Act & assert
         Assert.Throws<MatrixVectorsLengthNotEqualToVectorDimensionsException>(() => MatrixImmutable.Identity(matrix));
     }
-    
+
     [TestCase(0, 0, "{}")]
     [TestCase(1, 1, "{(1)}")]
     [TestCase(2, 1, "{(1,0),(0,1)}")]
@@ -295,7 +295,7 @@ public class MatrixImmutableTests
     {
         // Arrange & Act
         var matrix = MatrixImmutable.Identity(matrixSize, scale);
-        
+
         // Assert
         Assert.That(matrix.ToString(), Is.EqualTo(expectedResult));
     }
