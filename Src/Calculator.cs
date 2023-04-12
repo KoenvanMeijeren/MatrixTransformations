@@ -1,14 +1,17 @@
-﻿namespace Src;
+﻿using System;
 
-public static class Calculator
+namespace Src
 {
-    public static double RadiansToDegree(double radians)
+    public static class Calculator
     {
-        return (180 / Math.PI) * radians;
-    }
+        public static double RadiansToDegree(double radians)
+        {
+            return (180 / Math.PI) * radians;
+        }
 
-    public static double DegreesToRadians(double degrees)
-    {
-        return (Math.PI / 180) * degrees;
+        public static double DegreesToRadians(double degrees)
+        {
+            return (Math.PI / 180) * degrees;
+        }
     }
 }

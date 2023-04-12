@@ -1,8 +1,10 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Src;
-
-public class MatrixImmutable
+namespace Src
+{
+    public class MatrixImmutable
 {
     public readonly VectorImmutable[] Vectors;
 
@@ -644,4 +646,5 @@ public class MatrixVectorsNot3DException : Exception
 public class MatrixVectorsNot4DException : Exception
 {
 
+}
 }

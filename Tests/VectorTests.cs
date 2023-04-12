@@ -1,8 +1,10 @@
-﻿using Src;
+﻿using System;
+using NUnit.Framework;
+using Src;
 
-namespace Tests;
-
-[TestFixture]
+namespace Tests
+{
+    [TestFixture]
 public class VectorImmutableTests
 {
     [TestCase(new float[] { }, "()")]
@@ -259,4 +261,5 @@ public class VectorImmutableTests
             var result = vector / 0;
         });
     }
+}
 }

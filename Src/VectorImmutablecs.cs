@@ -1,9 +1,10 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Text;
 
-namespace Src;
-
-public class VectorImmutable
+namespace Src
+{
+    public class VectorImmutable
 {
     public readonly float[] Positions;
 
@@ -158,4 +159,5 @@ public class VectorImmutable
 public class VectorsDimensionsNotEqualException : Exception
 {
 
+}
 }

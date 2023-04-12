@@ -1,12 +1,15 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.Globalization;
 using System.Timers;
+using System.Windows.Forms;
 using Src;
 using Timer = System.Timers.Timer;
 
-namespace MatrixTransformations;
-
-[ExcludeFromCodeCoverage]
+namespace MatrixTransformations
+{
+    [ExcludeFromCodeCoverage]
 public partial class MatrixForm : Form
 {
     // Window dimensions
@@ -557,4 +560,5 @@ public enum Phase
     Two = 2,
     Three = 3,
     Four = 4,
+}
 }

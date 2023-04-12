@@ -1,8 +1,10 @@
-﻿using Src;
+﻿using System;
+using NUnit.Framework;
+using Src;
 
-namespace Tests;
-
-public class MatrixImmutableTests
+namespace Tests
+{
+    public class MatrixImmutableTests
 {
     [Test]
     public void Create_01_0D_Ok()
@@ -1331,4 +1333,5 @@ public class MatrixImmutableTests
         // Assert
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
+}
 }

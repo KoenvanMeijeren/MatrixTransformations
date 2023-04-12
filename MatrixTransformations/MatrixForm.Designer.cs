@@ -1,4 +1,7 @@
-﻿namespace MatrixTransformations
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace MatrixTransformations
 {
     partial class MatrixForm
     {
