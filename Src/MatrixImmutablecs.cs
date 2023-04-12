@@ -471,8 +471,8 @@ public class MatrixImmutable
         return new MatrixImmutable(
             new VectorImmutable(-projection, 0, 0, 0),
             new VectorImmutable(0, -projection, 0, 0),
-            new VectorImmutable(0, 0, 1, 0),
-            new VectorImmutable(0, 0, 0, 1)
+            new VectorImmutable(0, 0, 0, 0),
+            new VectorImmutable(0, 0, 0, 0)
         );
     }
 
