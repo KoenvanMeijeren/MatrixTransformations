@@ -48,6 +48,7 @@ public class MatrixImmutable
         var vectors = new VectorImmutable[matrix.Vectors.Length];
         var identityIndex = 0;
         var vectorIndex = 0;
+        var lastIdentityIndex = vectors.Length - 1;
         foreach (var vector in matrix.Vectors)
         {
             EnsureMatrixVectorsHaveEqualVectorDimensions(matrix.Vectors, vector);
@@ -57,12 +58,38 @@ public class MatrixImmutable
             }
 
             var positions = new float[vector.Length()];
-            positions[identityIndex++] = identity;
+            positions[identityIndex] = identity;
+            if (identityIndex == lastIdentityIndex)
+            {
+                positions[identityIndex] = 1;
+            }
+            
             vectors[vectorIndex++] = new VectorImmutable(positions);
             previousVector = vector;
+            identityIndex++;
         }
 
         EnsureMatrixVectorsHaveEqualVectorDimensions(vectors, previousVector);
+
+        return new MatrixImmutable(vectors);
+    }
+    
+    public static MatrixImmutable Identity(int matrixSize, float identity = 1)
+    {
+        var vectors = new VectorImmutable[matrixSize];
+        var vectorIndex = 0;
+        var lastIdentityIndex = matrixSize - 1;
+        for (var identityIndex = 0; identityIndex < matrixSize; identityIndex++)
+        {
+            var positions = new float[matrixSize];
+            positions[identityIndex] = identity;
+            if (identityIndex == lastIdentityIndex)
+            {
+                positions[identityIndex] = 1;
+            }
+            
+            vectors[vectorIndex++] = new VectorImmutable(positions);
+        }
 
         return new MatrixImmutable(vectors);
     }
@@ -235,12 +262,16 @@ public class MatrixImmutable
             return new MatrixImmutable();
         }
 
-        if (matrix.Length() != firstVector.Length())
+        var scalingMatrix = Identity(firstVector.Length(), scale);
+        var newVectors = new VectorImmutable[matrix.Length()];
+        var vectorIndex = 0;
+        foreach (var vector in matrix.Vectors)
         {
-            return matrix * scale;
+            newVectors[vectorIndex] = scalingMatrix * vector;
+            vectorIndex++;
         }
 
-        return ScalingMatrix(matrix, scale) * matrix;
+        return new MatrixImmutable(newVectors);
     }
 
     public static MatrixImmutable DegreesToRotationMatrix2D(float degrees)
