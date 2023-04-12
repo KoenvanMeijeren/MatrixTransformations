@@ -1294,9 +1294,9 @@ public class MatrixImmutableTests
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
 
-    [TestCase(0, new float[] { 3, 4, 5 }, "{(-0,0,0,0),(0,-0,0,0),(0,0,0,0),(0,0,0,0)}")]
-    [TestCase(10, new float[] { 3, 4, 5 }, "{(-2,0,0,0),(0,-2,0,0),(0,0,0,0),(0,0,0,0)}")]
-    [TestCase(33, new float[] { 3, 4, 5 }, "{(-6.6,0,0,0),(0,-6.6,0,0),(0,0,0,0),(0,0,0,0)}")]
+    [TestCase(0, new float[] { 3, 4, 5 }, "{(-0,0,0,0),(0,-0,0,0),(0,0,1,0),(0,0,0,1)}")]
+    [TestCase(10, new float[] { 3, 4, 5 }, "{(-2,0,0,0),(0,-2,0,0),(0,0,1,0),(0,0,0,1)}")]
+    [TestCase(33, new float[] { 3, 4, 5 }, "{(-6.6,0,0,0),(0,-6.6,0,0),(0,0,1,0),(0,0,0,1)}")]
     public void ProjectionMatrix_01_4D_Ok(float distance, float[] distancePositions, string expectedResult)
     {
         // Arrange
@@ -1309,9 +1309,9 @@ public class MatrixImmutableTests
         Assert.That(result.ToString(), Is.EqualTo(expectedResult));
     }
 
-    [TestCase(0, 0, 0, 0, "{(0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0)}")]
-    [TestCase(10, 10, -100, -10, "{(-27.84,-39.22,0,0),(50.15,-34.66,0,0),(-73.07,-102.61,0,0),(228.47,-157.21,0,0)}")]
-    [TestCase(33, 33, 50, 65, "{(2.54,12.45,0,0),(-106.27,4.61,0,0),(4.28,20.34,0,0),(217.18,-6.63,0,0)}")]
+    [TestCase(0, 0, 0, 0, "{(0,0,1,1),(0,0,1,1),(0,0,1,1),(0,0,1,1)}")]
+    [TestCase(10, 10, -100, -10, "{(-27.84,-39.22,-29.13,1),(50.15,-34.66,-23.1,1),(-73.07,-102.61,11.1,1),(228.47,-157.21,5.07,1)}")]
+    [TestCase(33, 33, 50, 65, "{(2.54,12.45,-160.26,1),(-106.27,4.61,-43.75,1),(4.28,20.34,95.11,1),(217.18,-6.63,-21.41,1)}")]
     public void ViewingPipelineMatrix_01_4D_Ok(float distance, float radians, float theta, float phi, string expectedResult)
     {
         // Mocked values
